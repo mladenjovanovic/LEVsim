@@ -1,0 +1,18 @@
+Package: LEVsim
+Title: Theoretical Modeling For Resistance Training
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Mladen",
+           family = "Jovanović",
+           role = c("aut", "cre"),
+           email = "coach.mladen.jovanovic@example.com",
+           comment = c(ORCID = "0000-0002-4013-6530"))
+Description: Description.
+License: MIT + file LICENSE
+URL: https://mladenjovanovic.github.io/LEVsim/
+BugReports: https://github.com/mladenjovanovic/LEVsim/issues
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.1
+VignetteBuilder: knitr
