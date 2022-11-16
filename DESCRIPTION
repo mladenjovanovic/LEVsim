@@ -1,5 +1,5 @@
 Package: LEVsim
-Title: Theoretical Modeling For Resistance Training
+Title: Load-Exertion-Velocity Theoretical Model For Resistance Training
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Mladen",

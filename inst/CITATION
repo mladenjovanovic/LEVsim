@@ -1,0 +1,17 @@
+citHeader("To cite 'VBTsim' in publications use:")
+
+citEntry(entry = "Manual",
+  title        = "{LEVsim}: Load-Exertion-Velocity Theoretical Model For Resistance Training",
+  author       = personList(as.person("Mladen Jovanović")),
+  note         = "R package version 0.0.0.9000",
+  year         = "2020",
+  url          = "https://mladenjovanovic.github.io/LEVsim/",
+  doi          = "",
+
+  textVersion  =
+  paste("Mladen Jovanović (2020).",
+        "LEVsim: Load-Exertion-Velocity Theoretical Model For Resistance Training.",
+        "R package version 0.0.0.9000.",
+        "url: https://mladenjovanovic.github.io/LEVsim/",
+        "")
+)
