@@ -44,7 +44,7 @@
 #' @export
 #' @examples
 #' # Create random athletes/profiles
-#' sets <- create_athletes(10) %>%
+#' sets <- create_athletes(1) %>%
 #'   create_visits(1) %>%
 #'   create_sets(load = c(70, 80, 90))
 #'
@@ -60,7 +60,7 @@ print.LEV_sets <- function(x, ...) {
 #' @return Data Frame
 #' @examples
 #' # Create random athletes/profiles
-#' sets <- create_athletes(10) %>%
+#' sets <- create_athletes(1) %>%
 #'   create_visits(1) %>%
 #'   create_sets(load = c(70, 80, 90))
 #'
@@ -83,7 +83,7 @@ coef.LEV_sets <- function(object, ...) {
 #' @return Data Frame
 #' @examples
 #' # Create random athletes/profiles
-#' sets <- create_athletes(10) %>%
+#' sets <- create_athletes(1) %>%
 #'   create_visits(1) %>%
 #'   create_sets(load = c(70, 80, 90))
 #'

@@ -16,7 +16,7 @@ S3 method for printing LEV Profiles Sets
 }
 \examples{
 # Create random athletes/profiles
-sets <- create_athletes(10) \%>\%
+sets <- create_athletes(1) \%>\%
   create_visits(1) \%>\%
   create_sets(load = c(70, 80, 90))
 
