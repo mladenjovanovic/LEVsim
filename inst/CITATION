@@ -1,4 +1,4 @@
-citHeader("To cite 'VBTsim' in publications use:")
+citHeader("To cite 'LEVsim' in publications use:")
 
 citEntry(entry = "Manual",
   title        = "{LEVsim}: Load-Exertion-Velocity Theoretical Model For Resistance Training",
