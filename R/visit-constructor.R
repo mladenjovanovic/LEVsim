@@ -1,0 +1,62 @@
+# New Visit Constructor
+#
+# This function creates \code{LEV_visit} object
+new_visit <- function(athlete,
+                      visit,
+                      V0,
+                      V0_rep_drop,
+                      V0_visit_change,
+                      V0_visit_change_multiplicative,
+                      V0_visit_random,
+                      V0_visit_random_multiplicative,
+                      L0,
+                      L0_rep_drop,
+                      L0_visit_change,
+                      L0_visit_change_multiplicative,
+                      L0_visit_random,
+                      L0_visit_random_multiplicative,
+                      v1RM,
+                      v1RM_random,
+                      v1RM_random_multiplicative,
+                      biological_variation,
+                      biological_variation_multiplicative,
+                      instrumentation_noise,
+                      instrumentation_noise_multiplicative,
+                      load_increment) {
+  visit <- list(
+    athlete = athlete,
+    visit = visit,
+    V0 = V0,
+    V0_rep_drop = V0_rep_drop,
+    V0_visit_change = V0_visit_change,
+    V0_visit_change_multiplicative = V0_visit_change_multiplicative,
+    V0_visit_random = V0_visit_random,
+    V0_visit_random_multiplicative = V0_visit_random_multiplicative,
+    L0 = L0,
+    L0_rep_drop = L0_rep_drop,
+    L0_visit_change = L0_visit_change,
+    L0_visit_change_multiplicative = L0_visit_change_multiplicative,
+    L0_visit_random = L0_visit_random,
+    L0_visit_random_multiplicative = L0_visit_random_multiplicative,
+    v1RM = v1RM,
+    v1RM_random = v1RM_random,
+    v1RM_random_multiplicative = v1RM_random_multiplicative,
+    biological_variation = biological_variation,
+    biological_variation_multiplicative = biological_variation_multiplicative,
+    instrumentation_noise = instrumentation_noise,
+    instrumentation_noise_multiplicative = instrumentation_noise_multiplicative,
+    load_increment = load_increment,
+
+    # Additional parameters
+    intercept = V0,
+    slope = -V0 / L0,
+    `1RM` = get_load_at_velocity(V0, L0, v1RM),
+
+    # These will be empty until using create_visit_1RM() and create_visit_prescription_1RM()
+    visit_1RM = NA,
+    prescription_1RM = NA
+  )
+
+  class(visit) <- "LEV_visit"
+  return(visit)
+}
