@@ -226,7 +226,7 @@ plot_LEV_summary <- function(df,
   gg <- gg +
     ggplot2::theme_linedraw() +
     ggplot2::geom_segment(alpha = 0.9, size = 1, arrow = ggplot2::arrow(length = ggplot2::unit(0.1, "cm"))) +
-    ggplot2::geom_label(ggplot2::aes(y = first_measured_rep_velocity + 0.025, label = load), vjust = "bottom", size = 3) +
+    ggplot2::geom_label(ggplot2::aes(y = first_measured_rep_velocity + 0.025, label = load), vjust = "bottom", size = 3, fill = "grey") +
     ggplot2::geom_label(ggplot2::aes(y = last_measured_rep_velocity - 0.025, label = reps), vjust = "top", size = 3)
 
   if (type == "athletes") {
