@@ -5,7 +5,7 @@
 \title{Create Sets}
 \usage{
 create_sets(
-  LEV_profiles,
+  LEV_profile,
   load,
   load_type = "absolute",
   max_reps = 100,
@@ -13,7 +13,7 @@ create_sets(
 )
 }
 \arguments{
-\item{LEV_profiles}{\code{LEV_profile} object, returned by \code{\link{create_visits}} function}
+\item{LEV_profile}{\code{LEV_profile} object, returned by \code{\link{create_visits}} function}
 
 \item{load}{Numeric vector. Loads are either absolute weight or percentages. See also \code{load_type}}
 
@@ -28,7 +28,7 @@ create_sets(
 Object \code{LEV_sets}
 }
 \description{
-Function creates sets, using provided \code{LEV_profiles} \code{loads} and \code{trials}
+Function creates sets, using provided \code{LEV_profile} \code{loads} and \code{trials}
 }
 \examples{
 # Create random athletes/profiles

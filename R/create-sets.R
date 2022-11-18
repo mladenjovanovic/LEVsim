@@ -1,8 +1,8 @@
 #' Create Sets
 #'
-#' Function creates sets, using provided \code{LEV_profiles} \code{loads} and \code{trials}
+#' Function creates sets, using provided \code{LEV_profile} \code{loads} and \code{trials}
 #'
-#' @param LEV_profiles \code{LEV_profile} object, returned by \code{\link{create_visits}} function
+#' @param LEV_profile \code{LEV_profile} object, returned by \code{\link{create_visits}} function
 #' @param load Numeric vector. Loads are either absolute weight or percentages. See also \code{load_type}
 #' @param load_type Type of load calculation. Can be either 'absolute' (default), or 'visit 1RM', or
 #'      'prescription 1RM'
@@ -43,7 +43,7 @@
 #'  plot(sets)
 #'  plot(sets, facet = NULL, x_var = "load")
 #'  plot(sets, visits = 1, x_var = "RIR")
-create_sets <- function(LEV_profiles,
+create_sets <- function(LEV_profile,
                         load,
                         load_type = "absolute",
                         max_reps = 100,
@@ -65,10 +65,10 @@ create_sets <- function(LEV_profiles,
   }
 
   # Check of the object is proper LEV_profile
-  is_LEV <- validate_LEV_profile(LEV_profiles, stop_running = TRUE)
+  is_LEV <- validate_LEV_profile(LEV_profile, stop_running = TRUE)
 
   # Cycle through each athlete in the LEV_profile
-  sets_df <- purrr::map_df(LEV_profiles, function(profile) {
+  sets_df <- purrr::map_df(LEV_profile, function(profile) {
 
     # Cycle through visits
     individual_sets <- purrr::map_df(profile$visit, function(visit) {
@@ -145,7 +145,7 @@ create_sets <- function(LEV_profiles,
     measured_rep_velocity = sets_df$measured_rep_velocity,
     RIR = sets_df$RIR,
     `%MNR` = sets_df$`%MNR`,
-    fastest_rep_velocity = sets_df$fastest_rep_velocity,
+    best_measured_rep_velocity = sets_df$best_measured_rep_velocity,
     VL = sets_df$VL,
     `%VL` = sets_df$`%VL`,
     VR = sets_df$VR

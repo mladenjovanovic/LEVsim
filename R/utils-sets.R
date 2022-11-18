@@ -98,10 +98,10 @@ get_sets <- function(visit_LEV_profile, load, max_reps = 100) {
       nRM = last_rep - 1,
       RTF = ifelse(is.na(nRM), FALSE, TRUE),
       `%MNR` = (rep / nRM) * 100,
-      fastest_rep_velocity = cummax(measured_rep_velocity),
-      VL = fastest_rep_velocity - measured_rep_velocity,
-      `%VL` = VL / fastest_rep_velocity * 100,
-      VR = 100 * (measured_rep_velocity - v1RM) / (fastest_rep_velocity - v1RM)
+      best_measured_rep_velocity = cummax(measured_rep_velocity),
+      VL = best_measured_rep_velocity - measured_rep_velocity,
+      `%VL` = VL / best_measured_rep_velocity * 100,
+      VR = 100 * (measured_rep_velocity - v1RM) / (best_measured_rep_velocity - v1RM)
     ) %>%
     dplyr::ungroup() %>%
     dplyr::arrange(load_index, rep) %>%
