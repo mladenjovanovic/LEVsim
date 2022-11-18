@@ -1,4 +1,19 @@
+#' Create Summary
+#'
+#' Function creates summary of the sets, using provided \code{LEV_sets}
+#' @param LEV_sets \code{LEV_sets} object, returned by \code{\link{create_sets}} function
+#' @return \code{LEV_summary} object
 #' @export
+#' @examples
+#' set.seed(1667)
+#' sets <- create_athletes(2) %>%
+#'   create_visits(1) %>%
+#'   create_visit_1RM() %>%
+#'   create_sets(load = c(0.7, 0.8, 0.9), load_type = "visit 1RM") %>%
+#'   create_summary()
+#'
+#' sets
+#' plot(sets)
 create_summary <- function(LEV_sets) {
 
   # +++++++++++++++++++++++++++++++++++++++++++

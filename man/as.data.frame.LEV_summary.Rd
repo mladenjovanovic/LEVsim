@@ -2,7 +2,7 @@
 % Please edit documentation in R/summary-S3.R
 \name{as.data.frame.LEV_summary}
 \alias{as.data.frame.LEV_summary}
-\title{S3 method for extracting LEV Profiles Summaries}
+\title{S3 method for extracting LEV Sets Summaries}
 \usage{
 \method{as.data.frame}{LEV_summary}(x, row.names = NULL, optional = FALSE, ...)
 }
@@ -19,7 +19,7 @@
 Data Frame
 }
 \description{
-S3 method for extracting LEV Profiles Summaries
+S3 method for extracting LEV Sets Summaries
 }
 \examples{
 # Create random athletes/profiles

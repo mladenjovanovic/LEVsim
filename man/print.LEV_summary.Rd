@@ -2,7 +2,7 @@
 % Please edit documentation in R/summary-S3.R
 \name{print.LEV_summary}
 \alias{print.LEV_summary}
-\title{S3 method for printing LEV Profiles Summaries}
+\title{S3 method for printing LEV Sets Summaries}
 \usage{
 \method{print}{LEV_summary}(x, ...)
 }
@@ -12,7 +12,7 @@
 \item{...}{Extra arguments}
 }
 \description{
-S3 method for printing LEV Profiles Summaries
+S3 method for printing LEV Sets Summaries
 }
 \examples{
 # Create random athletes/profiles
