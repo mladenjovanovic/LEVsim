@@ -2,7 +2,7 @@
 #'
 #' Before sets can be generated, it is necessary to create visits to the laboratory/gym
 #'
-#' @param LEV_profiles Object returned from \code{\link{create_profiles}} or \code{\link{create_athletes}}
+#' @param LEV_profile Object returned from \code{\link{create_profiles}} or \code{\link{create_athletes}}
 #' @param visit Numeric vector. Default is 1
 #'
 #' @return \code{LEV_profile} object
@@ -39,7 +39,7 @@
 #'  plot(sets)
 #'  plot(sets, facet = NULL, x_var = "load")
 #'  plot(sets, visits = 1, x_var = "RIR")
-create_visits <- function(LEV_profiles = create_profiles(),
+create_visits <- function(LEV_profile = create_profiles(),
                           visit = 1) {
 
 
@@ -65,7 +65,7 @@ create_visits <- function(LEV_profiles = create_profiles(),
 
 
   # Check of the object is proper LEV_profile
-  is_LEV <- validate_LEV_profile(LEV_profiles, stop_running = TRUE)
+  is_LEV <- validate_LEV_profile(LEV_profile, stop_running = TRUE)
 
   # Make sure visits are numeric
   if (!is.numeric(visit)) {
@@ -73,7 +73,7 @@ create_visits <- function(LEV_profiles = create_profiles(),
   }
 
   # Cycle through each profile in the object, and add visits
-  LEV_profiles <- purrr::map(LEV_profiles, function(profile) {
+  LEV_profile <- purrr::map(LEV_profile, function(profile) {
     # Create new L0 and V0 for each visit using
     # systematic and random theoretical effects
     true_profile <- profile$profile
@@ -165,7 +165,7 @@ create_visits <- function(LEV_profiles = create_profiles(),
     return(profile)
   })
 
-  # Now return added visits to LEV_profiles
-  class(LEV_profiles) <- "LEV_profile"
-  return(LEV_profiles)
+  # Now return added visits to LEV_profile
+  class(LEV_profile) <- "LEV_profile"
+  return(LEV_profile)
 }

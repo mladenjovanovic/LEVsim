@@ -4,10 +4,10 @@
 \alias{create_visits}
 \title{Create Visits}
 \usage{
-create_visits(LEV_profiles = create_profiles(), visit = 1)
+create_visits(LEV_profile = create_profiles(), visit = 1)
 }
 \arguments{
-\item{LEV_profiles}{Object returned from \code{\link{create_profiles}} or \code{\link{create_athletes}}}
+\item{LEV_profile}{Object returned from \code{\link{create_profiles}} or \code{\link{create_athletes}}}
 
 \item{visit}{Numeric vector. Default is 1}
 }
