@@ -104,8 +104,8 @@ create_athletes <- function(n = 20,
                             biological_variation_min = 0.02,
                             biological_variation_max = 0.075,
                             biological_variation_multiplicative = TRUE,
-                            instrumentation_noise_min = 0.01,
-                            instrumentation_noise_max = 0.01,
+                            instrumentation_noise_min = 0,
+                            instrumentation_noise_max = 0,
                             instrumentation_noise_multiplicative = FALSE,
                             load_increment = 2.5) {
 

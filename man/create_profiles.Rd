@@ -23,7 +23,7 @@ create_profiles(
   v1RM_random_multiplicative = FALSE,
   biological_variation = 0,
   biological_variation_multiplicative = TRUE,
-  instrumentation_noise = 10^-5,
+  instrumentation_noise = 0,
   instrumentation_noise_multiplicative = FALSE,
   load_increment = 2.5
 )
