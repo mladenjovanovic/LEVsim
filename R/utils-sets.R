@@ -3,6 +3,17 @@ get_load_rounded <- function(load, load_increment) {
   floor(load / load_increment) * load_increment
 }
 
+# Function to return whether the rep is last
+get_last_rep <- function(rep, failed) {
+  if (any(failed)) {
+    last_rep <- min(rep[failed])
+  } else {
+    last_rep <- NA
+  }
+
+  last_rep
+}
+
 # Generate Single Visit Sets
 #
 # Internal function for creating sets during a single visit
@@ -71,13 +82,6 @@ get_sets <- function(visit_LEV_profile, load, max_reps = 100) {
 
   # Now we need to clean them up and provide summaries
   # --------------------------------
-  get_last_rep <- function(rep, failed) {
-    if (any(failed)) {
-      last_rep <- min(rep[failed])
-    } else {
-      last_rep <- NA
-    }
-  }
 
   # Cleaned reps
   cleaned_sets <- sets %>%
