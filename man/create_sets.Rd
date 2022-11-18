@@ -9,7 +9,9 @@ create_sets(
   load,
   load_type = "absolute",
   max_reps = 100,
-  failed_reps = FALSE
+  failed_reps = FALSE,
+  L0_fatigue = 0,
+  V0_fatigue = 0
 )
 }
 \arguments{
@@ -23,6 +25,10 @@ create_sets(
 \item{max_reps}{How many maximum reps to generate? Default is 100}
 
 \item{failed_reps}{Should failed-reps be included in the output? Default is \code{FALSE}}
+
+\item{L0_fatigue}{Multiplicative decrease in L0 across sets in percentage. Default is 0}
+
+\item{V0_fatigue}{Multiplicative decrease in V0 across sets in percentage. Default is 0}
 }
 \value{
 Object \code{LEV_sets}

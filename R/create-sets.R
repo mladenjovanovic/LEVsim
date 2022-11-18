@@ -8,6 +8,8 @@
 #'      'prescription 1RM'
 #' @param max_reps How many maximum reps to generate? Default is 100
 #' @param failed_reps Should failed-reps be included in the output? Default is \code{FALSE}
+#' @param L0_fatigue Multiplicative decrease in L0 across sets in percentage. Default is 0
+#' @param V0_fatigue Multiplicative decrease in V0 across sets in percentage. Default is 0
 #'
 #' @return Object \code{LEV_sets}
 #' @export
@@ -47,7 +49,9 @@ create_sets <- function(LEV_profile,
                         load,
                         load_type = "absolute",
                         max_reps = 100,
-                        failed_reps = FALSE) {
+                        failed_reps = FALSE,
+                        L0_fatigue = 0,
+                        V0_fatigue = 0) {
 
   # +++++++++++++++++++++++++++++++++++++++++++
   # Code chunk for dealing with R CMD check note
@@ -103,7 +107,9 @@ create_sets <- function(LEV_profile,
       visit_sets <- get_sets(
         visit,
         load = visit_load,
-        max_reps = max_reps
+        max_reps = max_reps,
+        L0_fatigue = L0_fatigue,
+        V0_fatigue = V0_fatigue
       )
 
       # Filter out failed reps

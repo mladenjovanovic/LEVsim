@@ -22,7 +22,12 @@ get_last_rep <- function(rep, failed) {
 # @param max_reps How many maximum reps to generate? Default is 100
 #
 # @return Data frame
-get_sets <- function(visit_LEV_profile, load, max_reps = 100) {
+get_sets <- function(visit_LEV_profile,
+                     load,
+                     max_reps = 100,
+                     L0_fatigue = 0,
+                     V0_fatigue = 0
+                     ) {
 
   # +++++++++++++++++++++++++++++++++++++++++++
   # Code chunk for dealing with R CMD check note
@@ -46,6 +51,7 @@ get_sets <- function(visit_LEV_profile, load, max_reps = 100) {
   VL <- NULL
   load_index <- NULL
   last_row <- NULL
+  set <- NULL
   # +++++++++++++++++++++++++++++++++++++++++++
 
   class(visit_LEV_profile) <- "list"
@@ -58,7 +64,10 @@ get_sets <- function(visit_LEV_profile, load, max_reps = 100) {
     rep = seq(1, max_reps)
   ) %>%
     dplyr::mutate(
-      load = load[load_index]
+      set = load_index,
+      load = load[load_index],
+      L0 = systematic_effect(L0, set - 1, 1 - L0_fatigue, TRUE),
+      V0 = systematic_effect(V0, set - 1, 1 - V0_fatigue, TRUE)
     ) %>%
     dplyr::mutate(
       get_reps_velocity(
@@ -82,6 +91,7 @@ get_sets <- function(visit_LEV_profile, load, max_reps = 100) {
   cleaned_sets <- sets %>%
     dplyr::group_by(load_index) %>%
     dplyr::mutate(
+      # Here use either true_rep_velocity or biological_rep_velocity
       failed_rep = biological_rep_velocity <= v1RM
     ) %>%
     # Find first occurrence where velocity drops below v1RM

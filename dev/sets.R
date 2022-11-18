@@ -1,16 +1,28 @@
-x <- create_profiles(1) %>%
-  create_visits(1) %>%
-  create_sets(load = c(120, 130, 140, 150, 160), load_type = "absolute")
+set.seed(1667)
+sets <- create_profiles(1) %>%
+ create_visits(1:2) %>%
+ create_visit_1RM() %>%
+ create_sets(load = rep(0.8, 10), load_type = "visit 1RM") %>%
+ create_summary()
+
+plot(sets)
+
+
+sets <- as.data.frame(sets)
+as.data.frame(sets)
+
+plot(sets, x_var = "visit", y_var = "load", reps = 1, facet = NULL)
+plot(sets, x_var = "visit", y_var = "visit_1RM", facet = NULL)
 
 y <- as.data.frame(x)
-plot(x, x_var = "RIR")
-
-plot(x, visits = 1, facet = "trial", reps = 1)
-
-y <- get_sets(x$`Athlete 1`$visit$`1`, 120)
+plot(sets, x_var = "visit", y_var = "prescription_1RM", facet = NULL)
 
 
-system.time({get_sets(x$`Athlete 1`$visit$`1`, rep(100, 1000))})
+
+x <- create_profiles(1) %>%
+  create_visits(1)
+
+get_sets(x$`1`$visit$`1`, c(150, 150, 150))
 
 
 #' # Create random athletes/profiles
@@ -44,7 +56,16 @@ system.time({get_sets(x$`Athlete 1`$visit$`1`, rep(100, 1000))})
 #'  plot(sets, facet = NULL, x_var = "load")
 #'  plot(sets, visits = 1, x_var = "RIR")
 
+set.seed(1667)
 
+sets <- create_athletes(5) %>%
+  create_visits(1:3) %>%
+  create_prescription_1RM(100, 2.5) %>%
+  create_sets(
+     load = c(70, 80, 90),
+     load_type = "prescription 1RM"
+   )
+y <- as.data.frame(sets)
+print(sets)
 
-
-
+plot(sets, reps = 1)
