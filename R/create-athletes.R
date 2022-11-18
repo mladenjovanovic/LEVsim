@@ -46,9 +46,9 @@
 #'
 #' @examples
 #' # Create random athletes/profiles
-#'  set.seed(1667)
+#' set.seed(1667)
 #'
-#'  sets <- create_athletes(5) %>%
+#' sets <- create_athletes(5) %>%
 #'   create_visits(1:3) %>%
 #'   create_sets(
 #'     load = c(90, 110, 130),
@@ -57,7 +57,7 @@
 #'
 #' print(sets)
 #'
-#'# Extract data frame
+#' # Extract data frame
 #' LEV_data <- as.data.frame(sets)
 #' # Or
 #' # LEV_data <- coef(sets)
@@ -67,14 +67,14 @@
 #' plot(sets, athletes = "Athlete 1", reps = 1)
 #' plot(sets, athletes = "Athlete 1", x_var = "RIR")
 #'
-#'  # Another way to create LEV profiles
-#'  sets <- create_profiles(athletes = c("Mladen", "Ivan"), L0 = c(200, 180)) %>%
-#'    create_visits(1) %>%
-#'    create_sets(load = c(100, 120, 140), load_type = "absolute")
+#' # Another way to create LEV profiles
+#' sets <- create_profiles(athletes = c("Mladen", "Ivan"), L0 = c(200, 180)) %>%
+#'   create_visits(1) %>%
+#'   create_sets(load = c(100, 120, 140), load_type = "absolute")
 #'
-#'  plot(sets)
-#'  plot(sets, facet = NULL, x_var = "load")
-#'  plot(sets, visits = 1, x_var = "RIR")
+#' plot(sets)
+#' plot(sets, facet = NULL, x_var = "load")
+#' plot(sets, visits = 1, x_var = "RIR")
 create_athletes <- function(n = 20,
                             V0_min = 1.5,
                             V0_max = 2.5,
@@ -118,18 +118,15 @@ create_athletes <- function(n = 20,
     V0_visit_change_multiplicative = V0_visit_change_multiplicative,
     V0_visit_random = stats::runif(n, V0_visit_random_min, V0_visit_random_max),
     V0_visit_random_multiplicative = V0_visit_random_multiplicative,
-
     L0 = stats::runif(n, L0_min, L0_max),
     L0_rep_drop = stats::runif(n, L0_rep_drop_min, L0_rep_drop_max),
     L0_visit_change = stats::runif(n, L0_visit_change_min, L0_visit_change_max),
     L0_visit_change_multiplicative = L0_visit_change_multiplicative,
     L0_visit_random = stats::runif(n, L0_visit_random_min, L0_visit_random_max),
     L0_visit_random_multiplicative = L0_visit_random_multiplicative,
-
     v1RM = stats::runif(n, v1RM_min, v1RM_max),
     v1RM_random = stats::runif(n, v1RM_random_min, v1RM_random_max),
     v1RM_random_multiplicative = v1RM_random_multiplicative,
-
     biological_variation = stats::runif(n, biological_variation_min, biological_variation_max),
     biological_variation_multiplicative = biological_variation_multiplicative,
     instrumentation_noise = stats::runif(n, instrumentation_noise_min, instrumentation_noise_max),

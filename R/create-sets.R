@@ -16,9 +16,9 @@
 #'
 #' @examples
 #' # Create random athletes/profiles
-#'  set.seed(1667)
+#' set.seed(1667)
 #'
-#'  sets <- create_athletes(5) %>%
+#' sets <- create_athletes(5) %>%
 #'   create_visits(1:3) %>%
 #'   create_sets(
 #'     load = c(90, 110, 130),
@@ -27,7 +27,7 @@
 #'
 #' print(sets)
 #'
-#'# Extract data frame
+#' # Extract data frame
 #' LEV_data <- as.data.frame(sets)
 #' # Or
 #' # LEV_data <- coef(sets)
@@ -37,14 +37,14 @@
 #' plot(sets, athletes = "Athlete 1", reps = 1)
 #' plot(sets, athletes = "Athlete 1", x_var = "RIR")
 #'
-#'  # Another way to create LEV profiles
-#'  sets <- create_profiles(athletes = c("Mladen", "Ivan"), L0 = c(200, 180)) %>%
-#'    create_visits(1) %>%
-#'    create_sets(load = c(100, 120, 140), load_type = "absolute")
+#' # Another way to create LEV profiles
+#' sets <- create_profiles(athletes = c("Mladen", "Ivan"), L0 = c(200, 180)) %>%
+#'   create_visits(1) %>%
+#'   create_sets(load = c(100, 120, 140), load_type = "absolute")
 #'
-#'  plot(sets)
-#'  plot(sets, facet = NULL, x_var = "load")
-#'  plot(sets, visits = 1, x_var = "RIR")
+#' plot(sets)
+#' plot(sets, facet = NULL, x_var = "load")
+#' plot(sets, visits = 1, x_var = "RIR")
 create_sets <- function(LEV_profile,
                         load,
                         load_type = "absolute",
@@ -82,24 +82,26 @@ create_sets <- function(LEV_profile,
 
       # Create visit loads
       if (load_type == "absolute") {
-        visit_load = load
+        visit_load <- load
       } else if (load_type == "visit 1RM") {
         # visit 1RM
         visit_load <- get_load_rounded(load * visit_1RM, load_increment)
 
         # Check if there are NAs due to missing visit_1RM metric
-        if(any(is.na(visit_load))) {
+        if (any(is.na(visit_load))) {
           stop("There are missing values in the load due to missing visit 1RM. Please use 'create_visit_1RM()' before 'create_sets()'",
-               call. = FALSE)
+            call. = FALSE
+          )
         }
       } else {
         # prescription 1RM
         visit_load <- get_load_rounded(load * prescription_1RM, load_increment)
 
         # Check if there are NAs due to missing prescription_1RM metric
-        if(any(is.na(visit_load))) {
+        if (any(is.na(visit_load))) {
           stop("There are missing values in the load due to missing prescription 1RM. Please use 'create_prescription_1RM()' before 'create_sets()'",
-               call. = FALSE)
+            call. = FALSE
+          )
         }
       }
 

@@ -10,9 +10,9 @@
 #'
 #' @examples
 #' # Create random athletes/profiles
-#'  set.seed(1667)
+#' set.seed(1667)
 #'
-#'  sets <- create_athletes(5) %>%
+#' sets <- create_athletes(5) %>%
 #'   create_visits(1:3) %>%
 #'   create_sets(
 #'     load = c(90, 110, 130),
@@ -21,7 +21,7 @@
 #'
 #' print(sets)
 #'
-#'# Extract data frame
+#' # Extract data frame
 #' LEV_data <- as.data.frame(sets)
 #' # Or
 #' # LEV_data <- coef(sets)
@@ -31,14 +31,14 @@
 #' plot(sets, athletes = "Athlete 1", reps = 1)
 #' plot(sets, athletes = "Athlete 1", x_var = "RIR")
 #'
-#'  # Another way to create LEV profiles
-#'  sets <- create_profiles(athletes = c("Mladen", "Ivan"), L0 = c(200, 180)) %>%
-#'    create_visits(1) %>%
-#'    create_sets(load = c(100, 120, 140), load_type = "absolute")
+#' # Another way to create LEV profiles
+#' sets <- create_profiles(athletes = c("Mladen", "Ivan"), L0 = c(200, 180)) %>%
+#'   create_visits(1) %>%
+#'   create_sets(load = c(100, 120, 140), load_type = "absolute")
 #'
-#'  plot(sets)
-#'  plot(sets, facet = NULL, x_var = "load")
-#'  plot(sets, visits = 1, x_var = "RIR")
+#' plot(sets)
+#' plot(sets, facet = NULL, x_var = "load")
+#' plot(sets, visits = 1, x_var = "RIR")
 create_visits <- function(LEV_profile = create_profiles(),
                           visit = 1) {
 
@@ -102,7 +102,6 @@ create_visits <- function(LEV_profile = create_profiles(),
       v1RM = true_profile$v1RM,
       v1RM_random = true_profile$v1RM_random,
       v1RM_random_multiplicative = true_profile$v1RM_random_multiplicative,
-
       biological_variation = true_profile$biological_variation,
       biological_variation_multiplicative = true_profile$biological_variation_multiplicative,
       instrumentation_noise = true_profile$instrumentation_noise,

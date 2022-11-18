@@ -26,8 +26,7 @@ get_sets <- function(visit_LEV_profile,
                      load,
                      max_reps = 100,
                      L0_fatigue = 0,
-                     V0_fatigue = 0
-                     ) {
+                     V0_fatigue = 0) {
 
   # +++++++++++++++++++++++++++++++++++++++++++
   # Code chunk for dealing with R CMD check note
@@ -98,7 +97,8 @@ get_sets <- function(visit_LEV_profile,
     # And filter everything after that including that
     dplyr::mutate(
       last_rep = get_last_rep(rep, failed_rep),
-      last_row = ifelse(is.na(last_rep), dplyr::n(), last_rep)) %>%
+      last_row = ifelse(is.na(last_rep), dplyr::n(), last_rep)
+    ) %>%
     dplyr::filter(dplyr::row_number() <= last_row) %>%
     # Rep exertion summaries
     dplyr::mutate(

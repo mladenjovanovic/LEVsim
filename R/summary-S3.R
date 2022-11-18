@@ -150,15 +150,15 @@ plot.LEV_summary <- function(x, type = "athletes", ...) {
 
 # ===================================
 plot_LEV_summary <- function(df,
-                          type = "athletes",
-                          athletes = NULL,
-                          visits = NULL,
-                          loads = NULL,
-                          RTFs = NULL,
-                          reps = NULL,
-                          RIRs = NULL,
-                          color = NULL,
-                          facet = "visit") {
+                             type = "athletes",
+                             athletes = NULL,
+                             visits = NULL,
+                             loads = NULL,
+                             RTFs = NULL,
+                             reps = NULL,
+                             RIRs = NULL,
+                             color = NULL,
+                             facet = "visit") {
 
 
   # +++++++++++++++++++++++++++++++++++++++++++

@@ -25,7 +25,7 @@ gg <- ggplot(plot_df, aes(x = x, y = y)) +
   scale_y_continuous(expand = c(0, 0), limits = c(0, V0 * 1.05), breaks = V0, label = "V0") +
   xlab(NULL) +
   ylab(NULL) +
-  theme(axis.text=element_text(size=32))
+  theme(axis.text = element_text(size = 32))
 
 gg <- gg +
   geom_segment(
@@ -57,10 +57,10 @@ gg <- gg +
   )
 
 s <- sticker(gg,
-             package = "LEVsim",
-             p_size = 40, p_color = "black", p_y = 0.5, dpi = 600,
-             s_width = 1.5, s_x = 1, s_y = 1.1, s_height = 1.1,
-             h_fill = "white",
-             h_color = "#5DA5DA",
-             filename = "man/figures/logo.png"
+  package = "LEVsim",
+  p_size = 40, p_color = "black", p_y = 0.5, dpi = 600,
+  s_width = 1.5, s_x = 1, s_y = 1.1, s_height = 1.1,
+  h_fill = "white",
+  h_color = "#5DA5DA",
+  filename = "man/figures/logo.png"
 )
