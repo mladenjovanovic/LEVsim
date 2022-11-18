@@ -20,7 +20,7 @@ to create facets using another variable. See Details}
 S3 method for plotting LEV Profiles Sets
 }
 \details{
-S3 method for plotting LEV Profiles provides plenty of
+S3 method for plotting LEV Profiles Sets provides plenty of
 flexibility and control by using the \code{...} parameters.
 User can filter variables, use different x and y scales,
 provides colors and facets. Here are the extra parameters your
