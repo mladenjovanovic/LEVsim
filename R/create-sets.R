@@ -81,7 +81,7 @@ create_sets <- function(LEV_profile,
         visit_load = load
       } else if (load_type == "visit 1RM") {
         # visit 1RM
-        visit_load <- get_load_rounded(load * visit_1RM / 100, load_increment)
+        visit_load <- get_load_rounded(load * visit_1RM, load_increment)
 
         # Check if there are NAs due to missing visit_1RM metric
         if(any(is.na(visit_load))) {
@@ -90,7 +90,7 @@ create_sets <- function(LEV_profile,
         }
       } else {
         # prescription 1RM
-        visit_load <- get_load_rounded(load * prescription_1RM / 100, load_increment)
+        visit_load <- get_load_rounded(load * prescription_1RM, load_increment)
 
         # Check if there are NAs due to missing prescription_1RM metric
         if(any(is.na(visit_load))) {
