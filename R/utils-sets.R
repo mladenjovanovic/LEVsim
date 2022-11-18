@@ -34,8 +34,6 @@ get_sets <- function(visit_LEV_profile, load, max_reps = 100) {
   biological_variation_multiplicative <- NULL
   instrumentation_noise <- NULL
   instrumentation_noise_multiplicative <- NULL
-  trial <- NULL
-  trial <- NULL
   rep_V0 <- NULL
   rep_L0 <- NULL
   biological_rep_velocity <- NULL
@@ -44,12 +42,9 @@ get_sets <- function(visit_LEV_profile, load, max_reps = 100) {
   last_rep <- NULL
   nRM <- NULL
   measured_rep_velocity <- NULL
-  fastest_rep_velocity <- NULL
+  best_measured_rep_velocity <- NULL
   VL <- NULL
   load_index <- NULL
-  trial_index <- NULL
-  last_rep_velocity <- NULL
-  nRM_velocity <- NULL
   last_row <- NULL
   # +++++++++++++++++++++++++++++++++++++++++++
 
