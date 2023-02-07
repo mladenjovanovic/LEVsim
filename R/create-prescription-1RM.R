@@ -31,10 +31,10 @@
 #' plot(sets, x_var = "visit", y_var = "load", reps = 1, facet = NULL)
 #' plot(sets, x_var = "visit", y_var = "prescription_1RM", facet = NULL)
 create_prescription_1RM <- function(LEV_profile,
-                            init_1RM = NULL,
-                            change_1RM = 0,
-                            load_perc = seq(0.6, 1.2, by = 0.025),
-                            buffer = 1) {
+                                    init_1RM = NULL,
+                                    change_1RM = 0,
+                                    load_perc = seq(0.6, 1.2, by = 0.025),
+                                    buffer = 1) {
 
   # Check of the object is proper LEV_profile
   is_LEV <- validate_LEV_profile(LEV_profile, stop_running = TRUE)
