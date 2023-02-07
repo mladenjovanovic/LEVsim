@@ -99,9 +99,9 @@ Multiple profiles can be created
 }
 \examples{
 # Create random athletes/profiles
- set.seed(1667)
+set.seed(1667)
 
- sets <- create_athletes(5) \%>\%
+sets <- create_athletes(5) \%>\%
   create_visits(1:3) \%>\%
   create_sets(
     load = c(90, 110, 130),
@@ -120,14 +120,14 @@ plot(sets, athletes = "Athlete 1")
 plot(sets, athletes = "Athlete 1", reps = 1)
 plot(sets, athletes = "Athlete 1", x_var = "RIR")
 
- # Another way to create LEV profiles
- sets <- create_profiles(athletes = c("Mladen", "Ivan"), L0 = c(200, 180)) \%>\%
-   create_visits(1) \%>\%
-   create_sets(load = c(100, 120, 140), load_type = "absolute")
+# Another way to create LEV profiles
+sets <- create_profiles(athletes = c("Mladen", "Ivan"), L0 = c(200, 180)) \%>\%
+  create_visits(1) \%>\%
+  create_sets(load = c(100, 120, 140), load_type = "absolute")
 
- plot(sets)
- plot(sets, facet = NULL, x_var = "load")
- plot(sets, visits = 1, x_var = "RIR")
+plot(sets)
+plot(sets, facet = NULL, x_var = "load")
+plot(sets, visits = 1, x_var = "RIR")
 }
 \seealso{
 \code{\link[=create_athletes]{create_athletes()}} is another option to create LEV profiles

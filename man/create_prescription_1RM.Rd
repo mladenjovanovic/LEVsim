@@ -4,14 +4,27 @@
 \alias{create_prescription_1RM}
 \title{Create prescription 1RM}
 \usage{
-create_prescription_1RM(LEV_profile, init_1RM, change_1RM)
+create_prescription_1RM(
+  LEV_profile,
+  init_1RM = NULL,
+  change_1RM = 0,
+  load_perc = seq(0.6, 1.2, by = 0.025),
+  buffer = 1
+)
 }
 \arguments{
 \item{LEV_profile}{Object returned from \code{\link{create_visits}}}
 
-\item{init_1RM}{Initial 1RM value}
+\item{init_1RM}{Initial 1RM value. If \code{NULL} (default), then initial 1RM is estimated using
+profile parameters and used}
 
-\item{change_1RM}{1RM change per visit}
+\item{change_1RM}{1RM change per visit. Default is 0}
+
+\item{load_perc}{Percentage to be used to calculate loads using theoretical visit profile 1RM. This
+is utilized when \code{init_RM} equals \code{NULL}}
+
+\item{buffer}{Default is 1, but can be, for example 0.8 of the estimated 1RM to be used for
+prescription}
 }
 \description{
 This function creates prescription 1RM within provided \code{LEV_profile}
@@ -20,10 +33,19 @@ This function creates prescription 1RM within provided \code{LEV_profile}
 set.seed(1667)
 sets <- create_profiles(1, load_increment = 1) \%>\%
   create_visits(1:10) \%>\%
-  create_prescription_1RM(100, 2.5) \%>\%
-  create_sets(load = 0.8, load_type = "prescription 1RM")
+  create_prescription_1RM() \%>\%
+  create_sets(load = c(0.7, 0.8), load_type = "prescription 1RM")
 
 plot(sets, x_var = "visit", y_var = "load", reps = 1, facet = NULL)
+plot(sets, x_var = "visit", y_var = "prescription_1RM", facet = NULL)
 
+
+set.seed(1667)
+sets <- create_profiles(1, load_increment = 1) \%>\%
+  create_visits(1:10) \%>\%
+  create_prescription_1RM(120, 2.5) \%>\%
+  create_sets(load = c(0.7, 0.8), load_type = "prescription 1RM")
+
+plot(sets, x_var = "visit", y_var = "load", reps = 1, facet = NULL)
 plot(sets, x_var = "visit", y_var = "prescription_1RM", facet = NULL)
 }
