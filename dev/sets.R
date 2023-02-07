@@ -1,8 +1,8 @@
 set.seed(1667)
-sets <- create_profiles(1) %>%
+sets <- create_profiles(1, biological_variation = 0.2, v1RM = 0.1) %>%
  create_visits(1:2) %>%
  create_visit_1RM() %>%
- create_sets(load = rep(0.8, 10), load_type = "visit 1RM") %>%
+ create_sets(load = rep(0.8, 10), load_type = "visit 1RM", L0_fatigue = 0.01, V0_fatigue = 0) %>%
  create_summary()
 
 plot(sets)
