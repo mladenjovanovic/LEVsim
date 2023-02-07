@@ -58,6 +58,8 @@ get_sets <- function(visit_LEV_profile,
   set_L0 <- NULL
   set_1RM <- NULL
   true_rep_velocity <- NULL
+  orig_L0 <- NULL
+  orig_V0 <- NULL
   # +++++++++++++++++++++++++++++++++++++++++++
 
   class(visit_LEV_profile) <- "list"
@@ -75,6 +77,10 @@ get_sets <- function(visit_LEV_profile,
       set_L0 = systematic_effect(L0, set - 1, L0_fatigue, L0_fatigue_multiplicative),
       set_V0 = systematic_effect(V0, set - 1, V0_fatigue, V0_fatigue_multiplicative),
       set_1RM = get_load_at_velocity(set_V0, set_L0, v1RM),
+
+      # These are temp
+      orig_L0 = L0,
+      orig_V0 = V0,
     ) %>%
     dplyr::mutate(
       get_reps_velocity(
@@ -89,7 +95,12 @@ get_sets <- function(visit_LEV_profile,
         rep,
         load
       )
-    )
+    ) %>%
+    dplyr::mutate(
+      V0 = orig_V0,
+      L0 = orig_L0
+    ) %>%
+    dplyr::select(-orig_V0, -orig_L0)
 
   # Now we need to clean them up and provide summaries
   # --------------------------------
@@ -99,7 +110,7 @@ get_sets <- function(visit_LEV_profile,
     dplyr::group_by(load_index)
 
   # Here use either true_rep_velocity or biological_rep_velocity
-  if (use_true_velocity  == TRUE) {
+  if (use_true_velocity == TRUE) {
     cleaned_sets <- cleaned_sets %>%
       dplyr::mutate(
         failed_rep = true_rep_velocity <= v1RM
