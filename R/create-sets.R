@@ -8,8 +8,7 @@
 #'      'prescription 1RM'
 #' @param max_reps How many maximum reps to generate? Default is 100
 #' @param failed_reps Should failed-reps be included in the output? Default is \code{FALSE}
-#' @param L0_fatigue Multiplicative decrease in L0 across sets in percentage. Default is 0
-#' @param V0_fatigue Multiplicative decrease in V0 across sets in percentage. Default is 0
+#' @param use_true_velocity When estimating failure, should true or biological (default) velocity be used?
 #'
 #' @return Object \code{LEV_sets}
 #' @export
@@ -50,8 +49,7 @@ create_sets <- function(LEV_profile,
                         load_type = "absolute",
                         max_reps = 100,
                         failed_reps = FALSE,
-                        L0_fatigue = 0,
-                        V0_fatigue = 0) {
+                        use_true_velocity = FALSE) {
 
   # +++++++++++++++++++++++++++++++++++++++++++
   # Code chunk for dealing with R CMD check note
@@ -110,8 +108,7 @@ create_sets <- function(LEV_profile,
         visit,
         load = visit_load,
         max_reps = max_reps,
-        L0_fatigue = L0_fatigue,
-        V0_fatigue = V0_fatigue
+        use_true_velocity = use_true_velocity
       )
 
       # Filter out failed reps
@@ -141,6 +138,9 @@ create_sets <- function(LEV_profile,
     set = sets_df$set,
     load_index = sets_df$load_index,
     load = sets_df$load,
+    set_V0 = sets_df$set_V0,
+    set_L0 = sets_df$set_L0,
+    set_1RM = sets_df$set_1RM,
     RTF = sets_df$RTF,
     nRM = sets_df$nRM,
     rep = sets_df$rep,

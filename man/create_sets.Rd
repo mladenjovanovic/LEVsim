@@ -10,8 +10,7 @@ create_sets(
   load_type = "absolute",
   max_reps = 100,
   failed_reps = FALSE,
-  L0_fatigue = 0,
-  V0_fatigue = 0
+  use_true_velocity = FALSE
 )
 }
 \arguments{
@@ -26,9 +25,7 @@ create_sets(
 
 \item{failed_reps}{Should failed-reps be included in the output? Default is \code{FALSE}}
 
-\item{L0_fatigue}{Multiplicative decrease in L0 across sets in percentage. Default is 0}
-
-\item{V0_fatigue}{Multiplicative decrease in V0 across sets in percentage. Default is 0}
+\item{use_true_velocity}{When estimating failure, should true or biological (default) velocity be used?}
 }
 \value{
 Object \code{LEV_sets}
