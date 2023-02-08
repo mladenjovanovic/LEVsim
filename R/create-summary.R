@@ -67,7 +67,7 @@ create_summary <- function(LEV_sets) {
       last_biological_rep_velocity = biological_rep_velocity[[reps]],
       first_measured_rep_velocity = measured_rep_velocity[[1]],
       last_measured_rep_velocity = measured_rep_velocity[[reps]],
-      best_measured_rep_velocity = best_measured_rep_velocity[[1]],
+      best_measured_rep_velocity = best_measured_rep_velocity[[reps]],
       VL = VL[[reps]],
       `%VL` = `%VL`[[reps]],
       VR = VR[[reps]]
