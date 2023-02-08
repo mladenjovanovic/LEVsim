@@ -4,9 +4,10 @@
 #'
 #' @param LEV_profile \code{LEV_profile} object, returned by \code{\link{create_visits}} function
 #' @param load Numeric vector. Loads are either absolute weight or percentages. See also \code{load_type}
+#' @param reps Target number of reps. Default is equal to \code{max_reps}
 #' @param load_type Type of load calculation. Can be either 'absolute' (default), or 'visit 1RM', or
 #'      'prescription 1RM'
-#' @param max_reps How many maximum reps to generate? Default is 100
+#' @param max_reps How many maximum reps to generate? to search for failure? Default is 100
 #' @param failed_reps Should failed-reps be included in the output? Default is \code{FALSE}
 #' @param use_true_velocity When estimating failure, should true or biological (default) velocity be used?
 #'
@@ -46,6 +47,7 @@
 #' plot(sets, visits = 1, x_var = "RIR")
 create_sets <- function(LEV_profile,
                         load,
+                        reps = rep(max_reps, length(load)),
                         load_type = "absolute",
                         max_reps = 100,
                         failed_reps = FALSE,
@@ -107,6 +109,7 @@ create_sets <- function(LEV_profile,
       visit_sets <- get_sets(
         visit,
         load = visit_load,
+        reps = reps,
         max_reps = max_reps,
         use_true_velocity = use_true_velocity
       )

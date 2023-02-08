@@ -24,6 +24,7 @@ get_last_rep <- function(rep, failed) {
 # @return Data frame
 get_sets <- function(visit_LEV_profile,
                      load,
+                     reps = rep(max_reps, length(load)),
                      max_reps = 100,
                      use_true_velocity = FALSE) {
 
@@ -60,6 +61,7 @@ get_sets <- function(visit_LEV_profile,
   true_rep_velocity <- NULL
   orig_L0 <- NULL
   orig_V0 <- NULL
+  target_reps <- NULL
   # +++++++++++++++++++++++++++++++++++++++++++
 
   class(visit_LEV_profile) <- "list"
@@ -72,6 +74,7 @@ get_sets <- function(visit_LEV_profile,
     rep = seq(1, max_reps)
   ) %>%
     dplyr::mutate(
+      target_reps = reps[load_index],
       set = load_index,
       load = load[load_index],
       set_L0 = systematic_effect(L0, set - 1, L0_fatigue, L0_fatigue_multiplicative),
@@ -145,6 +148,7 @@ get_sets <- function(visit_LEV_profile,
     dplyr::ungroup() %>%
     dplyr::arrange(load_index, rep) %>%
     dplyr::mutate(set = load_index) %>%
+    dplyr::filter(rep <= target_reps) %>%
     dplyr::select(-last_rep, -last_row)
 
   # Return cleaned sets

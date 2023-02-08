@@ -7,6 +7,7 @@
 create_sets(
   LEV_profile,
   load,
+  reps = rep(max_reps, length(load)),
   load_type = "absolute",
   max_reps = 100,
   failed_reps = FALSE,
@@ -18,10 +19,12 @@ create_sets(
 
 \item{load}{Numeric vector. Loads are either absolute weight or percentages. See also \code{load_type}}
 
+\item{reps}{Target number of reps. Default is equal to \code{max_reps}}
+
 \item{load_type}{Type of load calculation. Can be either 'absolute' (default), or 'visit 1RM', or
 'prescription 1RM'}
 
-\item{max_reps}{How many maximum reps to generate? Default is 100}
+\item{max_reps}{How many maximum reps to generate? to search for failure? Default is 100}
 
 \item{failed_reps}{Should failed-reps be included in the output? Default is \code{FALSE}}
 
