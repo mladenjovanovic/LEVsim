@@ -67,6 +67,9 @@ get_sets <- function(visit_LEV_profile,
   class(visit_LEV_profile) <- "list"
   profile_info <- dplyr::bind_rows(visit_LEV_profile)
 
+  # Small trick to recycle the vector
+  reps <- reps + (0 * load)
+
   # Generate all reps for trials and reps
   sets <- tidyr::expand_grid(
     profile_info,
