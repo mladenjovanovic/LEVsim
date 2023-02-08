@@ -8,6 +8,10 @@
 #' @param V0_rep_drop Number indicating proportion of \code{V0} dropping
 #'     when multiple repetitions are performed. This parameter models the
 #'     exertion-velocity characteristics
+#' @param V0_fatigue Number indicating systematic change in \code{V0} per
+#'     each set
+#' @param V0_fatigue_multiplicative Should multiplicative fatigue be used? Default
+#'     is \code{FALSE}
 #' @param V0_visit_change Number indicating systematic change in \code{V0} per
 #'     each visit to the laboratory/gym
 #' @param V0_visit_change_multiplicative Should multiplicative change be used? Default
@@ -20,6 +24,10 @@
 #' @param L0_rep_drop Number indicating proportion of \code{L0} dropping
 #'     when multiple repetitions are performed. This parameter models the
 #'     exertion-velocity characteristics
+#' @param L0_fatigue Number indicating systematic change in \code{L0} per
+#'     each set
+#' @param L0_fatigue_multiplicative Should multiplicative fatigue be used? Default
+#'     is \code{FALSE}
 #' @param L0_visit_change Number indicating systematic change in \code{L0} per
 #'     each visit to the laboratory/gym
 #' @param L0_visit_change_multiplicative Should multiplicative change be used? Default
@@ -82,12 +90,16 @@
 create_profiles <- function(athletes = NA,
                             V0 = 1.8,
                             V0_rep_drop = 0,
+                            V0_fatigue = 0,
+                            V0_fatigue_multiplicative = FALSE,
                             V0_visit_change = 0,
                             V0_visit_change_multiplicative = FALSE,
                             V0_visit_random = 0,
                             V0_visit_random_multiplicative = FALSE,
                             L0 = 180,
                             L0_rep_drop = 0.04,
+                            L0_fatigue = 0,
+                            L0_fatigue_multiplicative = FALSE,
                             L0_visit_change = 0,
                             L0_visit_change_multiplicative = FALSE,
                             L0_visit_random = 0,
@@ -106,12 +118,16 @@ create_profiles <- function(athletes = NA,
     athletes = athletes,
     V0 = V0,
     V0_rep_drop = V0_rep_drop,
+    V0_fatigue = V0_fatigue,
+    V0_fatigue_multiplicative = V0_fatigue_multiplicative,
     V0_visit_change = V0_visit_change,
     V0_visit_change_multiplicative = V0_visit_change_multiplicative,
     V0_visit_random = V0_visit_random,
     V0_visit_random_multiplicative = V0_visit_random_multiplicative,
     L0 = L0,
     L0_rep_drop = L0_rep_drop,
+    L0_fatigue = L0_fatigue,
+    L0_fatigue_multiplicative = L0_fatigue_multiplicative,
     L0_visit_change = L0_visit_change,
     L0_visit_change_multiplicative = L0_visit_change_multiplicative,
     L0_visit_random = L0_visit_random,

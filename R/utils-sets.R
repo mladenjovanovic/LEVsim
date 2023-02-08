@@ -24,9 +24,9 @@ get_last_rep <- function(rep, failed) {
 # @return Data frame
 get_sets <- function(visit_LEV_profile,
                      load,
+                     reps = rep(max_reps, length(load)),
                      max_reps = 100,
-                     L0_fatigue = 0,
-                     V0_fatigue = 0) {
+                     use_true_velocity = FALSE) {
 
   # +++++++++++++++++++++++++++++++++++++++++++
   # Code chunk for dealing with R CMD check note
@@ -51,6 +51,17 @@ get_sets <- function(visit_LEV_profile,
   load_index <- NULL
   last_row <- NULL
   set <- NULL
+  V0_fatigue <- NULL
+  V0_fatigue_multiplicative <- NULL
+  L0_fatigue <- NULL
+  L0_fatigue_multiplicative <- NULL
+  set_V0 <- NULL
+  set_L0 <- NULL
+  set_1RM <- NULL
+  true_rep_velocity <- NULL
+  orig_L0 <- NULL
+  orig_V0 <- NULL
+  target_reps <- NULL
   # +++++++++++++++++++++++++++++++++++++++++++
 
   class(visit_LEV_profile) <- "list"
@@ -63,16 +74,22 @@ get_sets <- function(visit_LEV_profile,
     rep = seq(1, max_reps)
   ) %>%
     dplyr::mutate(
+      target_reps = reps[load_index],
       set = load_index,
       load = load[load_index],
-      L0 = systematic_effect(L0, set - 1, 1 - L0_fatigue, TRUE),
-      V0 = systematic_effect(V0, set - 1, 1 - V0_fatigue, TRUE)
+      set_L0 = systematic_effect(L0, set - 1, L0_fatigue, L0_fatigue_multiplicative),
+      set_V0 = systematic_effect(V0, set - 1, V0_fatigue, V0_fatigue_multiplicative),
+      set_1RM = get_load_at_velocity(set_V0, set_L0, v1RM),
+
+      # These are temp
+      orig_L0 = L0,
+      orig_V0 = V0,
     ) %>%
     dplyr::mutate(
       get_reps_velocity(
-        V0,
+        set_V0,
         V0_rep_drop,
-        L0,
+        set_L0,
         L0_rep_drop,
         biological_variation,
         biological_variation_multiplicative,
@@ -81,18 +98,34 @@ get_sets <- function(visit_LEV_profile,
         rep,
         load
       )
-    )
+    ) %>%
+    dplyr::mutate(
+      V0 = orig_V0,
+      L0 = orig_L0
+    ) %>%
+    dplyr::select(-orig_V0, -orig_L0)
 
   # Now we need to clean them up and provide summaries
   # --------------------------------
 
   # Cleaned reps
   cleaned_sets <- sets %>%
-    dplyr::group_by(load_index) %>%
-    dplyr::mutate(
-      # Here use either true_rep_velocity or biological_rep_velocity
-      failed_rep = biological_rep_velocity <= v1RM
-    ) %>%
+    dplyr::group_by(load_index)
+
+  # Here use either true_rep_velocity or biological_rep_velocity
+  if (use_true_velocity == TRUE) {
+    cleaned_sets <- cleaned_sets %>%
+      dplyr::mutate(
+        failed_rep = true_rep_velocity <= v1RM
+      )
+  } else {
+    cleaned_sets <- cleaned_sets %>%
+      dplyr::mutate(
+        failed_rep = biological_rep_velocity <= v1RM
+      )
+  }
+
+  cleaned_sets <- cleaned_sets %>%
     # Find first occurrence where velocity drops below v1RM
     # And filter everything after that including that
     dplyr::mutate(
@@ -115,6 +148,7 @@ get_sets <- function(visit_LEV_profile,
     dplyr::ungroup() %>%
     dplyr::arrange(load_index, rep) %>%
     dplyr::mutate(set = load_index) %>%
+    dplyr::filter(rep <= target_reps) %>%
     dplyr::select(-last_rep, -last_row)
 
   # Return cleaned sets
