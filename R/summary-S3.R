@@ -108,6 +108,7 @@ as.data.frame.LEV_summary <- function(x, row.names = NULL, optional = FALSE, ...
 #'     \describe{
 #'      \item{athletes}{Althetes to keep in}
 #'      \item{visits}{Visits to keep in}
+#'      \item{sets}{Sets to keep in}
 #'      \item{loads}{Loads to keep in}
 #'      \item{RTFs}{Reps-To-Failure indicator (TRUE/FALSE) to keep in}
 #'      \item{reps}{Repetitions to keep in}
@@ -153,6 +154,7 @@ plot_LEV_summary <- function(df,
                              type = "athletes",
                              athletes = NULL,
                              visits = NULL,
+                             sets = NULL,
                              loads = NULL,
                              RTFs = NULL,
                              reps = NULL,
@@ -166,6 +168,7 @@ plot_LEV_summary <- function(df,
   athlete <- NULL
   visit <- NULL
   set <- NULL
+  load_index <- NULL
   RTF <- NULL
   `%1RM` <- NULL
   `RIR` <- NULL
@@ -197,6 +200,11 @@ plot_LEV_summary <- function(df,
       dplyr::filter(visit %in% visits)
   }
 
+  if (!is.null(sets)) {
+    df <- df %>%
+      dplyr::filter(set %in% sets)
+  }
+
   if (!is.null(loads)) {
     df <- df %>%
       dplyr::filter(load %in% loads)
@@ -218,9 +226,9 @@ plot_LEV_summary <- function(df,
   }
 
   if (is.null(color)) {
-    gg <- ggplot2::ggplot(df, ggplot2::aes(x = set, xend = set, y = first_measured_rep_velocity, yend = last_measured_rep_velocity))
+    gg <- ggplot2::ggplot(df, ggplot2::aes(x = load_index, xend = load_index, y = first_measured_rep_velocity, yend = last_measured_rep_velocity))
   } else {
-    gg <- ggplot2::ggplot(df, ggplot2::aes_string(x = "set", xend = "set", y = "first_measured_rep_velocity", yend = "last_measured_rep_velocity", color = color))
+    gg <- ggplot2::ggplot(df, ggplot2::aes_string(x = "load_index", xend = "load_index", y = "first_measured_rep_velocity", yend = "last_measured_rep_velocity", color = color))
   }
 
   gg <- gg +
