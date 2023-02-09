@@ -61,7 +61,7 @@ create_tests <- function(LEV_profile = create_profiles(),
 
   RTF_profile <- visit_1RM %>%
     create_sets(
-      load = load_1RM,
+      load = load_RTF,
       max_reps = max_reps,
       load_type = "visit 1RM",
       use_true_velocity = use_true_velocity,
