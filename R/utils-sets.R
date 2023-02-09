@@ -26,7 +26,8 @@ get_sets <- function(visit_LEV_profile,
                      load,
                      reps = rep(max_reps, length(load)),
                      max_reps = 100,
-                     use_true_velocity = FALSE) {
+                     use_true_velocity = FALSE,
+                     inter_set_fatigue = TRUE) {
 
   # +++++++++++++++++++++++++++++++++++++++++++
   # Code chunk for dealing with R CMD check note
@@ -79,11 +80,24 @@ get_sets <- function(visit_LEV_profile,
     dplyr::mutate(
       target_reps = reps[load_index],
       set = load_index,
-      load = load[load_index],
-      set_L0 = systematic_effect(L0, load_index - 1, L0_fatigue, L0_fatigue_multiplicative),
-      set_V0 = systematic_effect(V0, load_index - 1, V0_fatigue, V0_fatigue_multiplicative),
-      set_1RM = get_load_at_velocity(set_V0, set_L0, v1RM),
+      load = load[load_index])
 
+  if (inter_set_fatigue == TRUE) {
+    sets <- sets %>%
+      dplyr::mutate(
+        set_L0 = systematic_effect(L0, load_index - 1, L0_fatigue, L0_fatigue_multiplicative),
+        set_V0 = systematic_effect(V0, load_index - 1, V0_fatigue, V0_fatigue_multiplicative),
+        set_1RM = get_load_at_velocity(set_V0, set_L0, v1RM))
+  } else {
+    sets <- sets %>%
+      dplyr::mutate(
+        set_L0 = L0,
+        set_V0 = V0,
+        set_1RM = get_load_at_velocity(set_V0, set_L0, v1RM))
+  }
+
+  sets <- sets %>%
+    dplyr::mutate(
       # These are temp
       orig_L0 = L0,
       orig_V0 = V0,

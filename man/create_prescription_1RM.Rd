@@ -8,7 +8,7 @@ create_prescription_1RM(
   LEV_profile,
   init_1RM = NULL,
   change_1RM = 0,
-  load_perc = seq(0.6, 1.2, by = 0.025),
+  load_perc = seq(0.8, 1.2, by = 0.025),
   buffer = 1,
   use_true_velocity = FALSE
 )

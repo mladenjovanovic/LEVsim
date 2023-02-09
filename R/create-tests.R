@@ -45,24 +45,31 @@ create_tests <- function(LEV_profile = create_profiles(),
     create_visit_1RM(load_perc = load_1RM, use_true_velocity = use_true_velocity)
 
   # Create Load-Velocity data
-  LV_profile <- purrr::imap_dfr(load_LV, function(load, index) {
-    set <- visit_1RM %>%
-      create_sets(load = load, max_reps = 1, load_type = "visit 1RM", use_true_velocity = use_true_velocity, failed_reps = failed_reps)
+  LV_profile <- visit_1RM %>%
+    create_sets(
+      load = load_1RM,
+      max_reps = 1,
+      load_type = "visit 1RM",
+      use_true_velocity = use_true_velocity,
+      failed_reps = failed_reps,
+      inter_set_fatigue = FALSE)
 
-    set$set <- "LV"
-    set$load_index <- index
-    as.data.frame(set)
-  })
+  LV_profile$set <- "LV"
+  LV_profile <- as.data.frame(LV_profile)
 
   # Create RTF data
-  RTF_profile <- purrr::imap_dfr(load_RTF, function(load, index) {
-    set <- visit_1RM %>%
-      create_sets(load = load, load_type = "visit 1RM", use_true_velocity = use_true_velocity, failed_reps = failed_reps, max_reps = max_reps)
 
-    set$set <- "RTF"
-    set$load_index <- index
-    as.data.frame(set)
-  })
+  RTF_profile <- visit_1RM %>%
+    create_sets(
+      load = load_1RM,
+      max_reps = max_reps,
+      load_type = "visit 1RM",
+      use_true_velocity = use_true_velocity,
+      failed_reps = failed_reps,
+      inter_set_fatigue = FALSE)
+
+  RTF_profile$set <- "RTF"
+  RTF_profile <- as.data.frame(RTF_profile)
 
   # Bind together
   sets_df <- rbind(LV_profile, RTF_profile) %>%

@@ -11,7 +11,8 @@ create_sets(
   load_type = "absolute",
   max_reps = 100,
   failed_reps = FALSE,
-  use_true_velocity = FALSE
+  use_true_velocity = FALSE,
+  inter_set_fatigue = TRUE
 )
 }
 \arguments{
@@ -29,6 +30,8 @@ create_sets(
 \item{failed_reps}{Should failed-reps be included in the output? Default is \code{FALSE}}
 
 \item{use_true_velocity}{When estimating failure, should true or biological (default) velocity be used?}
+
+\item{inter_set_fatigue}{Should profile inter-set fatigue parameters be utilized? Default is \code{TRUE}}
 }
 \value{
 Object \code{LEV_sets}

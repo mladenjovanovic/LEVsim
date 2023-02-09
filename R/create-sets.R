@@ -10,6 +10,7 @@
 #' @param max_reps How many maximum reps to generate to search for failure? Default is 100
 #' @param failed_reps Should failed-reps be included in the output? Default is \code{FALSE}
 #' @param use_true_velocity When estimating failure, should true or biological (default) velocity be used?
+#' @param inter_set_fatigue Should profile inter-set fatigue parameters be utilized? Default is \code{TRUE}
 #'
 #' @return Object \code{LEV_sets}
 #' @export
@@ -51,7 +52,8 @@ create_sets <- function(LEV_profile,
                         load_type = "absolute",
                         max_reps = 100,
                         failed_reps = FALSE,
-                        use_true_velocity = FALSE) {
+                        use_true_velocity = FALSE,
+                        inter_set_fatigue = TRUE) {
 
   # +++++++++++++++++++++++++++++++++++++++++++
   # Code chunk for dealing with R CMD check note
@@ -111,7 +113,8 @@ create_sets <- function(LEV_profile,
         load = visit_load,
         reps = reps,
         max_reps = max_reps,
-        use_true_velocity = use_true_velocity
+        use_true_velocity = use_true_velocity,
+        inter_set_fatigue = inter_set_fatigue
       )
 
       # Filter out failed reps

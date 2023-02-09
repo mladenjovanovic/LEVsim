@@ -6,7 +6,7 @@
 \usage{
 create_visit_1RM(
   LEV_profile,
-  load_perc = seq(0.6, 1.2, by = 0.025),
+  load_perc = seq(0.8, 1.2, by = 0.025),
   use_true_velocity = FALSE
 )
 }

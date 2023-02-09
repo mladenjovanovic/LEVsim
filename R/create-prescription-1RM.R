@@ -34,7 +34,7 @@
 create_prescription_1RM <- function(LEV_profile,
                                     init_1RM = NULL,
                                     change_1RM = 0,
-                                    load_perc = seq(0.6, 1.2, by = 0.025),
+                                    load_perc = seq(0.8, 1.2, by = 0.025),
                                     buffer = 1,
                                     use_true_velocity = FALSE) {
 
@@ -48,7 +48,11 @@ create_prescription_1RM <- function(LEV_profile,
     # If init_1RM is not provided, test it
     if (is.null(init_1RM)) {
       load <- get_load_rounded(profile$profile$`1RM` * load_perc, profile$profile$load_increment)
-      oneRM_trials <- get_sets(profile$profile, load, max_reps = 1, use_true_velocity = use_true_velocity)
+      oneRM_trials <- get_sets(
+        profile$profile,
+        load, max_reps = 1,
+        use_true_velocity = use_true_velocity,
+        inter_set_fatigue = FALSE)
       last_try <- min(which(oneRM_trials$failed_rep)) - 1
       init_1RM <- load[[last_try]] * buffer
     }
