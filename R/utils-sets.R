@@ -80,8 +80,8 @@ get_sets <- function(visit_LEV_profile,
       target_reps = reps[load_index],
       set = load_index,
       load = load[load_index],
-      set_L0 = systematic_effect(L0, set - 1, L0_fatigue, L0_fatigue_multiplicative),
-      set_V0 = systematic_effect(V0, set - 1, V0_fatigue, V0_fatigue_multiplicative),
+      set_L0 = systematic_effect(L0, load_index - 1, L0_fatigue, L0_fatigue_multiplicative),
+      set_V0 = systematic_effect(V0, load_index - 1, V0_fatigue, V0_fatigue_multiplicative),
       set_1RM = get_load_at_velocity(set_V0, set_L0, v1RM),
 
       # These are temp
