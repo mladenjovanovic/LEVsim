@@ -24,7 +24,7 @@ create_sets(
 \item{load_type}{Type of load calculation. Can be either 'absolute' (default), or 'visit 1RM', or
 'prescription 1RM'}
 
-\item{max_reps}{How many maximum reps to generate? to search for failure? Default is 100}
+\item{max_reps}{How many maximum reps to generate to search for failure? Default is 100}
 
 \item{failed_reps}{Should failed-reps be included in the output? Default is \code{FALSE}}
 

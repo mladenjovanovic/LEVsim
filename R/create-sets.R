@@ -7,7 +7,7 @@
 #' @param reps Target number of reps. Default is equal to \code{max_reps}
 #' @param load_type Type of load calculation. Can be either 'absolute' (default), or 'visit 1RM', or
 #'      'prescription 1RM'
-#' @param max_reps How many maximum reps to generate? to search for failure? Default is 100
+#' @param max_reps How many maximum reps to generate to search for failure? Default is 100
 #' @param failed_reps Should failed-reps be included in the output? Default is \code{FALSE}
 #' @param use_true_velocity When estimating failure, should true or biological (default) velocity be used?
 #'
