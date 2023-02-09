@@ -47,9 +47,8 @@ create_summary <- function(LEV_sets) {
   sets <- as.data.frame(LEV_sets)
 
   df <- sets %>%
-    dplyr::group_by(athlete, visit, set) %>%
+    dplyr::group_by(athlete, visit, set, load_index) %>%
     dplyr::summarise(
-      load_index = load_index[[1]],
       V0 = V0[[1]],
       L0 = L0[[1]],
       v1RM = v1RM[[1]],
