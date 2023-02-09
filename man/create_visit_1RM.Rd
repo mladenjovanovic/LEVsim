@@ -4,12 +4,18 @@
 \alias{create_visit_1RM}
 \title{Create visit 1RM}
 \usage{
-create_visit_1RM(LEV_profile, load_perc = seq(0.6, 1.2, by = 0.025))
+create_visit_1RM(
+  LEV_profile,
+  load_perc = seq(0.6, 1.2, by = 0.025),
+  use_true_velocity = FALSE
+)
 }
 \arguments{
 \item{LEV_profile}{Object returned from \code{\link{create_visits}}}
 
 \item{load_perc}{Percentage to be used to calculate loads using theoretical visit profile 1RM}
+
+\item{use_true_velocity}{When estimating failure, should true or biological (default) velocity be used?}
 }
 \description{
 This function creates visit 1RM within provided \code{LEV_profile}.

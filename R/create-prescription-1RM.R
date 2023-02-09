@@ -10,6 +10,7 @@
 #'      is utilized when \code{init_RM} equals \code{NULL}
 #' @param buffer Default is 1, but can be, for example 0.8 of the estimated 1RM to be used for
 #'      prescription
+#' @param use_true_velocity When estimating failure, should true or biological (default) velocity be used?
 #' @export
 #' @examples
 #' set.seed(1667)
@@ -34,7 +35,8 @@ create_prescription_1RM <- function(LEV_profile,
                                     init_1RM = NULL,
                                     change_1RM = 0,
                                     load_perc = seq(0.6, 1.2, by = 0.025),
-                                    buffer = 1) {
+                                    buffer = 1,
+                                    use_true_velocity = FALSE) {
 
   # Check of the object is proper LEV_profile
   is_LEV <- validate_LEV_profile(LEV_profile, stop_running = TRUE)
@@ -46,8 +48,7 @@ create_prescription_1RM <- function(LEV_profile,
     # If init_1RM is not provided, test it
     if (is.null(init_1RM)) {
       load <- get_load_rounded(profile$profile$`1RM` * load_perc, profile$profile$load_increment)
-      oneRM_trials <- get_sets(profile$profile, load, max_reps = 1)
-
+      oneRM_trials <- get_sets(profile$profile, load, max_reps = 1, use_true_velocity = use_true_velocity)
       last_try <- min(which(oneRM_trials$failed_rep)) - 1
       init_1RM <- load[[last_try]] * buffer
     }

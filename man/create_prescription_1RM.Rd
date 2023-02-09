@@ -9,7 +9,8 @@ create_prescription_1RM(
   init_1RM = NULL,
   change_1RM = 0,
   load_perc = seq(0.6, 1.2, by = 0.025),
-  buffer = 1
+  buffer = 1,
+  use_true_velocity = FALSE
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ is utilized when \code{init_RM} equals \code{NULL}}
 
 \item{buffer}{Default is 1, but can be, for example 0.8 of the estimated 1RM to be used for
 prescription}
+
+\item{use_true_velocity}{When estimating failure, should true or biological (default) velocity be used?}
 }
 \description{
 This function creates prescription 1RM within provided \code{LEV_profile}
