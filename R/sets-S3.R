@@ -103,6 +103,7 @@ as.data.frame.LEV_sets <- function(x, row.names = NULL, optional = FALSE, ...) {
 #'     \describe{
 #'      \item{athletes}{Althetes to keep in}
 #'      \item{visits}{Visits to keep in}
+#'      \item{sets}{Sets to keep in}
 #'      \item{loads}{Loads to keep in}
 #'      \item{RTFs}{Reps-To-Failure indicator (TRUE/FALSE) to keep in}
 #'      \item{reps}{Repetitions to keep in}
@@ -178,6 +179,7 @@ plot_LEV_sets <- function(df,
                           type = "athletes",
                           athletes = NULL,
                           visits = NULL,
+                          sets = NULL,
                           loads = NULL,
                           RTFs = NULL,
                           reps = NULL,
@@ -200,6 +202,7 @@ plot_LEV_sets <- function(df,
   # Code chunk for dealing with R CMD check note
   athlete <- NULL
   visit <- NULL
+  set <- NULL
   RTF <- NULL
   `%1RM` <- NULL
   `RIR` <- NULL
@@ -234,6 +237,11 @@ plot_LEV_sets <- function(df,
   if (!is.null(visits)) {
     df <- df %>%
       dplyr::filter(visit %in% visits)
+  }
+
+  if (!is.null(sets)) {
+    df <- df %>%
+      dplyr::filter(set %in% sets)
   }
 
   if (!is.null(loads)) {

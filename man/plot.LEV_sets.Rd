@@ -28,6 +28,7 @@ can utilize:
 \describe{
 \item{athletes}{Althetes to keep in}
 \item{visits}{Visits to keep in}
+\item{sets}{Sets to keep in}
 \item{loads}{Loads to keep in}
 \item{RTFs}{Reps-To-Failure indicator (TRUE/FALSE) to keep in}
 \item{reps}{Repetitions to keep in}
