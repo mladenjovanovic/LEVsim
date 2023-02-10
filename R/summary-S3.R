@@ -172,6 +172,7 @@ plot_LEV_summary <- function(df,
   RTF <- NULL
   `%1RM` <- NULL
   `RIR` <- NULL
+  best_measured_rep_velocity <- NULL
   first_measured_rep_velocity <- NULL
   last_measured_rep_velocity <- NULL
   # +++++++++++++++++++++++++++++++++++++++++++
@@ -226,7 +227,7 @@ plot_LEV_summary <- function(df,
   }
 
   if (is.null(color)) {
-    gg <- ggplot2::ggplot(df, ggplot2::aes(x = load_index, xend = load_index, y = first_measured_rep_velocity, yend = last_measured_rep_velocity))
+    gg <- ggplot2::ggplot(df, ggplot2::aes(x = load_index, xend = load_index, y = best_measured_rep_velocity, yend = last_measured_rep_velocity))
   } else {
     gg <- ggplot2::ggplot(df, ggplot2::aes_string(x = "load_index", xend = "load_index", y = "first_measured_rep_velocity", yend = "last_measured_rep_velocity", color = color))
   }
@@ -234,8 +235,8 @@ plot_LEV_summary <- function(df,
   gg <- gg +
     ggplot2::theme_linedraw() +
     ggplot2::geom_segment(alpha = 0.9, size = 1, arrow = ggplot2::arrow(length = ggplot2::unit(0.1, "cm"))) +
-    ggplot2::geom_label(ggplot2::aes(y = first_measured_rep_velocity + 0.025, label = load), vjust = "bottom", size = 3, fill = "grey") +
-    ggplot2::geom_label(ggplot2::aes(y = last_measured_rep_velocity - 0.025, label = reps), vjust = "top", size = 3)
+    #ggplot2::geom_label(ggplot2::aes(y = best_measured_rep_velocity + 0.025, label = load), vjust = "center", size = 3, fill = "grey") +
+    ggplot2::geom_label(ggplot2::aes(y = best_measured_rep_velocity + 0.065, label = paste0(reps, " w/", load, "\n@", RIR, "RIR")), vjust = "center", size = 2)
 
   if (type == "athletes") {
     if (!is.null(facet)) {
