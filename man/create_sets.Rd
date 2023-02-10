@@ -37,7 +37,7 @@ create_sets(
 Object \code{LEV_sets}
 }
 \description{
-Function creates sets, using provided \code{LEV_profile} \code{loads} and \code{trials}
+Function creates sets, using provided \code{LEV_profile}, \code{loads}, and \code{trials}
 }
 \examples{
 # Create random athletes/profiles

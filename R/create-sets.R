@@ -1,6 +1,6 @@
 #' Create Sets
 #'
-#' Function creates sets, using provided \code{LEV_profile} \code{loads} and \code{trials}
+#' Function creates sets, using provided \code{LEV_profile}, \code{loads}, and \code{trials}
 #'
 #' @param LEV_profile \code{LEV_profile} object, returned by \code{\link{create_visits}} function
 #' @param load Numeric vector. Loads are either absolute weight or percentages. See also \code{load_type}
