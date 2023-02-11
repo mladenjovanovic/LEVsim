@@ -47,7 +47,7 @@ create_tests <- function(LEV_profile = create_profiles(),
   # Create Load-Velocity data
   LV_profile <- visit_1RM %>%
     create_sets(
-      load = load_1RM,
+      load = load_LV,
       max_reps = 1,
       load_type = "visit 1RM",
       use_true_velocity = use_true_velocity,
