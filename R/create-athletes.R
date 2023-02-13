@@ -33,6 +33,9 @@
 #' @param v1RM_random_min Numeric
 #' @param v1RM_random_max Numeric
 #' @param v1RM_random_multiplicative Logical
+#' @param est_RIR_random_min Numeric
+#' @param est_RIR_random_max Numeric
+#' @param est_RIR_random_multiplicative Logical
 #' @param biological_variation_min Numeric
 #' @param biological_variation_max Numeric
 #' @param biological_variation_multiplicative Logical
@@ -101,6 +104,9 @@ create_athletes <- function(n = 20,
                             v1RM_random_min = 0,
                             v1RM_random_max = 0.05,
                             v1RM_random_multiplicative = FALSE,
+                            est_RIR_random_min = 0,
+                            est_RIR_random_max = 0.5,
+                            est_RIR_random_multiplicative = TRUE,
                             biological_variation_min = 0.02,
                             biological_variation_max = 0.075,
                             biological_variation_multiplicative = TRUE,
@@ -127,6 +133,8 @@ create_athletes <- function(n = 20,
     v1RM = stats::runif(n, v1RM_min, v1RM_max),
     v1RM_random = stats::runif(n, v1RM_random_min, v1RM_random_max),
     v1RM_random_multiplicative = v1RM_random_multiplicative,
+    est_RIR_random = stats::runif(n, est_RIR_random_min, est_RIR_random_max),
+    est_RIR_random_multiplicative = est_RIR_random_multiplicative,
     biological_variation = stats::runif(n, biological_variation_min, biological_variation_max),
     biological_variation_multiplicative = biological_variation_multiplicative,
     instrumentation_noise = stats::runif(n, instrumentation_noise_min, instrumentation_noise_max),

@@ -77,7 +77,6 @@ create_visits <- function(LEV_profile = create_profiles(),
     # Create new L0 and V0 for each visit using
     # systematic and random theoretical effects
     true_profile <- profile$profile
-
     visits_df <- dplyr::tibble(
       athlete = profile$athlete,
       visit = visit,
@@ -106,6 +105,9 @@ create_visits <- function(LEV_profile = create_profiles(),
       v1RM = true_profile$v1RM,
       v1RM_random = true_profile$v1RM_random,
       v1RM_random_multiplicative = true_profile$v1RM_random_multiplicative,
+
+      est_RIR_random = true_profile$est_RIR_random,
+      est_RIR_random_multiplicative = true_profile$est_RIR_random_multiplicative,
       biological_variation = true_profile$biological_variation,
       biological_variation_multiplicative = true_profile$biological_variation_multiplicative,
       instrumentation_noise = true_profile$instrumentation_noise,
@@ -155,6 +157,8 @@ create_visits <- function(LEV_profile = create_profiles(),
         v1RM = visit$new_v1RM,
         v1RM_random = visit$v1RM_random,
         v1RM_random_multiplicative = visit$v1RM_random_multiplicative,
+        est_RIR_random = visit$est_RIR_random,
+        est_RIR_random_multiplicative = visit$est_RIR_random_multiplicative,
         biological_variation = visit$biological_variation,
         biological_variation_multiplicative = visit$biological_variation_multiplicative,
         instrumentation_noise = visit$instrumentation_noise,

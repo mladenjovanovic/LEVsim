@@ -31,6 +31,9 @@ create_athletes(
   v1RM_random_min = 0,
   v1RM_random_max = 0.05,
   v1RM_random_multiplicative = FALSE,
+  est_RIR_random_min = 0,
+  est_RIR_random_max = 0.5,
+  est_RIR_random_multiplicative = TRUE,
   biological_variation_min = 0.02,
   biological_variation_max = 0.075,
   biological_variation_multiplicative = TRUE,
@@ -92,6 +95,12 @@ create_athletes(
 \item{v1RM_random_max}{Numeric}
 
 \item{v1RM_random_multiplicative}{Logical}
+
+\item{est_RIR_random_min}{Numeric}
+
+\item{est_RIR_random_max}{Numeric}
+
+\item{est_RIR_random_multiplicative}{Logical}
 
 \item{biological_variation_min}{Numeric}
 
