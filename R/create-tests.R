@@ -19,8 +19,8 @@
 #'   create_tests() %>%
 #'   create_summary()
 #'
-#' plot(test_sets, set = "LV")
-#' plot(test_sets, set = "RTF")
+#' plot(test_sets, sets = "LV")
+#' plot(test_sets, sets = "RTF")
 create_tests <- function(LEV_profile = create_profiles(),
                          load_1RM = seq(0.6, 1.2, by = 0.025),
                          load_LV = c(0.5, 0.6, 0.7, 0.8, 0.85, 0.9, 0.95, 0.975, 1),
@@ -53,7 +53,8 @@ create_tests <- function(LEV_profile = create_profiles(),
       load_type = "visit 1RM",
       use_true_velocity = use_true_velocity,
       failed_reps = failed_reps,
-      inter_set_fatigue = FALSE)
+      inter_set_fatigue = FALSE
+    )
 
   LV_profile$set <- "LV"
   LV_profile <- as.data.frame(LV_profile)
@@ -67,7 +68,8 @@ create_tests <- function(LEV_profile = create_profiles(),
       load_type = "visit 1RM",
       use_true_velocity = use_true_velocity,
       failed_reps = failed_reps,
-      inter_set_fatigue = FALSE)
+      inter_set_fatigue = FALSE
+    )
 
   RTF_profile$set <- "RTF"
   RTF_profile <- as.data.frame(RTF_profile)
@@ -93,10 +95,10 @@ create_tests <- function(LEV_profile = create_profiles(),
     set_V0 = sets_df$set_V0,
     set_L0 = sets_df$set_L0,
     set_1RM = sets_df$set_1RM,
-    RTF = sets_df$RTF,
     nRM = sets_df$nRM,
     target_reps = sets_df$target_reps,
     reps_done = sets_df$reps_done,
+    set_to_failure = sets_df$set_to_failure,
     rep = sets_df$rep,
     rep_V0 = sets_df$rep_V0,
     rep_L0 = sets_df$rep_L0,

@@ -43,6 +43,6 @@ test_sets <- create_profiles(athletes = 1:2, L0_visit_random = 10, L0_fatigue = 
   create_tests() \%>\%
   create_summary()
 
-plot(test_sets, set = "LV")
-plot(test_sets, set = "RTF")
+plot(test_sets, sets = "LV")
+plot(test_sets, sets = "RTF")
 }

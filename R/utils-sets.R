@@ -117,20 +117,23 @@ get_sets <- function(visit_LEV_profile,
     dplyr::mutate(
       target_reps = reps[load_index],
       set = load_index,
-      load = load[load_index])
+      load = load[load_index]
+    )
 
   if (inter_set_fatigue == TRUE) {
     sets <- sets %>%
       dplyr::mutate(
         set_L0 = systematic_effect(L0, load_index - 1, L0_fatigue, L0_fatigue_multiplicative),
         set_V0 = systematic_effect(V0, load_index - 1, V0_fatigue, V0_fatigue_multiplicative),
-        set_1RM = get_load_at_velocity(set_V0, set_L0, v1RM))
+        set_1RM = get_load_at_velocity(set_V0, set_L0, v1RM)
+      )
   } else {
     sets <- sets %>%
       dplyr::mutate(
         set_L0 = L0,
         set_V0 = V0,
-        set_1RM = get_load_at_velocity(set_V0, set_L0, v1RM))
+        set_1RM = get_load_at_velocity(set_V0, set_L0, v1RM)
+      )
   }
 
   sets <- sets %>%
@@ -192,15 +195,12 @@ get_sets <- function(visit_LEV_profile,
       rep_1RM = get_load_at_velocity(rep_V0, rep_L0, v1RM),
       RIR = last_rep - rep - 1,
       nRM = last_rep - 1,
-      RTF = ifelse(is.na(nRM), FALSE, TRUE),
       `%MNR` = (rep / nRM) * 100,
       best_measured_rep_velocity = cummax(measured_rep_velocity),
       VL = best_measured_rep_velocity - measured_rep_velocity,
       `%VL` = VL / best_measured_rep_velocity * 100,
       VR = 100 * (measured_rep_velocity - v1RM) / (best_measured_rep_velocity - v1RM)
     ) %>%
-    dplyr::ungroup() %>%
-    dplyr::arrange(load_index, rep) %>%
     dplyr::mutate(set = load_index) %>%
     dplyr::filter(rep <= ifelse(is.na(target_reps), Inf, target_reps)) %>%
     dplyr::mutate(
@@ -214,9 +214,12 @@ get_sets <- function(visit_LEV_profile,
       last_eRIR = round(last_eRIR),
       est_RIR = last_eRIR + (RIR - last_RIR),
       est_nRM = nRM + est_RIR - RIR,
-      `est_%MNR` = (rep / est_nRM) * 100
+      `est_%MNR` = (rep / est_nRM) * 100,
+      set_to_failure = ifelse(is.na(RIR), FALSE, ifelse(any(RIR <= 0), TRUE, FALSE))
     ) %>%
-    dplyr::select(-last_rep, -last_row, -last_RIR, -last_eRIR, -last_eRIR_sys, -last_eRIR_rnd)
+    dplyr::select(-last_rep, -last_row, -last_RIR, -last_eRIR, -last_eRIR_sys, -last_eRIR_rnd) %>%
+    dplyr::ungroup() %>%
+    dplyr::arrange(load_index, rep)
 
   # Return cleaned sets
   return(cleaned_sets)

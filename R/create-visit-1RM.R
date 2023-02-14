@@ -34,7 +34,8 @@ create_visit_1RM <- function(LEV_profile, load_perc = seq(0.8, 1.2, by = 0.025),
         load,
         max_reps = 1,
         use_true_velocity = use_true_velocity,
-        inter_set_fatigue = FALSE)
+        inter_set_fatigue = FALSE
+      )
 
       last_try <- min(which(oneRM_trials$failed_rep)) - 1
       visit$visit_1RM <- load[[last_try]]

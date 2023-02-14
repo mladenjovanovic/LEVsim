@@ -102,22 +102,23 @@ as.data.frame.LEV_summary <- function(x, row.names = NULL, optional = FALSE, ...
 #'
 #' @details S3 method for plotting LEV Sets Summaries provides plenty of
 #'     flexibility and control by using the \code{...} parameters.
-#'     User can filter variables, use different x and y scales,
-#'     provides colors and facets. Here are the extra parameters your
-#'     can utilize:
+#'     User can filter variables, provides colors and facets.
+#'     Here are the extra parameters your can utilize:
 #'     \describe{
 #'      \item{athletes}{Althetes to keep in}
 #'      \item{visits}{Visits to keep in}
 #'      \item{sets}{Sets to keep in}
 #'      \item{loads}{Loads to keep in}
-#'      \item{RTFs}{Reps-To-Failure indicator (TRUE/FALSE) to keep in}
-#'      \item{reps}{Repetitions to keep in}
+#'      \item{nRMs}{N-Repetition-Maximum loads to keep in}
+#'      \item{sets_to_failure}{Sets-To-Failure indicator (TRUE/FALSE) to keep in}
+#'      \item{target_repetitions}{Target repetitions to keep in}
+#'      \item{repetitions_done}{Repetitions done to keep in}
 #'      \item{RIRs}{Reps-In-Reserve to keep in}
-#'      \item{y_var}{Variable on y-axis. Default is 'measured_rep_velocity'}
-#'      \item{x_var}{Variable on x-axis. Default is 'load'}
+#'      \item{est_RIRs}{Estimated Reps-In-Reserve to keep in}
 #'      \item{color}{What variable should be used to coloring groups? Default is none}
 #'      \item{facet}{Variable to be used for plot faceting. Athletes are already faceted,
 #'          and this parameter allows for adding extra level. Default is 'visit'}
+#'      \item{label_size}{Label size}
 #'     }
 #'
 #' Please check the examples section for few examples
@@ -156,11 +157,15 @@ plot_LEV_summary <- function(df,
                              visits = NULL,
                              sets = NULL,
                              loads = NULL,
-                             RTFs = NULL,
-                             reps = NULL,
+                             sets_to_failure = NULL,
+                             target_repetitions = NULL,
+                             repetitions_done = NULL,
+                             nRMs = NULL,
                              RIRs = NULL,
+                             est_RIRs = NULL,
                              color = NULL,
-                             facet = "visit") {
+                             facet = "visit",
+                             label_size = 1.5) {
 
 
   # +++++++++++++++++++++++++++++++++++++++++++
@@ -169,12 +174,17 @@ plot_LEV_summary <- function(df,
   visit <- NULL
   set <- NULL
   load_index <- NULL
-  RTF <- NULL
   `%1RM` <- NULL
   `RIR` <- NULL
   best_measured_rep_velocity <- NULL
   first_measured_rep_velocity <- NULL
   last_measured_rep_velocity <- NULL
+  reps_done <- NULL
+  set_to_failure <- NULL
+  est_RIR <- NULL
+  nRM <- NULL
+  reps_done <- NULL
+  target_reps <- NULL
   # +++++++++++++++++++++++++++++++++++++++++++
 
   # If null, use visit so it doesn't throw an error
@@ -211,19 +221,34 @@ plot_LEV_summary <- function(df,
       dplyr::filter(load %in% loads)
   }
 
-  if (!is.null(RTFs)) {
+  if (!is.null(sets_to_failure)) {
     df <- df %>%
-      dplyr::filter(RTF %in% RTFs)
+      dplyr::filter(set_to_failure %in% sets_to_failure)
   }
 
-  if (!is.null(reps)) {
+  if (!is.null(target_repetitions)) {
     df <- df %>%
-      dplyr::filter(rep %in% reps)
+      dplyr::filter(target_reps %in% target_repetitions)
+  }
+
+  if (!is.null(repetitions_done)) {
+    df <- df %>%
+      dplyr::filter(reps_done %in% repetitions_done)
+  }
+
+  if (!is.null(nRMs)) {
+    df <- df %>%
+      dplyr::filter(nRM %in% nRMs)
   }
 
   if (!is.null(RIRs)) {
     df <- df %>%
       dplyr::filter(RIR %in% RIRs)
+  }
+
+  if (!is.null(est_RIRs)) {
+    df <- df %>%
+      dplyr::filter(est_RIR %in% est_RIRs)
   }
 
   if (is.null(color)) {
@@ -235,10 +260,10 @@ plot_LEV_summary <- function(df,
   gg <- gg +
     ggplot2::theme_linedraw() +
     ggplot2::geom_segment(alpha = 0.9, size = 1, arrow = ggplot2::arrow(length = ggplot2::unit(0.1, "cm"))) +
-    ggplot2::geom_text(ggplot2::aes(y = best_measured_rep_velocity + 0.025, label = load), vjust = "bottom", size = 1.5, alpha = 0.8) +
-    ggplot2::geom_text(ggplot2::aes(y = last_measured_rep_velocity - 0.025, label = paste0(RIR, "RIR")), vjust = "top", size = 1.5, alpha = 0.8) +
-    ggplot2::geom_text(ggplot2::aes(y = last_measured_rep_velocity + 0.5 * (best_measured_rep_velocity - last_measured_rep_velocity), label = reps), vjust = -1, size = 1.5, alpha = 0.8, angle = 90)
-    #ggplot2::geom_label(ggplot2::aes(y = best_measured_rep_velocity + 0.065, label = paste0(reps, " w/", load, "\n@", RIR, "RIR")), vjust = "center", size = 2)
+    ggplot2::geom_text(ggplot2::aes(y = best_measured_rep_velocity + 0.025, label = load), vjust = "bottom", size = label_size, alpha = 0.8) +
+    ggplot2::geom_text(ggplot2::aes(y = last_measured_rep_velocity - 0.025, label = paste0(est_RIR, "eRIR")), vjust = "top", size = label_size, alpha = 0.8) +
+    ggplot2::geom_text(ggplot2::aes(y = last_measured_rep_velocity + 0.5 * (best_measured_rep_velocity - last_measured_rep_velocity), label = reps_done), vjust = -1, size = label_size, alpha = 0.8, angle = 90)
+  # ggplot2::geom_label(ggplot2::aes(y = best_measured_rep_velocity + 0.065, label = paste0(reps, " w/", load, "\n@", RIR, "RIR")), vjust = "center", size = 2)
 
   if (type == "athletes") {
     if (!is.null(facet)) {

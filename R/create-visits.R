@@ -105,7 +105,6 @@ create_visits <- function(LEV_profile = create_profiles(),
       v1RM = true_profile$v1RM,
       v1RM_random = true_profile$v1RM_random,
       v1RM_random_multiplicative = true_profile$v1RM_random_multiplicative,
-
       est_RIR_systematic = true_profile$est_RIR_systematic,
       est_RIR_systematic_multiplicative = true_profile$est_RIR_systematic_multiplicative,
       est_RIR_random = true_profile$est_RIR_random,
