@@ -30,6 +30,7 @@ Here are the extra parameters your can utilize:
 \item{sets}{Sets to keep in}
 \item{loads}{Loads to keep in}
 \item{nRMs}{N-Repetition-Maximum loads to keep in}
+\item{est_nRMs}{Estimated N-Repetition-Maximum loads to keep in}
 \item{sets_to_failure}{Sets-To-Failure indicator (TRUE/FALSE) to keep in}
 \item{target_repetitions}{Target repetitions to keep in}
 \item{repetitions_done}{Repetitions done to keep in}

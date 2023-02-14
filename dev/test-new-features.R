@@ -1,8 +1,9 @@
-test_sets <- create_profiles(athletes = 1:2, L0_visit_random = 10, L0_fatigue = -10) %>%
-  create_visits(1) %>%
+test_sets <- create_profiles(athletes = 1:2, L0_visit_random = 00, L0_fatigue = -10) %>%
+  create_visits(2) %>%
   create_tests() %>%
   create_summary()
 
+plot(test_sets, sets = "RTF", est_nRM = 5:15)
 
 data("strength_training_program")
 

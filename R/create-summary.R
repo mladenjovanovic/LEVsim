@@ -46,6 +46,7 @@ create_summary <- function(LEV_sets) {
   reps_done <- NULL
   set_to_failure <- NULL
   target_reps <- NULL
+  est_nRM <- NULL
   # +++++++++++++++++++++++++++++++++++++++++++
 
   is_sets <- validate_LEV_sets(LEV_sets)
@@ -69,6 +70,7 @@ create_summary <- function(LEV_sets) {
       RIR = RIR[reps_done],
       `%MNR` = `%MNR`[reps_done],
       est_RIR = est_RIR[reps_done],
+      est_nRM = est_nRM[[1]],
       `est_%MNR` = `est_%MNR`[reps_done],
       first_true_rep_velocity = true_rep_velocity[[1]],
       last_true_rep_velocity = true_rep_velocity[reps_done],
@@ -102,6 +104,7 @@ create_summary <- function(LEV_sets) {
     RIR = df$RIR,
     `%MNR` = df$`%MNR`,
     est_RIR = df$est_RIR,
+    est_nRM = df$est_nRM,
     `est_%MNR` = df$`est_%MNR`,
     first_true_rep_velocity = df$first_true_rep_velocity,
     last_true_rep_velocity = df$last_true_rep_velocity,

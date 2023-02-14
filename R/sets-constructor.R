@@ -35,7 +35,8 @@ new_sets <- function(athlete,
                      `%VL`,
                      VR,
                      est_RIR,
-                     `est_%MNR`) {
+                     `est_%MNR`,
+                     est_nRM) {
   sets <- dplyr::tibble(
     athlete = athlete,
     visit = visit,
@@ -71,7 +72,8 @@ new_sets <- function(athlete,
     `%VL` = `%VL`,
     VR = VR,
     est_RIR = est_RIR,
-    `est_%MNR` = `est_%MNR`
+    `est_%MNR` = `est_%MNR`,
+    est_nRM = est_nRM
   )
 
   class(sets) <- "LEV_sets"

@@ -150,7 +150,8 @@ create_program_sets <- function(LEV_profile = create_profiles(),
         `%VL` = visit_sets$`%VL`,
         VR = visit_sets$VR,
         est_RIR = visit_sets$est_RIR,
-        `est_%MNR` = visit_sets$`est_%MNR`
+        `est_%MNR` = visit_sets$`est_%MNR`,
+        est_nRM = visit_sets$est_nRM
       )
 
       visit_sets <- as.data.frame(visit_sets)
@@ -220,7 +221,8 @@ create_program_sets <- function(LEV_profile = create_profiles(),
       `%VL` = sets_df$`%VL`,
       VR = sets_df$VR,
       est_RIR = sets_df$est_RIR,
-      `est_%MNR` = sets_df$`est_%MNR`
+      `est_%MNR` = sets_df$`est_%MNR`,
+      est_nRM = sets_df$est_nRM
     )
   }
 

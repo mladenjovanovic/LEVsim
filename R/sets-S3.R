@@ -112,6 +112,7 @@ as.data.frame.LEV_sets <- function(x, row.names = NULL, optional = FALSE, ...) {
 #'      \item{RIRs}{Reps-In-Reserve to keep in}
 #'      \item{est_RIRs}{Reps-In-Reserve to keep in}
 #'      \item{nRMs}{N-Repetition-Maximum loads to keep in}
+#'      \item{est_nRMs}{Estimated N-Repetition-Maximum loads to keep in}
 #'      \item{failed_reps}{Should failed reps be kept in? Default is \code{FALSE}}
 #'      \item{y_var}{Variable on y-axis. Default is 'measured_rep_velocity'}
 #'      \item{x_var}{Variable on x-axis. Default is 'load'}
@@ -189,6 +190,7 @@ plot_LEV_sets <- function(df,
                           target_repetitions = NULL,
                           repetitions_done = NULL,
                           nRMs = NULL,
+                          est_nRMs = NULL,
                           RIRs = NULL,
                           est_RIRs = NULL,
                           failed_reps = NULL,
@@ -213,6 +215,7 @@ plot_LEV_sets <- function(df,
   `%1RM` <- NULL
   `RIR` <- NULL
   `nRM` <- NULL
+  `est_nRM` <- NULL
   `failed_rep` <- NULL
   est_RIR <- NULL
   reps_done <- NULL
@@ -291,6 +294,11 @@ plot_LEV_sets <- function(df,
   if (!is.null(nRMs)) {
     df <- df %>%
       dplyr::filter(nRM %in% nRMs)
+  }
+
+  if (!is.null(est_nRMs)) {
+    df <- df %>%
+      dplyr::filter(est_nRM %in% est_nRMs)
   }
 
   if (!is.null(failed_reps)) {

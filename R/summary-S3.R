@@ -110,6 +110,7 @@ as.data.frame.LEV_summary <- function(x, row.names = NULL, optional = FALSE, ...
 #'      \item{sets}{Sets to keep in}
 #'      \item{loads}{Loads to keep in}
 #'      \item{nRMs}{N-Repetition-Maximum loads to keep in}
+#'      \item{est_nRMs}{Estimated N-Repetition-Maximum loads to keep in}
 #'      \item{sets_to_failure}{Sets-To-Failure indicator (TRUE/FALSE) to keep in}
 #'      \item{target_repetitions}{Target repetitions to keep in}
 #'      \item{repetitions_done}{Repetitions done to keep in}
@@ -163,6 +164,7 @@ plot_LEV_summary <- function(df,
                              nRMs = NULL,
                              RIRs = NULL,
                              est_RIRs = NULL,
+                             est_nRMs = NULL,
                              color = NULL,
                              facet = "visit",
                              label_size = 1.5) {
@@ -183,6 +185,7 @@ plot_LEV_summary <- function(df,
   set_to_failure <- NULL
   est_RIR <- NULL
   nRM <- NULL
+  `est_nRM` <- NULL
   reps_done <- NULL
   target_reps <- NULL
   # +++++++++++++++++++++++++++++++++++++++++++
@@ -239,6 +242,11 @@ plot_LEV_summary <- function(df,
   if (!is.null(nRMs)) {
     df <- df %>%
       dplyr::filter(nRM %in% nRMs)
+  }
+
+  if (!is.null(est_nRMs)) {
+    df <- df %>%
+      dplyr::filter(est_nRM %in% est_nRMs)
   }
 
   if (!is.null(RIRs)) {

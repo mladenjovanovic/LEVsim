@@ -166,7 +166,8 @@ create_sets <- function(LEV_profile,
     `%VL` = sets_df$`%VL`,
     VR = sets_df$VR,
     est_RIR = sets_df$est_RIR,
-    `est_%MNR` = sets_df$`est_%MNR`
+    `est_%MNR` = sets_df$`est_%MNR`,
+    est_nRM = sets_df$est_nRM
   )
 
   return(sets)

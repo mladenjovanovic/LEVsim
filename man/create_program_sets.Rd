@@ -65,7 +65,8 @@ program_sets <- create_profiles(athletes = 1, L0_visit_change = 1, L0_fatigue = 
     visit = "visit",
     load = "perc_1RM",
     reps = "target_reps",
-    load_type = "prescription 1RM") \%>\%
+    load_type = "prescription 1RM"
+  ) \%>\%
   create_summary()
 
 plot(program_sets, type = "pooled")
