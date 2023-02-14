@@ -41,6 +41,10 @@
 #'     each visit to the laboratory/gym
 #' @param v1RM_random_multiplicative Should multiplicative random error be used? Default
 #'     is \code{FALSE}
+#' @param est_RIR_systematic Number indicating systematic effect of the random biological variation
+#'  in estimating \code{RIR}
+#' @param est_RIR_systematic_multiplicative Should multiplicative random error be used? Default
+#'     is \code{FALSE}
 #' @param est_RIR_random Number indicating SD of the random biological variation in estimating
 #'     \code{RIR}
 #' @param est_RIR_random_multiplicative Should multiplicative random error be used? Default
@@ -111,6 +115,8 @@ create_profiles <- function(athletes = NA,
                             v1RM = 0.2,
                             v1RM_random = 0,
                             v1RM_random_multiplicative = FALSE,
+                            est_RIR_systematic = 0,
+                            est_RIR_systematic_multiplicative = FALSE,
                             est_RIR_random = 0,
                             est_RIR_random_multiplicative = TRUE,
                             biological_variation = 0,
@@ -141,6 +147,8 @@ create_profiles <- function(athletes = NA,
     v1RM = v1RM,
     v1RM_random = v1RM_random,
     v1RM_random_multiplicative = v1RM_random_multiplicative,
+    est_RIR_systematic = est_RIR_systematic,
+    est_RIR_systematic_multiplicative = est_RIR_systematic_multiplicative,
     est_RIR_random = est_RIR_random,
     est_RIR_random_multiplicative = est_RIR_random_multiplicative,
     biological_variation = biological_variation,

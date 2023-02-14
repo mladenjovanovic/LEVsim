@@ -7,7 +7,7 @@
 create_sets(
   LEV_profile,
   load,
-  reps = rep(max_reps, length(load)),
+  reps = rep(NA, length(load)),
   load_type = "absolute",
   max_reps = 100,
   failed_reps = FALSE,

@@ -48,7 +48,8 @@ create_tests <- function(LEV_profile = create_profiles(),
   LV_profile <- visit_1RM %>%
     create_sets(
       load = load_LV,
-      max_reps = 1,
+      reps = 1,
+      max_reps = max_reps,
       load_type = "visit 1RM",
       use_true_velocity = use_true_velocity,
       failed_reps = failed_reps,
@@ -94,6 +95,8 @@ create_tests <- function(LEV_profile = create_profiles(),
     set_1RM = sets_df$set_1RM,
     RTF = sets_df$RTF,
     nRM = sets_df$nRM,
+    target_reps = sets_df$target_reps,
+    reps_done = sets_df$reps_done,
     rep = sets_df$rep,
     rep_V0 = sets_df$rep_V0,
     rep_L0 = sets_df$rep_L0,
@@ -107,7 +110,9 @@ create_tests <- function(LEV_profile = create_profiles(),
     best_measured_rep_velocity = sets_df$best_measured_rep_velocity,
     VL = sets_df$VL,
     `%VL` = sets_df$`%VL`,
-    VR = sets_df$VR
+    VR = sets_df$VR,
+    est_RIR = sets_df$est_RIR,
+    `est_%MNR` = sets_df$`est_%MNR`
   )
 
   return(sets)

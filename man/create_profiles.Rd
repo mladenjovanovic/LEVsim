@@ -25,6 +25,8 @@ create_profiles(
   v1RM = 0.2,
   v1RM_random = 0,
   v1RM_random_multiplicative = FALSE,
+  est_RIR_systematic = 0,
+  est_RIR_systematic_multiplicative = FALSE,
   est_RIR_random = 0,
   est_RIR_random_multiplicative = TRUE,
   biological_variation = 0,
@@ -91,6 +93,12 @@ is \code{FALSE}}
 each visit to the laboratory/gym}
 
 \item{v1RM_random_multiplicative}{Should multiplicative random error be used? Default
+is \code{FALSE}}
+
+\item{est_RIR_systematic}{Number indicating systematic effect of the random biological variation
+in estimating \code{RIR}}
+
+\item{est_RIR_systematic_multiplicative}{Should multiplicative random error be used? Default
 is \code{FALSE}}
 
 \item{est_RIR_random}{Number indicating SD of the random biological variation in estimating

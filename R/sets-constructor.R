@@ -18,6 +18,8 @@ new_sets <- function(athlete,
                      set_1RM,
                      RTF,
                      nRM,
+                     target_reps,
+                     reps_done,
                      rep,
                      rep_V0,
                      rep_L0,
@@ -31,7 +33,9 @@ new_sets <- function(athlete,
                      best_measured_rep_velocity,
                      VL,
                      `%VL`,
-                     VR) {
+                     VR,
+                     est_RIR,
+                     `est_%MNR`) {
   sets <- dplyr::tibble(
     athlete = athlete,
     visit = visit,
@@ -50,6 +54,8 @@ new_sets <- function(athlete,
     set_1RM = set_1RM,
     RTF = RTF,
     nRM = nRM,
+    target_reps = target_reps,
+    reps_done = reps_done,
     rep = rep,
     rep_V0 = rep_V0,
     rep_L0 = rep_L0,
@@ -63,7 +69,9 @@ new_sets <- function(athlete,
     best_measured_rep_velocity = best_measured_rep_velocity,
     VL = VL,
     `%VL` = `%VL`,
-    VR = VR
+    VR = VR,
+    est_RIR = est_RIR,
+    `est_%MNR` = `est_%MNR`
   )
 
   class(sets) <- "LEV_sets"

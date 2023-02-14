@@ -14,6 +14,32 @@ get_last_rep <- function(rep, failed) {
   last_rep
 }
 
+# Function to find last RIR
+get_last_RIR <- function(RIR, failed) {
+  # If there are no failed reps
+  if (!any(failed)) {
+    last_RIR <- min(RIR)
+  } else {
+    # if there are failed reps
+    last_RIR <- min(RIR) + 1
+  }
+
+  last_RIR
+}
+
+# Function to find reps done
+get_reps_done <- function(rep, failed) {
+  # If there are no failed reps
+  if (!any(failed)) {
+    last_rep <- max(rep)
+  } else {
+    # if there are failed reps
+    last_rep <- max(rep) - 1
+  }
+
+  last_rep
+}
+
 # Generate Single Visit Sets
 #
 # Internal function for creating sets during a single visit
@@ -24,7 +50,7 @@ get_last_rep <- function(rep, failed) {
 # @return Data frame
 get_sets <- function(visit_LEV_profile,
                      load,
-                     reps = rep(max_reps, length(load)),
+                     reps = rep(NA, length(load)),
                      max_reps = 100,
                      use_true_velocity = FALSE,
                      inter_set_fatigue = TRUE) {
@@ -63,6 +89,17 @@ get_sets <- function(visit_LEV_profile,
   orig_L0 <- NULL
   orig_V0 <- NULL
   target_reps <- NULL
+  RIR <- NULL
+  est_RIR <- NULL
+  est_RIR_random <- NULL
+  est_RIR_random_multiplicative <- NULL
+  est_RIR_systematic <- NULL
+  est_RIR_systematic_multiplicative <- NULL
+  est_nRM <- NULL
+  last_RIR <- NULL
+  last_eRIR <- NULL
+  last_eRIR_rnd <- NULL
+  last_eRIR_sys <- NULL
   # +++++++++++++++++++++++++++++++++++++++++++
 
   class(visit_LEV_profile) <- "list"
@@ -165,8 +202,21 @@ get_sets <- function(visit_LEV_profile,
     dplyr::ungroup() %>%
     dplyr::arrange(load_index, rep) %>%
     dplyr::mutate(set = load_index) %>%
-    dplyr::filter(rep <= target_reps) %>%
-    dplyr::select(-last_rep, -last_row)
+    dplyr::filter(rep <= ifelse(is.na(target_reps), Inf, target_reps)) %>%
+    dplyr::mutate(
+      # Calculate estimated RIR and %MNR
+      reps_done = get_reps_done(rep, failed_rep),
+      last_RIR = get_last_RIR(RIR, failed_rep),
+      last_eRIR_sys = systematic_effect(last_RIR[1], visit = 1, effect = est_RIR_systematic[1], multiplicative = est_RIR_systematic_multiplicative[1]) - last_RIR[1],
+      last_eRIR_rnd = random_effect(last_RIR[1], effect = est_RIR_random[1], multiplicative = est_RIR_random_multiplicative[1]) - last_RIR[1],
+      last_eRIR = last_RIR[1] + last_eRIR_sys + last_eRIR_rnd,
+      last_eRIR = ifelse(last_eRIR < 0, 0, last_eRIR),
+      last_eRIR = round(last_eRIR),
+      est_RIR = last_eRIR + (RIR - last_RIR),
+      est_nRM = nRM + est_RIR - RIR,
+      `est_%MNR` = (rep / est_nRM) * 100
+    ) %>%
+    dplyr::select(-last_rep, -last_row, -last_RIR, -last_eRIR, -last_eRIR_sys, -last_eRIR_rnd)
 
   # Return cleaned sets
   return(cleaned_sets)

@@ -48,7 +48,7 @@
 #' plot(sets, visits = 1, x_var = "RIR")
 create_sets <- function(LEV_profile,
                         load,
-                        reps = rep(max_reps, length(load)),
+                        reps = rep(NA, length(load)),
                         load_type = "absolute",
                         max_reps = 100,
                         failed_reps = FALSE,
@@ -149,6 +149,8 @@ create_sets <- function(LEV_profile,
     set_1RM = sets_df$set_1RM,
     RTF = sets_df$RTF,
     nRM = sets_df$nRM,
+    target_reps = sets_df$target_reps,
+    reps_done = sets_df$reps_done,
     rep = sets_df$rep,
     rep_V0 = sets_df$rep_V0,
     rep_L0 = sets_df$rep_L0,
@@ -162,7 +164,9 @@ create_sets <- function(LEV_profile,
     best_measured_rep_velocity = sets_df$best_measured_rep_velocity,
     VL = sets_df$VL,
     `%VL` = sets_df$`%VL`,
-    VR = sets_df$VR
+    VR = sets_df$VR,
+    est_RIR = sets_df$est_RIR,
+    `est_%MNR` = sets_df$`est_%MNR`
   )
 
   return(sets)

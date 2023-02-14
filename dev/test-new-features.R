@@ -1,7 +1,26 @@
+data("strength_training_program")
+
+set.seed(10)
+program_sets <- create_profiles(athletes = 1, L0_visit_change = 1, L0_fatigue = -2.5) %>%
+  create_visits(1:12) %>%
+  create_prescription_1RM(buffer = 0.9) %>%
+  create_program_sets(
+    program_df = strength_training_program,
+    visit = "visit",
+    load = "perc_1RM",
+    reps = "target_reps",
+    load_type = "prescription 1RM") %>%
+  create_summary()
+
+plot(program_sets, type = "pooled")
+
+
+
 require(tidyverse)
 require(ggdist)
 require(directlabels)
 
+set.seed(1)
 athlete_profiles <- create_athletes(2)
 plot(athlete_profiles) +
   theme_ggdist()
@@ -15,7 +34,12 @@ LV_str <- paste0(round(LV_loads * 100, 1), "%")
 
 tests <- athlete_profiles %>%
   create_visits(1) %>%
+  create_sets(120, 8)
+
+
   create_tests(load_LV = LV_loads, load_RTF = RTF_loads)
+
+x <- tests %>% as.data.frame(tests)
 
 # Native plot
 plot(tests, facet = "set", smooth = FALSE) +
