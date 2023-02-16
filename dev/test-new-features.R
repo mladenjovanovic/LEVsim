@@ -1,60 +1,8 @@
-test_sets <- create_profiles(athletes = 1:2, L0_visit_random = 00, L0_fatigue = -10) %>%
-  create_visits(2) %>%
-  create_tests() %>%
-  create_summary()
-
-plot(test_sets, sets = "RTF", est_nRM = 5:15)
-
-data("strength_training_program")
-
-set.seed(10)
-program_sets <- create_profiles(athletes = 1, L0_visit_change = 1, L0_fatigue = -2.5) %>%
-  create_visits(1:12) %>%
-  create_prescription_1RM(buffer = 0.9) %>%
-  create_program_sets(
-    program_df = strength_training_program,
-    visit = "visit",
-    load = "perc_1RM",
-    reps = "target_reps",
-    load_type = "prescription 1RM") %>%
-  create_summary()
-
-plot(program_sets, type = "pooled")
-
-# Create random athletes/profiles
-set.seed(1667)
-
-sets <- create_athletes(5) %>%
-  create_visits(1:3) %>%
-  create_sets(
-    load = c(90, 110, 130),
-    load_type = "absolute"
-  )
-
-print(sets)
-
-# Extract data frame
-LEV_data <- as.data.frame(sets)
-# Or
-# LEV_data <- coef(sets)
-
-plot(sets)
-plot(sets, athletes = "Athlete 1")
-plot(sets, athletes = "Athlete 1", reps = 1)
-plot(sets, athletes = "Athlete 1", x_var = "RIR")
-
-# Another way to create LEV profiles
-sets <- create_profiles(athletes = c("Mladen", "Ivan"), L0 = c(200, 180)) %>%
-  create_visits(1) %>%
-  create_sets(load = c(100, 120, 140), load_type = "absolute")
-
-plot(sets)
-plot(sets, facet = NULL, x_var = "load")
-plot(sets, visits = 1, x_var = "RIR")
-
 require(tidyverse)
 require(ggdist)
 require(directlabels)
+
+data("strength_training_program")
 
 set.seed(1)
 athlete_profiles <- create_athletes(2)
@@ -70,18 +18,12 @@ LV_str <- paste0(round(LV_loads * 100, 1), "%")
 
 tests <- athlete_profiles %>%
   create_visits(1) %>%
-  create_sets(c(120, 150), failed_reps = FALSE) %>%
-  create_summary()
-
-
   create_tests(load_LV = LV_loads, load_RTF = RTF_loads)
-
-x <- tests %>% as.data.frame(tests)
 
 # Native plot
 plot(tests, facet = "set", smooth = FALSE) +
   theme_ggdist() +
-  geom_hline(aes(yintercept = v1RM))
+  geom_hline(aes(yintercept = v1RM), linetype = "dashed", alpha = 0.5)
 
 # Filter out the tests
 tests <- as.data.frame(tests)
