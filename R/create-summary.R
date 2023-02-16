@@ -30,6 +30,7 @@ create_summary <- function(LEV_sets) {
   load_index <- NULL
   load <- NULL
   RTF <- NULL
+  nRM <- NULL
   RIR <- NULL
   reps <- NULL
   `%MNR` <- NULL
@@ -40,6 +41,12 @@ create_summary <- function(LEV_sets) {
   VL <- NULL
   `%VL` <- NULL
   VR <- NULL
+  `est_%MNR` <- NULL
+  est_RIR <- NULL
+  reps_done <- NULL
+  set_to_failure <- NULL
+  target_reps <- NULL
+  est_nRM <- NULL
   # +++++++++++++++++++++++++++++++++++++++++++
 
   is_sets <- validate_LEV_sets(LEV_sets)
@@ -55,21 +62,26 @@ create_summary <- function(LEV_sets) {
       `1RM` = `1RM`[[1]],
       visit_1RM = visit_1RM[[1]],
       prescription_1RM = prescription_1RM[[1]],
+      set_to_failure = set_to_failure[[1]],
+      target_reps = target_reps[[1]],
       load = load[[1]],
-      RTF = RTF[[1]],
-      reps = max(rep),
-      RIR = RIR[[reps]],
-      `%MNR` = `%MNR`[[reps]],
+      nRM = nRM[[1]],
+      reps_done = reps_done[[1]],
+      RIR = RIR[reps_done],
+      `%MNR` = `%MNR`[reps_done],
+      est_RIR = est_RIR[reps_done],
+      est_nRM = est_nRM[[1]],
+      `est_%MNR` = `est_%MNR`[reps_done],
       first_true_rep_velocity = true_rep_velocity[[1]],
-      last_true_rep_velocity = true_rep_velocity[[reps]],
+      last_true_rep_velocity = true_rep_velocity[reps_done],
       first_biological_rep_velocity = biological_rep_velocity[[1]],
-      last_biological_rep_velocity = biological_rep_velocity[[reps]],
+      last_biological_rep_velocity = biological_rep_velocity[reps_done],
       first_measured_rep_velocity = measured_rep_velocity[[1]],
-      last_measured_rep_velocity = measured_rep_velocity[[reps]],
-      best_measured_rep_velocity = best_measured_rep_velocity[[reps]],
-      VL = VL[[reps]],
-      `%VL` = `%VL`[[reps]],
-      VR = VR[[reps]]
+      last_measured_rep_velocity = measured_rep_velocity[reps_done],
+      best_measured_rep_velocity = best_measured_rep_velocity[reps_done],
+      VL = VL[reps_done],
+      `%VL` = `%VL`[reps_done],
+      VR = VR[reps_done]
     )
 
   # Save as LEV_summary object
@@ -84,11 +96,16 @@ create_summary <- function(LEV_sets) {
     prescription_1RM = df$prescription_1RM,
     set = df$set,
     load_index = df$load_index,
+    set_to_failure = df$set_to_failure,
+    target_reps = df$target_reps,
     load = df$load,
-    RTF = df$RTF,
-    reps = df$reps,
+    nRM = df$nRM,
+    reps_done = df$reps_done,
     RIR = df$RIR,
     `%MNR` = df$`%MNR`,
+    est_RIR = df$est_RIR,
+    est_nRM = df$est_nRM,
+    `est_%MNR` = df$`est_%MNR`,
     first_true_rep_velocity = df$first_true_rep_velocity,
     last_true_rep_velocity = df$last_true_rep_velocity,
     first_biological_rep_velocity = df$first_biological_rep_velocity,

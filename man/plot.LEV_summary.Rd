@@ -22,22 +22,24 @@ S3 method for plotting LEV Sets Summaries
 \details{
 S3 method for plotting LEV Sets Summaries provides plenty of
 flexibility and control by using the \code{...} parameters.
-User can filter variables, use different x and y scales,
-provides colors and facets. Here are the extra parameters your
-can utilize:
+User can filter variables, provides colors and facets.
+Here are the extra parameters your can utilize:
 \describe{
 \item{athletes}{Althetes to keep in}
 \item{visits}{Visits to keep in}
 \item{sets}{Sets to keep in}
 \item{loads}{Loads to keep in}
-\item{RTFs}{Reps-To-Failure indicator (TRUE/FALSE) to keep in}
-\item{reps}{Repetitions to keep in}
+\item{nRMs}{N-Repetition-Maximum loads to keep in}
+\item{est_nRMs}{Estimated N-Repetition-Maximum loads to keep in}
+\item{sets_to_failure}{Sets-To-Failure indicator (TRUE/FALSE) to keep in}
+\item{target_repetitions}{Target repetitions to keep in}
+\item{repetitions_done}{Repetitions done to keep in}
 \item{RIRs}{Reps-In-Reserve to keep in}
-\item{y_var}{Variable on y-axis. Default is 'measured_rep_velocity'}
-\item{x_var}{Variable on x-axis. Default is 'load'}
+\item{est_RIRs}{Estimated Reps-In-Reserve to keep in}
 \item{color}{What variable should be used to coloring groups? Default is none}
 \item{facet}{Variable to be used for plot faceting. Athletes are already faceted,
 and this parameter allows for adding extra level. Default is 'visit'}
+\item{label_size}{Label size}
 }
 
 Please check the examples section for few examples

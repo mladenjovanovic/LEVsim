@@ -104,11 +104,15 @@ as.data.frame.LEV_sets <- function(x, row.names = NULL, optional = FALSE, ...) {
 #'      \item{athletes}{Althetes to keep in}
 #'      \item{visits}{Visits to keep in}
 #'      \item{sets}{Sets to keep in}
+#'      \item{reps}{Reps to keep in}
 #'      \item{loads}{Loads to keep in}
-#'      \item{RTFs}{Reps-To-Failure indicator (TRUE/FALSE) to keep in}
-#'      \item{reps}{Repetitions to keep in}
+#'      \item{sets_to_failure}{Sets to failure to keep in}
+#'      \item{target_repetitions}{Target repetitions to keep in}
+#'      \item{repetitions_done}{Repetitions done to keep in}
 #'      \item{RIRs}{Reps-In-Reserve to keep in}
+#'      \item{est_RIRs}{Reps-In-Reserve to keep in}
 #'      \item{nRMs}{N-Repetition-Maximum loads to keep in}
+#'      \item{est_nRMs}{Estimated N-Repetition-Maximum loads to keep in}
 #'      \item{failed_reps}{Should failed reps be kept in? Default is \code{FALSE}}
 #'      \item{y_var}{Variable on y-axis. Default is 'measured_rep_velocity'}
 #'      \item{x_var}{Variable on x-axis. Default is 'load'}
@@ -180,11 +184,15 @@ plot_LEV_sets <- function(df,
                           athletes = NULL,
                           visits = NULL,
                           sets = NULL,
-                          loads = NULL,
-                          RTFs = NULL,
                           reps = NULL,
-                          RIRs = NULL,
+                          loads = NULL,
+                          sets_to_failure = NULL,
+                          target_repetitions = NULL,
+                          repetitions_done = NULL,
                           nRMs = NULL,
+                          est_nRMs = NULL,
+                          RIRs = NULL,
+                          est_RIRs = NULL,
                           failed_reps = NULL,
                           y_var = "measured_rep_velocity",
                           x_var = "load",
@@ -203,11 +211,15 @@ plot_LEV_sets <- function(df,
   athlete <- NULL
   visit <- NULL
   set <- NULL
-  RTF <- NULL
+  set_to_failure <- NULL
   `%1RM` <- NULL
   `RIR` <- NULL
   `nRM` <- NULL
+  `est_nRM` <- NULL
   `failed_rep` <- NULL
+  est_RIR <- NULL
+  reps_done <- NULL
+  target_reps <- NULL
   # +++++++++++++++++++++++++++++++++++++++++++
 
   y_var_name <- as.name(y_var)
@@ -244,19 +256,29 @@ plot_LEV_sets <- function(df,
       dplyr::filter(set %in% sets)
   }
 
+  if (!is.null(reps)) {
+    df <- df %>%
+      dplyr::filter(rep %in% reps)
+  }
+
   if (!is.null(loads)) {
     df <- df %>%
       dplyr::filter(load %in% loads)
   }
 
-  if (!is.null(RTFs)) {
+  if (!is.null(sets_to_failure)) {
     df <- df %>%
-      dplyr::filter(RTF %in% RTFs)
+      dplyr::filter(set_to_failure %in% sets_to_failure)
   }
 
-  if (!is.null(reps)) {
+  if (!is.null(target_repetitions)) {
     df <- df %>%
-      dplyr::filter(rep %in% reps)
+      dplyr::filter(target_reps %in% target_repetitions)
+  }
+
+  if (!is.null(repetitions_done)) {
+    df <- df %>%
+      dplyr::filter(reps_done %in% repetitions_done)
   }
 
   if (!is.null(RIRs)) {
@@ -264,9 +286,19 @@ plot_LEV_sets <- function(df,
       dplyr::filter(RIR %in% RIRs)
   }
 
+  if (!is.null(est_RIRs)) {
+    df <- df %>%
+      dplyr::filter(est_RIR %in% est_RIRs)
+  }
+
   if (!is.null(nRMs)) {
     df <- df %>%
       dplyr::filter(nRM %in% nRMs)
+  }
+
+  if (!is.null(est_nRMs)) {
+    df <- df %>%
+      dplyr::filter(est_nRM %in% est_nRMs)
   }
 
   if (!is.null(failed_reps)) {

@@ -52,7 +52,10 @@ sets <- create_profiles(1, load_increment = 1) \%>\%
   create_prescription_1RM(
     120,
     # Prescription 1RM increases for 2.5kg every visit
-    visit_1RM_func = function(init_1RM, visit) {init_1RM + (visit - 1) * 2.5}) \%>\%
+    visit_1RM_func = function(init_1RM, visit) {
+      init_1RM + (visit - 1) * 2.5
+    }
+  ) \%>\%
   create_sets(load = c(0.7, 0.8), load_type = "prescription 1RM")
 
 plot(sets, x_var = "visit", y_var = "load", reps = 1, facet = NULL)

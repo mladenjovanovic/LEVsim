@@ -30,14 +30,19 @@
 #'   create_prescription_1RM(
 #'     120,
 #'     # Prescription 1RM increases for 2.5kg every visit
-#'     visit_1RM_func = function(init_1RM, visit) {init_1RM + (visit - 1) * 2.5}) %>%
+#'     visit_1RM_func = function(init_1RM, visit) {
+#'       init_1RM + (visit - 1) * 2.5
+#'     }
+#'   ) %>%
 #'   create_sets(load = c(0.7, 0.8), load_type = "prescription 1RM")
 #'
 #' plot(sets, x_var = "visit", y_var = "load", reps = 1, facet = NULL)
 #' plot(sets, x_var = "visit", y_var = "prescription_1RM", facet = NULL)
 create_prescription_1RM <- function(LEV_profile,
                                     init_1RM = NULL,
-                                    visit_1RM_func = function(init_1RM, visit) {init_1RM},
+                                    visit_1RM_func = function(init_1RM, visit) {
+                                      init_1RM
+                                    },
                                     load_perc = seq(0.8, 1.2, by = 0.025),
                                     buffer = 1,
                                     use_true_velocity = FALSE) {
@@ -54,9 +59,11 @@ create_prescription_1RM <- function(LEV_profile,
       load <- get_load_rounded(profile$profile$`1RM` * load_perc, profile$profile$load_increment)
       oneRM_trials <- get_sets(
         profile$profile,
-        load, max_reps = 1,
+        load,
+        max_reps = 1,
         use_true_velocity = use_true_velocity,
-        inter_set_fatigue = FALSE)
+        inter_set_fatigue = FALSE
+      )
       last_try <- min(which(oneRM_trials$failed_rep)) - 1
       init_1RM <- load[[last_try]] * buffer
     }

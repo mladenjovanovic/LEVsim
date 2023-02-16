@@ -30,7 +30,8 @@
 #'     visit = "visit",
 #'     load = "perc_1RM",
 #'     reps = "target_reps",
-#'     load_type = "prescription 1RM") %>%
+#'     load_type = "prescription 1RM"
+#'   ) %>%
 #'   create_summary()
 #'
 #' plot(program_sets, type = "pooled")
@@ -64,7 +65,6 @@ create_program_sets <- function(LEV_profile = create_profiles(),
 
     # Cycle through visits
     individual_sets <- purrr::map_df(profile$visit, function(.visit) {
-
       visit_1RM <- .visit$visit_1RM
       prescription_1RM <- .visit$prescription_1RM
       load_increment <- .visit$load_increment
@@ -75,7 +75,9 @@ create_program_sets <- function(LEV_profile = create_profiles(),
       program_load <- program_df_visit[[load]]
       program_reps <- program_df_visit[[reps]]
 
-      if(purrr::is_empty(program_load)) return(NULL)
+      if (purrr::is_empty(program_load)) {
+        return(NULL)
+      }
 
       # Create visit loads
       if (load_type == "absolute") {
@@ -129,8 +131,10 @@ create_program_sets <- function(LEV_profile = create_profiles(),
         set_V0 = visit_sets$set_V0,
         set_L0 = visit_sets$set_L0,
         set_1RM = visit_sets$set_1RM,
-        RTF = visit_sets$RTF,
         nRM = visit_sets$nRM,
+        target_reps = visit_sets$target_reps,
+        reps_done = visit_sets$reps_done,
+        set_to_failure = visit_sets$set_to_failure,
         rep = visit_sets$rep,
         rep_V0 = visit_sets$rep_V0,
         rep_L0 = visit_sets$rep_L0,
@@ -144,7 +148,10 @@ create_program_sets <- function(LEV_profile = create_profiles(),
         best_measured_rep_velocity = visit_sets$best_measured_rep_velocity,
         VL = visit_sets$VL,
         `%VL` = visit_sets$`%VL`,
-        VR = visit_sets$VR
+        VR = visit_sets$VR,
+        est_RIR = visit_sets$est_RIR,
+        `est_%MNR` = visit_sets$`est_%MNR`,
+        est_nRM = visit_sets$est_nRM
       )
 
       visit_sets <- as.data.frame(visit_sets)
@@ -174,7 +181,9 @@ create_program_sets <- function(LEV_profile = create_profiles(),
     return(individual_sets)
   })
 
-  if(purrr::is_empty(sets_df)) return()
+  if (purrr::is_empty(sets_df)) {
+    return()
+  }
   if (keep_program_df == FALSE) {
     # Save as LV_sets object
     sets_df <- new_sets(
@@ -193,8 +202,10 @@ create_program_sets <- function(LEV_profile = create_profiles(),
       set_V0 = sets_df$set_V0,
       set_L0 = sets_df$set_L0,
       set_1RM = sets_df$set_1RM,
-      RTF = sets_df$RTF,
       nRM = sets_df$nRM,
+      target_reps = sets_df$target_reps,
+      reps_done = sets_df$reps_done,
+      set_to_failure = sets_df$set_to_failure,
       rep = sets_df$rep,
       rep_V0 = sets_df$rep_V0,
       rep_L0 = sets_df$rep_L0,
@@ -208,7 +219,10 @@ create_program_sets <- function(LEV_profile = create_profiles(),
       best_measured_rep_velocity = sets_df$best_measured_rep_velocity,
       VL = sets_df$VL,
       `%VL` = sets_df$`%VL`,
-      VR = sets_df$VR
+      VR = sets_df$VR,
+      est_RIR = sets_df$est_RIR,
+      `est_%MNR` = sets_df$`est_%MNR`,
+      est_nRM = sets_df$est_nRM
     )
   }
 
