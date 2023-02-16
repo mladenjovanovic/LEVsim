@@ -37,7 +37,7 @@ LV_tests <-  tests %>%
   mutate(`Load (%1RM)` = round(100 *  load / visit_1RM, 0))
 
 # =====================================
-# LV Profile
+# Tests
 LV_tests %>%
   ggplot(aes(x = `Load (%1RM)`, y = measured_rep_velocity)) +
   theme_ggdist() +
@@ -47,7 +47,8 @@ LV_tests %>%
   ylab("Mean Velocity [m/s]") +
   xlab("Load [%1RM]") +
   facet_wrap(~athlete) +
-  theme(legend.position = "none") #+
+  theme(legend.position = "none") +
+  geom_hline(aes(yintercept = v1RM), linetype = "dashed", alpha = 0.5)
 #scale_color_brewer(palette = "Dark2")
 
 RTF_tests %>%
@@ -60,7 +61,8 @@ RTF_tests %>%
   ylab("Mean Velocity [m/s]") +
   xlab("Repetition") +
   theme(legend.position = "none") +
-  scale_color_brewer(palette = "Dark2")
+  scale_color_brewer(palette = "Dark2") +
+  geom_hline(aes(yintercept = v1RM), linetype = "dashed", alpha = 0.5)
 
 RTF_tests %>%
   ggplot(aes(y = measured_rep_velocity, x = RIR, color = `Load (%1RM)`)) +
@@ -71,7 +73,8 @@ RTF_tests %>%
   facet_wrap(~athlete) +
   ylab("MV [m/s]") +
   theme(legend.position = "none") +
-  scale_color_brewer(palette = "Dark2")
+  scale_color_brewer(palette = "Dark2") +
+  geom_hline(aes(yintercept = v1RM), linetype = "dashed", alpha = 0.5)
 
 RTF_tests %>%
   ggplot(aes(y = measured_rep_velocity, x = `%MNR`, color = `Load (%1RM)`)) +
@@ -82,7 +85,8 @@ RTF_tests %>%
   ylab("MV [m/s]")  +
   geom_dl(aes(label = paste0(`Load (%1RM)`, "  ")), method = list("first.bumpup", cex = 0.75,  hjust = 0, vjust = -1)) +
   theme(legend.position = "none") +
-  scale_color_brewer(palette = "Dark2")
+  scale_color_brewer(palette = "Dark2") +
+  geom_hline(aes(yintercept = v1RM), linetype = "dashed", alpha = 0.5)
 
 RTF_tests %>%
   ggplot(aes(y = `%VL`, x = `%MNR`, color = `Load (%1RM)`)) +
@@ -149,26 +153,12 @@ filled_training_log <- athlete_profiles %>%
     visit = "visit",
     load = "perc_1RM",
     reps = "target_reps",
-    load_type = "prescription 1RM",
-    keep_program_df = TRUE) %>%
+    load_type = "prescription 1RM")
+
+x <- filled_training_log %>%
+  create_summary() %>%
   as.data.frame()
 
-# Simulate eRIR and e%MNR
-eRIR_noise <- 0.3
-filled_training_log  <- filled_training_log %>%
-  group_by(athlete, phase, week, visit, session, set) %>%
-  mutate(
-    reps_done = max(rep),
-    last_RIR = RIR[reps_done],
-    last_eRIR = random_effect(last_RIR[1], effect = eRIR_noise, multiplicative = TRUE),
-    last_eRIR = if_else(last_eRIR < 0, 0, last_eRIR),
-    last_eRIR = round(last_eRIR),
-    est_RIR = last_eRIR + (reps_done - rep),
-    est_nRM = last_eRIR + reps_done,
-    `est_%MNR` = (rep / est_nRM) * 100
-    ) %>%
-  select(-reps_done, -last_RIR, -last_eRIR) %>%
-  ungroup()
 
 summary_training_log <- filled_training_log %>%
   group_by(athlete, phase, week, visit, session, set) %>%
