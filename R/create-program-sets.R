@@ -184,6 +184,7 @@ create_program_sets <- function(LEV_profile = create_profiles(),
   if (purrr::is_empty(sets_df)) {
     return()
   }
+
   if (keep_program_df == FALSE) {
     # Save as LV_sets object
     sets_df <- new_sets(
