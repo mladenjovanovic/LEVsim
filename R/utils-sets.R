@@ -22,6 +22,9 @@ get_last_RIR <- function(RIR, failed) {
   } else {
     # if there are failed reps
     last_RIR <- min(RIR) + 1
+
+    # if there are ONLY failed reps
+    if (length(RIR) == 1) last_RIR <- NA
   }
 
   last_RIR
@@ -38,6 +41,140 @@ get_reps_done <- function(rep, failed) {
   }
 
   last_rep
+}
+
+# =================================================
+
+get_sets_df <- function(LEV_df,
+                        max_reps = 100,
+                        use_true_velocity = FALSE,
+                        inter_set_fatigue = TRUE) {
+
+  # Generate all reps for trials and reps
+  LEV_df <- tidyr::expand_grid(
+    LEV_df,
+    rep = seq(1, max_reps)
+  ) %>%
+    dplyr::mutate(
+      set = load_index
+    )
+
+  if (inter_set_fatigue == TRUE) {
+    LEV_df <- LEV_df %>%
+      dplyr::mutate(
+        set_L0 = systematic_effect(L0, load_index - 1, L0_fatigue, L0_fatigue_multiplicative),
+        set_V0 = systematic_effect(V0, load_index - 1, V0_fatigue, V0_fatigue_multiplicative),
+        set_1RM = get_load_at_velocity(set_V0, set_L0, v1RM)
+      )
+  } else {
+    LEV_df <- LEV_df %>%
+      dplyr::mutate(
+        set_L0 = L0,
+        set_V0 = V0,
+        set_1RM = get_load_at_velocity(set_V0, set_L0, v1RM)
+      )
+  }
+
+  # Create rep velocities
+  LEV_df <- LEV_df %>%
+    dplyr::mutate(
+      # Effects of fatigue within-set (i.e., between reps)
+      rep_initial_velocity = get_velocity_at_load(set_V0, set_L0, load),
+      rep_V0 = set_V0 - V0_rep_drop * (set_V0 - rep_initial_velocity) * (rep - 1),
+      rep_L0 = set_L0 - L0_rep_drop * load * (rep - 1),
+
+      # True profile velocity
+      true_rep_velocity = get_velocity_at_load(rep_V0, rep_L0, load),
+
+      # Add biological variation
+      biological_rep_velocity = random_effect(true_rep_velocity, 1, biological_variation, biological_variation_multiplicative),
+
+      # Add instrumentation noise
+      measured_rep_velocity = random_effect(biological_rep_velocity, 1, instrumentation_noise, instrumentation_noise_multiplicative)
+    )
+
+  # Here use either true_rep_velocity or biological_rep_velocity to mark failed reps
+  if (use_true_velocity == TRUE) {
+    LEV_df <- LEV_df %>%
+      dplyr::mutate(
+        failed_rep = true_rep_velocity <= v1RM
+      )
+  } else {
+    LEV_df <- LEV_df %>%
+      dplyr::mutate(
+        failed_rep = biological_rep_velocity <= v1RM
+      )
+  }
+
+  # Estimate set params
+
+  set_params <- function(set) {
+    # Check if the failure is found
+    failure_point_found <- any(set$failed_rep)
+
+    # Calculate metrics
+    set_filled <- set %>%
+      # Find first occurrence where velocity drops below v1RM
+      # And filter everything after that including that
+      dplyr::mutate(
+        last_rep = get_last_rep(rep, failed_rep),
+        last_row = ifelse(is.na(last_rep), dplyr::n(), last_rep)
+      ) %>%
+      dplyr::filter(dplyr::row_number() <= last_row) %>%
+      # Rep exertion summaries
+      dplyr::mutate(
+        rep_1RM = get_load_at_velocity(rep_V0, rep_L0, v1RM),
+        RIR = last_rep - rep - 1,
+        nRM = last_rep - 1,
+        `%MNR` = (rep / nRM) * 100,
+        best_measured_rep_velocity = cummax(measured_rep_velocity),
+        VL = best_measured_rep_velocity - measured_rep_velocity,
+        `%VL` = VL / best_measured_rep_velocity * 100,
+        VR = 100 * (measured_rep_velocity - v1RM) / (best_measured_rep_velocity - v1RM)
+      ) %>%
+      dplyr::filter(rep <= ifelse(is.na(target_reps), Inf, target_reps))
+
+    # Calculate eRIR and e%MR
+    reps_done <- get_reps_done(set_filled$rep, set_filled$failed_rep)
+    last_RIR <- get_last_RIR(set_filled$RIR, set_filled$failed_rep)
+
+    last_eRIR_sys <- systematic_effect(
+      last_RIR,
+      visit = 1,
+      effect = set_filled$est_RIR_systematic[1],
+      multiplicative = set_filled$est_RIR_systematic_multiplicative[1]
+    ) - last_RIR
+
+
+    last_eRIR_rnd <- random_effect(
+      last_RIR,
+      effect = set_filled$est_RIR_random[1],
+      multiplicative = set_filled$est_RIR_random_multiplicative[1]
+    ) - last_RIR
+
+    last_eRIR <- last_RIR + last_eRIR_sys + last_eRIR_rnd
+
+    last_eRIR <- ifelse(last_eRIR < 0, 0, last_eRIR)
+    last_eRIR <- round(last_eRIR)
+
+    set_filled <- set_filled %>%
+      dplyr::mutate(
+        # Calculate estimated RIR and %MNR
+        reps_done = reps_done,
+        est_RIR = last_eRIR + (RIR - last_RIR),
+        est_nRM = nRM + est_RIR - RIR,
+        `est_%MNR` = (rep / est_nRM) * 100,
+        set_to_failure = ifelse(is.na(RIR), FALSE, ifelse(any(RIR <= 0), TRUE, FALSE))
+      )
+
+
+    set_filled
+  }
+
+  LEV_df %>%
+    dplyr::group_by(athlete, visit, load_index) %>%
+    dplyr::do(set_params(.)) %>%
+    dplyr::ungroup()
 }
 
 # Generate Single Visit Sets
@@ -218,8 +355,8 @@ get_sets <- function(visit_LEV_profile,
       set_to_failure = ifelse(is.na(RIR), FALSE, ifelse(any(RIR <= 0), TRUE, FALSE))
     ) %>%
     dplyr::select(-last_rep, -last_row, -last_RIR, -last_eRIR, -last_eRIR_sys, -last_eRIR_rnd) %>%
-    dplyr::ungroup() %>%
-    dplyr::arrange(load_index, rep)
+    dplyr::ungroup() #%>%
+    #dplyr::arrange(load_index, rep)
 
   # Return cleaned sets
   return(cleaned_sets)

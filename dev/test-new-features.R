@@ -143,12 +143,39 @@ athlete_nRM %>%
 
 #### Create training program
 
+require(tictoc)
+tic("fast")
+x1 <-  athlete_profiles %>%
+  create_visits(1:36) %>%
+  #create_visit_1RM() %>%
+  create_prescription_1RM(buffer = 0.9, visit_1RM_func = function(init_1RM, visit) {init_1RM + 2.5 * ((visit - 1) %/% 6)}) %>%
+  create_program_sets_fast(
+    visit =strength_training_program$visit,
+    load = strength_training_program$perc_1RM,
+    reps = strength_training_program$target_reps,
+    load_type = "prescription 1RM", failed_reps = TRUE)
+toc()
+
+tic("slow")
+x2 <-  athlete_profiles %>%
+  create_visits(1:36) %>%
+  #create_visit_1RM() %>%
+  create_prescription_1RM(buffer = 0.9, visit_1RM_func = function(init_1RM, visit) {init_1RM + 2.5 * ((visit - 1) %/% 6)}) %>%
+  create_program_sets(
+    program_df = strength_training_program,
+    visit = "visit",
+    load = "perc_1RM",
+    reps = "target_reps",
+    load_type = "prescription 1RM", failed_reps = TRUE)
+toc()
+
+
 # Prescription 1RM
 filled_training_log <- athlete_profiles %>%
   create_visits(1:36) %>%
-  create_visit_1RM() %>%
+  #create_visit_1RM() %>%
   create_prescription_1RM(buffer = 0.9, visit_1RM_func = function(init_1RM, visit) {init_1RM + 2.5 * ((visit - 1) %/% 6)}) %>%
-  create_program_sets(
+  create_program_sets_fast(
     program_df = strength_training_program,
     visit = "visit",
     load = "perc_1RM",
