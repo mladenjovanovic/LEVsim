@@ -14,6 +14,7 @@ create_program_sets(
   load_type = "absolute",
   max_reps = 100,
   failed_reps = FALSE,
+  failed_sets = FALSE,
   use_true_velocity = FALSE,
   inter_set_fatigue = TRUE,
   keep_program_df = FALSE
@@ -39,6 +40,8 @@ repetitions is located}
 \item{max_reps}{How many maximum reps to generate to search for failure? Default is 100}
 
 \item{failed_reps}{Should failed-reps be included in the output? Default is \code{FALSE}}
+
+\item{failed_sets}{Should failed-sets be included in the output? Default is \code{FALSE}}
 
 \item{use_true_velocity}{When estimating failure, should true or biological (default) velocity be used?}
 

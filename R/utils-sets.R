@@ -22,6 +22,9 @@ get_last_RIR <- function(RIR, failed) {
   } else {
     # if there are failed reps
     last_RIR <- min(RIR) + 1
+
+    # if there are ONLY failed reps
+    if (length(RIR) == 1) last_RIR <- NA
   }
 
   last_RIR
@@ -53,7 +56,8 @@ get_sets <- function(visit_LEV_profile,
                      reps = rep(NA, length(load)),
                      max_reps = 100,
                      use_true_velocity = FALSE,
-                     inter_set_fatigue = TRUE) {
+                     inter_set_fatigue = TRUE,
+                     subjective_ratings = TRUE) {
 
   # +++++++++++++++++++++++++++++++++++++++++++
   # Code chunk for dealing with R CMD check note
@@ -202,25 +206,73 @@ get_sets <- function(visit_LEV_profile,
       VR = 100 * (measured_rep_velocity - v1RM) / (best_measured_rep_velocity - v1RM)
     ) %>%
     dplyr::mutate(set = load_index) %>%
-    dplyr::filter(rep <= ifelse(is.na(target_reps), Inf, target_reps)) %>%
-    dplyr::mutate(
-      # Calculate estimated RIR and %MNR
-      reps_done = get_reps_done(rep, failed_rep),
-      last_RIR = get_last_RIR(RIR, failed_rep),
-      last_eRIR_sys = systematic_effect(last_RIR[1], visit = 1, effect = est_RIR_systematic[1], multiplicative = est_RIR_systematic_multiplicative[1]) - last_RIR[1],
-      last_eRIR_rnd = random_effect(last_RIR[1], effect = est_RIR_random[1], multiplicative = est_RIR_random_multiplicative[1]) - last_RIR[1],
-      last_eRIR = last_RIR[1] + last_eRIR_sys + last_eRIR_rnd,
-      last_eRIR = ifelse(last_eRIR < 0, 0, last_eRIR),
-      last_eRIR = round(last_eRIR),
-      est_RIR = last_eRIR + (RIR - last_RIR),
-      est_nRM = nRM + est_RIR - RIR,
-      `est_%MNR` = (rep / est_nRM) * 100,
-      set_to_failure = ifelse(is.na(RIR), FALSE, ifelse(any(RIR <= 0), TRUE, FALSE))
-    ) %>%
-    dplyr::select(-last_rep, -last_row, -last_RIR, -last_eRIR, -last_eRIR_sys, -last_eRIR_rnd) %>%
-    dplyr::ungroup() %>%
-    dplyr::arrange(load_index, rep)
+    dplyr::filter(rep <= ifelse(is.na(target_reps), Inf, target_reps))
+
+  if (subjective_ratings == TRUE) {
+    cleaned_sets <- cleaned_sets %>%
+      dplyr::mutate(
+        # Calculate estimated RIR and %MNR
+        reps_done = get_reps_done(rep, failed_rep),
+        last_RIR = get_last_RIR(RIR, failed_rep),
+        last_eRIR_sys = systematic_effect(last_RIR[1], visit = 1, effect = est_RIR_systematic[1], multiplicative = est_RIR_systematic_multiplicative[1]) - last_RIR[1],
+        last_eRIR_rnd = random_effect(last_RIR[1], effect = est_RIR_random[1], multiplicative = est_RIR_random_multiplicative[1]) - last_RIR[1],
+        last_eRIR = last_RIR[1] + last_eRIR_sys + last_eRIR_rnd,
+        last_eRIR = ifelse(last_eRIR < 0, 0, last_eRIR),
+        last_eRIR = round(last_eRIR),
+        est_RIR = last_eRIR + (RIR - last_RIR),
+        est_nRM = nRM + est_RIR - RIR,
+        `est_%MNR` = (rep / est_nRM) * 100,
+        set_to_failure = ifelse(is.na(RIR), FALSE, ifelse(any(RIR <= 0), TRUE, FALSE))
+      ) %>%
+      dplyr::select(-last_rep, -last_row, -last_RIR, -last_eRIR, -last_eRIR_sys, -last_eRIR_rnd) %>%
+      dplyr::ungroup()
+  } else {
+    cleaned_sets <- cleaned_sets %>%
+      dplyr::mutate(
+        # Calculate estimated RIR and %MNR
+        reps_done = get_reps_done(rep, failed_rep),
+        est_RIR = NA,
+        est_nRM = NA,
+        `est_%MNR` = NA,
+        set_to_failure = ifelse(is.na(RIR), FALSE, ifelse(any(RIR <= 0), TRUE, FALSE))
+      ) %>%
+      dplyr::select(-last_rep, -last_row) %>%
+      dplyr::ungroup()
+  }
+
 
   # Return cleaned sets
   return(cleaned_sets)
+}
+
+# Filter missing reps
+#
+# Internal function for filtering missing reps, but keeping load_index
+#
+# @return Data frame
+filter_missing_reps <- function(sets, failed_sets) {
+  # +++++++++++++++++++++++++++++++++++++++++++
+  # Code chunk for dealing with R CMD check note
+  failed_rep <- NULL
+  athlete <- NULL
+  visit <- NULL
+  load_index <- NULL
+  . <- NULL
+  # +++++++++++++++++++++++++++++++++++++++++++
+
+  filter_set <- function(set) {
+    if (nrow(set) == 1 & failed_sets == TRUE) {
+      # Only one rep is done, thus it must be kept
+      set_filtered <- set
+    } else {
+      set_filtered <- set %>%
+        dplyr::filter(failed_rep == FALSE)
+    }
+    set_filtered
+  }
+
+  sets %>%
+    dplyr::group_by(athlete, visit, load_index) %>%
+    dplyr::do(filter_set(.)) %>%
+    dplyr::ungroup()
 }

@@ -84,6 +84,20 @@ create_summary <- function(LEV_sets) {
       VR = VR[reps_done]
     )
 
+  # Make sure that the load_indexes are kept
+  only_load_index <- sets %>%
+    dplyr::group_by(athlete, visit, set, load_index) %>%
+    dplyr::summarise(
+      athlete = athlete[1],
+      visit = visit[1],
+      set = set[1],
+      load_index = load_index[1]
+    ) %>%
+    dplyr::ungroup()
+
+  df <- only_load_index %>%
+    dplyr::left_join(df, by = c("athlete", "visit", "set", "load_index"))
+
   # Save as LEV_summary object
   new_summary(
     athlete = df$athlete,

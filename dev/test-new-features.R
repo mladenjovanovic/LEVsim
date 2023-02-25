@@ -16,15 +16,19 @@ RTF_loads_str <- paste0(round(RTF_loads * 100, 0), "%")
 LV_loads <- c(0.5, 0.6, 0.7, 0.8, 0.85, 0.9, 0.95, 0.975, 1)
 LV_str <- paste0(round(LV_loads * 100, 1), "%")
 
+
 tests <- athlete_profiles %>%
   create_visits(1) %>%
-  create_tests(load_LV = LV_loads, load_RTF = RTF_loads)
+  create_tests(load_LV = LV_loads, load_RTF = RTF_loads, failed_reps = TRUE, failed_sets = TRUE)
 
 # Native plot
-plot(tests, facet = "set", smooth = FALSE) +
+plot(tests, facet = "set", smooth = FALSE, color = "failed_rep") +
   theme_ggdist() +
-  geom_hline(aes(yintercept = v1RM), linetype = "dashed", alpha = 0.5)
+  geom_hline(aes(yintercept = v1RM), linetype = "dashed", alpha = 0.5) +
+  labs(color ='Failed Rep') +
+  scale_color_manual(values = c("black", "red"))
 
+stop()
 # Filter out the tests
 tests <- as.data.frame(tests)
 
@@ -142,14 +146,17 @@ athlete_nRM %>%
   scale_color_brewer(palette = "Dark2")
 
 #### Create training program
-
+stop()
 # Prescription 1RM
+require(tictoc)
+
 filled_training_log <- athlete_profiles %>%
   create_visits(1:36) %>%
-  create_visit_1RM() %>%
+  #create_visit_1RM() %>%
   create_prescription_1RM(buffer = 0.9, visit_1RM_func = function(init_1RM, visit) {init_1RM + 2.5 * ((visit - 1) %/% 6)}) %>%
   create_program_sets(
-    program_df = strength_training_program,
+    program_df = strength_training_program %>%
+      slice_tail(n=1),
     visit = "visit",
     load = "perc_1RM",
     reps = "target_reps",
@@ -157,7 +164,7 @@ filled_training_log <- athlete_profiles %>%
 
 x <- filled_training_log %>%
   create_summary() %>%
-  as.data.frame()
+  plot()#as.data.frame()
 
 
 summary_training_log <- filled_training_log %>%

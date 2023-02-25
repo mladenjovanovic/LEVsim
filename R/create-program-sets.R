@@ -12,6 +12,7 @@
 #'      'prescription 1RM'
 #' @param max_reps How many maximum reps to generate to search for failure? Default is 100
 #' @param failed_reps Should failed-reps be included in the output? Default is \code{FALSE}
+#' @param failed_sets Should failed-sets be included in the output? Default is \code{FALSE}
 #' @param use_true_velocity When estimating failure, should true or biological (default) velocity be used?
 #' @param inter_set_fatigue Should profile inter-set fatigue parameters be utilized? Default is \code{TRUE}
 #' @param keep_program_df Should \code{LEV_sets} object be returned or \code{data.frame}
@@ -43,6 +44,7 @@ create_program_sets <- function(LEV_profile = create_profiles(),
                                 load_type = "absolute",
                                 max_reps = 100,
                                 failed_reps = FALSE,
+                                failed_sets = FALSE,
                                 use_true_velocity = FALSE,
                                 inter_set_fatigue = TRUE,
                                 keep_program_df = FALSE) {
@@ -165,15 +167,12 @@ create_program_sets <- function(LEV_profile = create_profiles(),
         suffix <- c(".program", "")
       }
 
-      visit_sets <- dplyr::left_join(program_df_visit, visit_sets, by = "load_index", suffix = suffix)
-
       # Filter out failed reps
       if (failed_reps == FALSE) {
-        visit_sets <- visit_sets %>%
-          dplyr::filter(
-            failed_rep == FALSE
-          )
+        visit_sets <- filter_missing_reps(visit_sets, failed_sets = failed_sets)
       }
+
+      visit_sets <- dplyr::left_join(program_df_visit, visit_sets, by = "load_index", suffix = suffix)
 
       visit_sets
     })

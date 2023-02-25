@@ -9,6 +9,7 @@
 #' @param load_RTF Percentages used to estimate RTF profile
 #' @param max_reps How many maximum reps to generate to search for failure? Default is 100
 #' @param failed_reps Should failed-reps be included in the output? Default is \code{FALSE}
+#' @param failed_sets Should failed-sets be included in the output? Default is \code{FALSE}
 #' @param use_true_velocity When estimating failure, should true or biological (default) velocity be used?
 #'
 #' @return Object \code{LEV_sets}
@@ -27,6 +28,7 @@ create_tests <- function(LEV_profile = create_profiles(),
                          load_RTF = c(0.9, 0.8, 0.7),
                          max_reps = 100,
                          failed_reps = FALSE,
+                         failed_sets = FALSE,
                          use_true_velocity = FALSE) {
 
   # +++++++++++++++++++++++++++++++++++++++++++
@@ -53,6 +55,7 @@ create_tests <- function(LEV_profile = create_profiles(),
       load_type = "visit 1RM",
       use_true_velocity = use_true_velocity,
       failed_reps = failed_reps,
+      failed_sets = failed_sets,
       inter_set_fatigue = FALSE
     )
 
@@ -68,6 +71,7 @@ create_tests <- function(LEV_profile = create_profiles(),
       load_type = "visit 1RM",
       use_true_velocity = use_true_velocity,
       failed_reps = failed_reps,
+      failed_sets = failed_sets,
       inter_set_fatigue = FALSE
     )
 
