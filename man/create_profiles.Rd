@@ -5,119 +5,129 @@
 \title{Create Load-Exertion-Velocity Profiles}
 \usage{
 create_profiles(
-  athletes = NA,
+  athlete = NA,
   V0 = 1.8,
-  V0_rep_drop = 0,
-  V0_fatigue = 0,
-  V0_fatigue_multiplicative = FALSE,
-  V0_visit_change = 0,
-  V0_visit_change_multiplicative = FALSE,
-  V0_visit_random = 0,
-  V0_visit_random_multiplicative = FALSE,
+  V0_rep_drop_additive = 0,
+  V0_rep_drop_multiplicative = 0,
+  V0_fatigue_additive = 0,
+  V0_fatigue_multiplicative = 0,
+  V0_visit_change_additive = 0,
+  V0_visit_change_multiplicative = 0,
+  V0_visit_random_additive = 0,
+  V0_visit_random_multiplicative = 0,
   L0 = 180,
-  L0_rep_drop = 0.04,
-  L0_fatigue = 0,
-  L0_fatigue_multiplicative = FALSE,
-  L0_visit_change = 0,
-  L0_visit_change_multiplicative = FALSE,
-  L0_visit_random = 0,
-  L0_visit_random_multiplicative = FALSE,
+  L0_rep_drop_additive = 0,
+  L0_rep_drop_multiplicative = 0.04,
+  L0_fatigue_additive = 0,
+  L0_fatigue_multiplicative = 0,
+  L0_visit_change_additive = 0,
+  L0_visit_change_multiplicative = 0,
+  L0_visit_random_additive = 0,
+  L0_visit_random_multiplicative = 0,
   v1RM = 0.2,
-  v1RM_random = 0,
-  v1RM_random_multiplicative = FALSE,
-  est_RIR_systematic = 0,
-  est_RIR_systematic_multiplicative = FALSE,
-  est_RIR_random = 0,
-  est_RIR_random_multiplicative = TRUE,
-  biological_variation = 0,
-  biological_variation_multiplicative = TRUE,
-  instrumentation_noise = 0,
-  instrumentation_noise_multiplicative = FALSE,
+  v1RM_random_additive = 0,
+  v1RM_random_multiplicative = 0,
+  est_RIR_systematic_additive = 0,
+  est_RIR_systematic_multiplicative = 0,
+  est_RIR_random_additive = 0,
+  est_RIR_random_multiplicative = 0,
+  biological_variation_additive = 0,
+  biological_variation_multiplicative = 0,
+  instrumentation_noise_additive = 0,
+  instrumentation_noise_multiplicative = 0,
   load_increment = 2.5
 )
 }
 \arguments{
-\item{athletes}{Numeric or character vector indicating different athletes. Can also be names}
+\item{athlete}{Numeric or character vector indicating different athletes. Can also be names}
 
 \item{V0}{Highest velocity when load equals zero}
 
-\item{V0_rep_drop}{Number indicating proportion of \code{V0} dropping
-when multiple repetitions are performed. This parameter models the
-exertion-velocity characteristics}
+\item{V0_rep_drop_additive}{Number indicating fixed amount of \code{V0} dropping
+per repetition within set. This parameter models the
+exertion-velocity characteristic}
 
-\item{V0_fatigue}{Number indicating systematic change in \code{V0} per
-each set}
+\item{V0_rep_drop_multiplicative}{Number indicating proportion of \code{V0} dropping
+per repetition within set. This parameter models the
+exertion-velocity characteristic}
 
-\item{V0_fatigue_multiplicative}{Should multiplicative fatigue be used? Default
-is \code{FALSE}}
+\item{V0_fatigue_additive}{Number indicating additive systematic change in \code{V0} across multiple
+sets, simulating effect of fatigue}
 
-\item{V0_visit_change}{Number indicating systematic change in \code{V0} per
-each visit to the laboratory/gym}
+\item{V0_fatigue_multiplicative}{Number indicating proportional systematic change in \code{V0} across multiple
+sets, simulating effect of fatigue}
 
-\item{V0_visit_change_multiplicative}{Should multiplicative change be used? Default
-is \code{FALSE}}
+\item{V0_visit_change_additive}{Number indicating additive systematic change in \code{V0} per
+each visit}
 
-\item{V0_visit_random}{Number indicating SD of random change in \code{V0} for
-each visit to the laboratory/gym}
+\item{V0_visit_change_multiplicative}{Number indicating proportional systematic change in \code{V0} per
+each visit}
 
-\item{V0_visit_random_multiplicative}{Should multiplicative random error be used? Default
-is \code{FALSE}}
+\item{V0_visit_random_additive}{Number indicating SD of additive random change in \code{V0} for
+each visit}
+
+\item{V0_visit_random_multiplicative}{Number indicating SD of proportional random change in \code{V0} for
+each visit}
 
 \item{L0}{Highest load when velocity equals zero}
 
-\item{L0_rep_drop}{Number indicating proportion of \code{L0} dropping
-when multiple repetitions are performed. This parameter models the
-exertion-velocity characteristics}
+\item{L0_rep_drop_additive}{Number indicating fixed amount of \code{L0} dropping
+per repetition within set. This parameter models the
+exertion-velocity characteristic}
 
-\item{L0_fatigue}{Number indicating systematic change in \code{L0} per
-each set}
+\item{L0_rep_drop_multiplicative}{Number indicating proportion of \code{L0} dropping
+per repetition within set. This parameter models the
+exertion-velocity characteristic}
 
-\item{L0_fatigue_multiplicative}{Should multiplicative fatigue be used? Default
-is \code{FALSE}}
+\item{L0_fatigue_additive}{Number indicating additive systematic change in \code{L0} across multiple
+sets, simulating effect of fatigue}
 
-\item{L0_visit_change}{Number indicating systematic change in \code{L0} per
-each visit to the laboratory/gym}
+\item{L0_fatigue_multiplicative}{Number indicating proportional systematic change in \code{L0} across multiple
+sets, simulating effect of fatigue}
 
-\item{L0_visit_change_multiplicative}{Should multiplicative change be used? Default
-is \code{FALSE}}
+\item{L0_visit_change_additive}{Number indicating additive systematic change in \code{L0} per
+each visit}
 
-\item{L0_visit_random}{Number indicating SD of random change in \code{L0} for
-each visit to the laboratory/gym}
+\item{L0_visit_change_multiplicative}{Number indicating proportional systematic change in \code{L0} per
+each visit}
 
-\item{L0_visit_random_multiplicative}{Should multiplicative random error be used? Default
-is \code{FALSE}}
+\item{L0_visit_random_additive}{Number indicating SD of additive random change in \code{L0} for
+each visit}
+
+\item{L0_visit_random_multiplicative}{Number indicating SD of proportional random change in \code{L0} for
+each visit}
 
 \item{v1RM}{Velocity at 1RM, or Minimum Velocity Threshold}
 
-\item{v1RM_random}{Number indicating SD of random change in \code{v1RM} for
-each visit to the laboratory/gym}
+\item{v1RM_random_additive}{Number indicating SD of additive random change in \code{v1RM} for
+each visit}
 
-\item{v1RM_random_multiplicative}{Should multiplicative random error be used? Default
-is \code{FALSE}}
+\item{v1RM_random_multiplicative}{Number indicating SD of proportional random change in \code{v1RM} for
+each visit}
 
-\item{est_RIR_systematic}{Number indicating systematic effect of the random biological variation
-in estimating \code{RIR}}
+\item{est_RIR_systematic_additive}{Number indicating systematic additive effect of the random
+biological variation in estimating \code{RIR}}
 
-\item{est_RIR_systematic_multiplicative}{Should multiplicative random error be used? Default
-is \code{FALSE}}
+\item{est_RIR_systematic_multiplicative}{Number indicating systematic proportional effect of the random
+biological variation in estimating \code{RIR}}
 
-\item{est_RIR_random}{Number indicating SD of the random biological variation in estimating
+\item{est_RIR_random_additive}{Number indicating SD of the random additive biological variation in estimating
 \code{RIR}}
 
-\item{est_RIR_random_multiplicative}{Should multiplicative random error be used? Default
-is \code{TRUE}}
+\item{est_RIR_random_multiplicative}{Number indicating SD of the random proportional biological variation
+in estimating \code{RIR}}
 
-\item{biological_variation}{Number indicating SD of the random biological variation in velocity
-when performing repetitions}
+\item{biological_variation_additive}{Number indicating SD of the random additive biological variation
+in velocity when performing repetitions}
 
-\item{biological_variation_multiplicative}{Should multiplicative random error be used? Default
-is \code{TRUE}}
+\item{biological_variation_multiplicative}{Number indicating SD of the random proportional biological variation
+in velocity when performing repetitions}
 
-\item{instrumentation_noise}{Number indicating SD of the random instrumentation noise when
+\item{instrumentation_noise_additive}{Number indicating SD of the random additive instrumentation noise when
 measuring repetition velocity}
 
-\item{instrumentation_noise_multiplicative}{Should multiplicative random error be used? Default
-is \code{FALSE}}
+\item{instrumentation_noise_multiplicative}{Number indicating SD of the random proportional instrumentation noise
+when measuring repetition velocity}
 
 \item{load_increment}{What should be the minimal jump in load? Default is 2.5, common load jump
 in kg in resistance training}
@@ -153,7 +163,7 @@ plot(sets, athletes = "Athlete 1", reps = 1)
 plot(sets, athletes = "Athlete 1", x_var = "RIR")
 
 # Another way to create LEV profiles
-sets <- create_profiles(athletes = c("Mladen", "Ivan"), L0 = c(200, 180)) \%>\%
+sets <- create_profiles(athlete = c("Mladen", "Ivan"), L0 = c(200, 180)) \%>\%
   create_visits(1) \%>\%
   create_sets(load = c(100, 120, 140), load_type = "absolute")
 
