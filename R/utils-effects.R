@@ -18,7 +18,7 @@ systematic_effect <- function(x, visit = 0, effect = 0, multiplicative = FALSE) 
 
   with(df, dplyr::if_else(
     multiplicative == TRUE,
-    x * (effect^visit),
+    x * ((1 + effect)^visit),
     x + (visit * effect)
   ))
 }
