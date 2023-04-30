@@ -19,7 +19,7 @@ create_prescription_1RM(
 \item{LEV_profile}{Object returned from \code{\link{create_visits}}}
 
 \item{init_1RM}{Initial 1RM value. If \code{NULL} (default), then initial 1RM is estimated using
-profile parameters and used}
+profile parameters and used to prescribe}
 
 \item{visit_1RM_func}{Function to calculate visit 1RM using \code{init_1RM} and visit as parameters.
 By default, there is no change in \code{init_1RM} across visits}
