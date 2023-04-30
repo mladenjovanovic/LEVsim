@@ -32,7 +32,7 @@
 #' plot(sets, athletes = "Athlete 1", x_var = "RIR")
 #'
 #' # Another way to create LEV profiles
-#' sets <- create_profiles(athletes = c("Mladen", "Ivan"), L0 = c(200, 180)) %>%
+#' sets <- create_profiles(athlete = c("Mladen", "Ivan"), L0 = c(200, 180)) %>%
 #'   create_visits(1) %>%
 #'   create_sets(load = c(100, 120, 140), load_type = "absolute")
 #'
@@ -46,20 +46,20 @@ create_visits <- function(LEV_profile = create_profiles(),
   # +++++++++++++++++++++++++++++++++++++++++++
   # Code chunk for dealing with R CMD check note
   V0 <- NULL
-  V0_visit_change <- NULL
+  V0_visit_change_additive <- NULL
   V0_visit_change_multiplicative <- NULL
   L0 <- NULL
-  L0_visit_change <- NULL
+  L0_visit_change_additive <- NULL
   L0_visit_change_multiplicative <- NULL
   new_V0 <- NULL
-  V0_visit_random <- NULL
+  V0_visit_random_additive <- NULL
   V0_visit_random_multiplicative <- NULL
   new_L0 <- NULL
-  L0_visit_random <- NULL
+  L0_visit_random_additive <- NULL
   L0_visit_random_multiplicative <- NULL
   v1RM <- NULL
   new_v1RM <- NULL
-  v1RM_random <- NULL
+  v1RM_random_additive <- NULL
   v1RM_random_multiplicative <- NULL
   # +++++++++++++++++++++++++++++++++++++++++++
 
@@ -83,36 +83,42 @@ create_visits <- function(LEV_profile = create_profiles(),
 
       # V0 visit effects
       V0 = true_profile$V0,
-      V0_rep_drop = true_profile$V0_rep_drop,
-      V0_fatigue = true_profile$V0_fatigue,
+      V0_rep_drop_additive = true_profile$V0_rep_drop_additive,
+      V0_rep_drop_multiplicative = true_profile$V0_rep_drop_multiplicative,
+      V0_fatigue_additive = true_profile$V0_fatigue_additive,
       V0_fatigue_multiplicative = true_profile$V0_fatigue_multiplicative,
-      V0_visit_change = true_profile$V0_visit_change,
+      V0_visit_change_additive = true_profile$V0_visit_change_additive,
       V0_visit_change_multiplicative = true_profile$V0_visit_change_multiplicative,
-      V0_visit_random = true_profile$V0_visit_random,
+      V0_visit_random_additive = true_profile$V0_visit_random_additive,
       V0_visit_random_multiplicative = true_profile$V0_visit_random_multiplicative,
 
       # L0 visit effects
       L0 = true_profile$L0,
-      L0_rep_drop = true_profile$L0_rep_drop,
-      L0_fatigue = true_profile$L0_fatigue,
+      L0_rep_drop_additive = true_profile$L0_rep_drop_additive,
+      L0_rep_drop_multiplicative = true_profile$L0_rep_drop_multiplicative,
+      L0_fatigue_additive = true_profile$L0_fatigue_additive,
       L0_fatigue_multiplicative = true_profile$L0_fatigue_multiplicative,
-      L0_visit_change = true_profile$L0_visit_change,
+      L0_visit_change_additive = true_profile$L0_visit_change_additive,
       L0_visit_change_multiplicative = true_profile$L0_visit_change_multiplicative,
-      L0_visit_random = true_profile$L0_visit_random,
+      L0_visit_random_additive = true_profile$L0_visit_random_additive,
       L0_visit_random_multiplicative = true_profile$L0_visit_random_multiplicative,
 
       # v1RM visit effects
       v1RM = true_profile$v1RM,
-      v1RM_random = true_profile$v1RM_random,
+      v1RM_random_additive = true_profile$v1RM_random_additive,
       v1RM_random_multiplicative = true_profile$v1RM_random_multiplicative,
-      est_RIR_systematic = true_profile$est_RIR_systematic,
+
+      est_RIR_systematic_additive = true_profile$est_RIR_systematic_additive,
       est_RIR_systematic_multiplicative = true_profile$est_RIR_systematic_multiplicative,
-      est_RIR_random = true_profile$est_RIR_random,
+      est_RIR_random_additive = true_profile$est_RIR_random_additive,
       est_RIR_random_multiplicative = true_profile$est_RIR_random_multiplicative,
-      biological_variation = true_profile$biological_variation,
+
+      biological_variation_additive = true_profile$biological_variation_additive,
       biological_variation_multiplicative = true_profile$biological_variation_multiplicative,
-      instrumentation_noise = true_profile$instrumentation_noise,
+
+      instrumentation_noise_additive = true_profile$instrumentation_noise_additive,
       instrumentation_noise_multiplicative = true_profile$instrumentation_noise_multiplicative,
+
       load_increment = true_profile$load_increment
     )
 
@@ -121,13 +127,21 @@ create_visits <- function(LEV_profile = create_profiles(),
       dplyr::mutate(
         # Systematic effects
         # Deduct 1 from visit since first visit is initial without systematic effects
-        new_V0 = systematic_effect(V0, visit - 1, V0_visit_change, V0_visit_change_multiplicative),
-        new_L0 = systematic_effect(L0, visit - 1, L0_visit_change, L0_visit_change_multiplicative),
+        new_V0 = systematic_effect(V0, visit - 1, V0_visit_change_multiplicative, TRUE),
+        new_V0 = systematic_effect(new_V0, visit - 1, V0_visit_change_additive, FALSE),
+
+        new_L0 = systematic_effect(L0, visit - 1, L0_visit_change_multiplicative, TRUE),
+        new_L0 = systematic_effect(new_L0, visit - 1, L0_visit_change_additive, FALSE),
 
         # Random effects
-        new_V0 = random_effect(new_V0, visit - 1, V0_visit_random, V0_visit_random_multiplicative),
-        new_L0 = random_effect(new_L0, visit - 1, L0_visit_random, L0_visit_random_multiplicative),
-        new_v1RM = random_effect(v1RM, visit - 1, v1RM_random, v1RM_random_multiplicative),
+        new_V0 = random_effect(new_V0, visit - 1, V0_visit_random_multiplicative, TRUE),
+        new_V0 = random_effect(new_V0, visit - 1, V0_visit_random_additive, FALSE),
+
+        new_L0 = random_effect(new_L0, visit - 1, L0_visit_random_multiplicative, TRUE),
+        new_L0 = random_effect(new_L0, visit - 1, L0_visit_random_additive, FALSE),
+
+        new_v1RM = random_effect(v1RM, visit - 1, v1RM_random_multiplicative, TRUE),
+        new_v1RM = random_effect(new_v1RM, visit - 1, v1RM_random_additive, FALSE),
 
         # Check if v1RM is below zero
         new_v1RM = dplyr::if_else(new_v1RM < 0, 0, new_v1RM)
@@ -140,31 +154,33 @@ create_visits <- function(LEV_profile = create_profiles(),
         athlete = visit$athlete,
         visit = visit$visit,
         V0 = visit$new_V0,
-        V0_rep_drop = visit$V0_rep_drop,
-        V0_fatigue = visit$V0_fatigue,
+        V0_rep_drop_additive = visit$V0_rep_drop_additive,
+        V0_rep_drop_multiplicative = visit$V0_rep_drop_multiplicative,
+        V0_fatigue_additive = visit$V0_fatigue_additive,
         V0_fatigue_multiplicative = visit$V0_fatigue_multiplicative,
-        V0_visit_change = visit$V0_visit_change,
+        V0_visit_change_additive = visit$V0_visit_change_additive,
         V0_visit_change_multiplicative = visit$V0_visit_change_multiplicative,
-        V0_visit_random = visit$V0_visit_random,
+        V0_visit_random_additive = visit$V0_visit_random_additive,
         V0_visit_random_multiplicative = visit$V0_visit_random_multiplicative,
         L0 = visit$new_L0,
-        L0_rep_drop = visit$L0_rep_drop,
-        L0_fatigue = visit$L0_fatigue,
+        L0_rep_drop_additive = visit$L0_rep_drop_additive,
+        L0_rep_drop_multiplicative = visit$L0_rep_drop_multiplicative,
+        L0_fatigue_additive = visit$L0_fatigue_additive,
         L0_fatigue_multiplicative = visit$L0_fatigue_multiplicative,
-        L0_visit_change = visit$L0_visit_change,
+        L0_visit_change_additive = visit$L0_visit_change_additive,
         L0_visit_change_multiplicative = visit$L0_visit_change_multiplicative,
-        L0_visit_random = visit$L0_visit_random,
+        L0_visit_random_additive = visit$L0_visit_random_additive,
         L0_visit_random_multiplicative = visit$L0_visit_random_multiplicative,
         v1RM = visit$new_v1RM,
-        v1RM_random = visit$v1RM_random,
+        v1RM_random_additive = visit$v1RM_random_additive,
         v1RM_random_multiplicative = visit$v1RM_random_multiplicative,
-        est_RIR_systematic = visit$est_RIR_systematic,
+        est_RIR_systematic_additive = visit$est_RIR_systematic_additive,
         est_RIR_systematic_multiplicative = visit$est_RIR_systematic_multiplicative,
-        est_RIR_random = visit$est_RIR_random,
+        est_RIR_random_additive = visit$est_RIR_random_additive,
         est_RIR_random_multiplicative = visit$est_RIR_random_multiplicative,
-        biological_variation = visit$biological_variation,
+        biological_variation_additive = visit$biological_variation_additive,
         biological_variation_multiplicative = visit$biological_variation_multiplicative,
-        instrumentation_noise = visit$instrumentation_noise,
+        instrumentation_noise_additive = visit$instrumentation_noise_additive,
         instrumentation_noise_multiplicative = visit$instrumentation_noise_multiplicative,
         load_increment = visit$load_increment
       )
