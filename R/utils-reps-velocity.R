@@ -23,6 +23,7 @@ get_reps_velocity <- function(V0,
   rep_L0 <- NULL
   true_rep_velocity <- NULL
   biological_rep_velocity <- NULL
+  measured_rep_velocity <- NULL
   # +++++++++++++++++++++++++++++++++++++++++++
 
   reps <- dplyr::tibble(

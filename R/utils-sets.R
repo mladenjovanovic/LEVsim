@@ -62,12 +62,14 @@ get_sets <- function(visit_LEV_profile,
   # +++++++++++++++++++++++++++++++++++++++++++
   # Code chunk for dealing with R CMD check note
   V0 <- NULL
-  V0_rep_drop <- NULL
+  V0_rep_drop_additive <- NULL
+  V0_rep_drop_multiplicative <- NULL
   L0 <- NULL
-  L0_rep_drop <- NULL
-  biological_variation <- NULL
+  L0_rep_drop_additive <- NULL
+  L0_rep_drop_multiplicative <- NULL
+  biological_variation_additive <- NULL
   biological_variation_multiplicative <- NULL
-  instrumentation_noise <- NULL
+  instrumentation_noise_additive <- NULL
   instrumentation_noise_multiplicative <- NULL
   rep_V0 <- NULL
   rep_L0 <- NULL
@@ -95,15 +97,16 @@ get_sets <- function(visit_LEV_profile,
   target_reps <- NULL
   RIR <- NULL
   est_RIR <- NULL
-  est_RIR_random <- NULL
+  est_RIR_random_additive <- NULL
   est_RIR_random_multiplicative <- NULL
-  est_RIR_systematic <- NULL
+  est_RIR_systematic_additive <- NULL
   est_RIR_systematic_multiplicative <- NULL
   est_nRM <- NULL
   last_RIR <- NULL
   last_eRIR <- NULL
   last_eRIR_rnd <- NULL
   last_eRIR_sys <- NULL
+  set_to_failure <- NULL
   # +++++++++++++++++++++++++++++++++++++++++++
 
   class(visit_LEV_profile) <- "list"
