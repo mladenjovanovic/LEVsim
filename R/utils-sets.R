@@ -127,11 +127,11 @@ get_sets <- function(visit_LEV_profile,
   if (inter_set_fatigue == TRUE) {
     sets <- sets %>%
       dplyr::mutate(
-        set_L0 = systematic_effect(L0, load_index - 1, L0_fatigue_multiplicative, TRUE),
-        set_L0 = systematic_effect(set_L0, load_index - 1, L0_fatigue_additive, FALSE),
+        set_L0 = systematic_effect(L0, load_index - 1, -L0_fatigue_multiplicative, TRUE),
+        set_L0 = systematic_effect(set_L0, load_index - 1, -L0_fatigue_additive, FALSE),
 
-        set_V0 = systematic_effect(V0, load_index - 1, V0_fatigue_multiplicative, TRUE),
-        set_V0 = systematic_effect(set_V0, load_index - 1, V0_fatigue_additive, FALSE),
+        set_V0 = systematic_effect(V0, load_index - 1, -V0_fatigue_multiplicative, TRUE),
+        set_V0 = systematic_effect(set_V0, load_index - 1, -V0_fatigue_additive, FALSE),
 
         set_1RM = get_load_at_velocity(set_V0, set_L0, v1RM)
       )
