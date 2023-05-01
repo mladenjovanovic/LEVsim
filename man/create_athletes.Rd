@@ -8,41 +8,62 @@ create_athletes(
   n = 20,
   V0_min = 1.5,
   V0_max = 2.5,
-  V0_rep_drop_min = 0,
-  V0_rep_drop_max = 0.1,
-  V0_visit_change_min = -0.05,
-  V0_visit_change_max = 0.05,
-  V0_visit_change_multiplicative = FALSE,
-  V0_visit_random_min = 0.01,
-  V0_visit_random_max = 0.05,
-  V0_visit_random_multiplicative = FALSE,
+  V0_rep_drop_additive_min = 0,
+  V0_rep_drop_additive_max = 0,
+  V0_rep_drop_multiplicative_min = 0,
+  V0_rep_drop_multiplicative_max = 0.1,
+  V0_fatigue_additive_min = 0,
+  V0_fatigue_additive_max = 0,
+  V0_fatigue_multiplicative_min = 0,
+  V0_fatigue_multiplicative_max = 0.05,
+  V0_visit_change_additive_min = 0,
+  V0_visit_change_additive_max = 0,
+  V0_visit_change_multiplicative_min = -0.05,
+  V0_visit_change_multiplicative_max = 0.05,
+  V0_visit_random_additive_min = 0,
+  V0_visit_random_additive_max = 0,
+  V0_visit_random_multiplicative_min = 0.01,
+  V0_visit_random_multiplicative_max = 0.05,
   L0_min = 180,
   L0_max = 280,
-  L0_rep_drop_min = 0.03,
-  L0_rep_drop_max = 0.1,
-  L0_visit_change_min = -5,
-  L0_visit_change_max = 5,
-  L0_visit_change_multiplicative = FALSE,
-  L0_visit_random_min = 0.5,
-  L0_visit_random_max = 5,
-  L0_visit_random_multiplicative = FALSE,
+  L0_rep_drop_additive_min = 0,
+  L0_rep_drop_additive_max = 0,
+  L0_rep_drop_multiplicative_min = 0.1,
+  L0_rep_drop_multiplicative_max = 0.3,
+  L0_fatigue_additive_min = 0,
+  L0_fatigue_additive_max = 0,
+  L0_fatigue_multiplicative_min = 0,
+  L0_fatigue_multiplicative_max = 0.05,
+  L0_visit_change_additive_min = 0,
+  L0_visit_change_additive_max = 0,
+  L0_visit_change_multiplicative_min = -0.05,
+  L0_visit_change_multiplicative_max = 0.05,
+  L0_visit_random_additive_min = 0,
+  L0_visit_random_additive_max = 0,
+  L0_visit_random_multiplicative_min = 0.01,
+  L0_visit_random_multiplicative_max = 0.05,
   v1RM_min = 0.2,
   v1RM_max = 0.4,
-  v1RM_random_min = 0,
-  v1RM_random_max = 0.05,
-  v1RM_random_multiplicative = FALSE,
-  est_RIR_systematic_min = -2,
-  est_RIR_systematic_max = 2,
-  est_RIR_systematic_multiplicative = FALSE,
-  est_RIR_random_min = 0,
-  est_RIR_random_max = 0.5,
-  est_RIR_random_multiplicative = TRUE,
-  biological_variation_min = 0.02,
-  biological_variation_max = 0.075,
-  biological_variation_multiplicative = TRUE,
-  instrumentation_noise_min = 0,
-  instrumentation_noise_max = 0,
-  instrumentation_noise_multiplicative = FALSE,
+  v1RM_random_additive_min = 0,
+  v1RM_random_additive_max = 0,
+  v1RM_random_multiplicative_min = 0,
+  v1RM_random_multiplicative_max = 0.05,
+  est_RIR_systematic_additive_min = -2,
+  est_RIR_systematic_additive_max = 2,
+  est_RIR_systematic_multiplicative_min = 0,
+  est_RIR_systematic_multiplicative_max = 0,
+  est_RIR_random_additive_min = 0,
+  est_RIR_random_additive_max = 0,
+  est_RIR_random_multiplicative_min = 0,
+  est_RIR_random_multiplicative_max = 0.25,
+  biological_variation_additive_min = 0,
+  biological_variation_additive_max = 0,
+  biological_variation_multiplicative_min = 0.02,
+  biological_variation_multiplicative_max = 0.075,
+  instrumentation_noise_additive_min = 0,
+  instrumentation_noise_additive_max = 0,
+  instrumentation_noise_multiplicative_min = 0,
+  instrumentation_noise_multiplicative_max = 0,
   load_increment = 2.5
 )
 }
@@ -53,75 +74,117 @@ create_athletes(
 
 \item{V0_max}{Numeric}
 
-\item{V0_rep_drop_min}{Numeric}
+\item{V0_rep_drop_additive_min}{Numeric}
 
-\item{V0_rep_drop_max}{Numeric}
+\item{V0_rep_drop_additive_max}{Numeric}
 
-\item{V0_visit_change_min}{Numeric}
+\item{V0_rep_drop_multiplicative_min}{Numeric}
 
-\item{V0_visit_change_max}{Numeric}
+\item{V0_rep_drop_multiplicative_max}{Numeric}
 
-\item{V0_visit_change_multiplicative}{Logical}
+\item{V0_fatigue_additive_min}{Numeric}
 
-\item{V0_visit_random_min}{Numeric}
+\item{V0_fatigue_additive_max}{Numeric}
 
-\item{V0_visit_random_max}{Numeric}
+\item{V0_fatigue_multiplicative_min}{Numeric}
 
-\item{V0_visit_random_multiplicative}{Logical}
+\item{V0_fatigue_multiplicative_max}{Numeric}
+
+\item{V0_visit_change_additive_min}{Numeric}
+
+\item{V0_visit_change_additive_max}{Numeric}
+
+\item{V0_visit_change_multiplicative_min}{Numeric}
+
+\item{V0_visit_change_multiplicative_max}{Numeric}
+
+\item{V0_visit_random_additive_min}{Numeric}
+
+\item{V0_visit_random_additive_max}{Numeric}
+
+\item{V0_visit_random_multiplicative_min}{Numeric}
+
+\item{V0_visit_random_multiplicative_max}{Numeric}
 
 \item{L0_min}{Numeric}
 
 \item{L0_max}{Numeric}
 
-\item{L0_rep_drop_min}{Numeric}
+\item{L0_rep_drop_additive_min}{Numeric}
 
-\item{L0_rep_drop_max}{Numeric}
+\item{L0_rep_drop_additive_max}{Numeric}
 
-\item{L0_visit_change_min}{Numeric}
+\item{L0_rep_drop_multiplicative_min}{Numeric}
 
-\item{L0_visit_change_max}{Numeric}
+\item{L0_rep_drop_multiplicative_max}{Numeric}
 
-\item{L0_visit_change_multiplicative}{Logical}
+\item{L0_fatigue_additive_min}{Numeric}
 
-\item{L0_visit_random_min}{Numeric}
+\item{L0_fatigue_additive_max}{Numeric}
 
-\item{L0_visit_random_max}{Numeric}
+\item{L0_fatigue_multiplicative_min}{Numeric}
 
-\item{L0_visit_random_multiplicative}{Logical}
+\item{L0_fatigue_multiplicative_max}{Numeric}
+
+\item{L0_visit_change_additive_min}{Numeric}
+
+\item{L0_visit_change_additive_max}{Numeric}
+
+\item{L0_visit_change_multiplicative_min}{Numeric}
+
+\item{L0_visit_change_multiplicative_max}{Numeric}
+
+\item{L0_visit_random_additive_min}{Numeric}
+
+\item{L0_visit_random_additive_max}{Numeric}
+
+\item{L0_visit_random_multiplicative_min}{Numeric}
+
+\item{L0_visit_random_multiplicative_max}{Numeric}
 
 \item{v1RM_min}{Numeric}
 
 \item{v1RM_max}{Numeric}
 
-\item{v1RM_random_min}{Numeric}
+\item{v1RM_random_additive_min}{Numeric}
 
-\item{v1RM_random_max}{Numeric}
+\item{v1RM_random_additive_max}{Numeric}
 
-\item{v1RM_random_multiplicative}{Logical}
+\item{v1RM_random_multiplicative_min}{Numeric}
 
-\item{est_RIR_systematic_min}{Numeric}
+\item{v1RM_random_multiplicative_max}{Numeric}
 
-\item{est_RIR_systematic_max}{Numeric}
+\item{est_RIR_systematic_additive_min}{Numeric}
 
-\item{est_RIR_systematic_multiplicative}{Logical}
+\item{est_RIR_systematic_additive_max}{Numeric}
 
-\item{est_RIR_random_min}{Numeric}
+\item{est_RIR_systematic_multiplicative_min}{Numeric}
 
-\item{est_RIR_random_max}{Numeric}
+\item{est_RIR_systematic_multiplicative_max}{Numeric}
 
-\item{est_RIR_random_multiplicative}{Logical}
+\item{est_RIR_random_additive_min}{Numeric}
 
-\item{biological_variation_min}{Numeric}
+\item{est_RIR_random_additive_max}{Numeric}
 
-\item{biological_variation_max}{Numeric}
+\item{est_RIR_random_multiplicative_min}{Numeric}
 
-\item{biological_variation_multiplicative}{Logical}
+\item{est_RIR_random_multiplicative_max}{Numeric}
 
-\item{instrumentation_noise_min}{Numeric}
+\item{biological_variation_additive_min}{Numeric}
 
-\item{instrumentation_noise_max}{Numeric}
+\item{biological_variation_additive_max}{Numeric}
 
-\item{instrumentation_noise_multiplicative}{Logical}
+\item{biological_variation_multiplicative_min}{Numeric}
+
+\item{biological_variation_multiplicative_max}{Numeric}
+
+\item{instrumentation_noise_additive_min}{Numeric}
+
+\item{instrumentation_noise_additive_max}{Numeric}
+
+\item{instrumentation_noise_multiplicative_min}{Numeric}
+
+\item{instrumentation_noise_multiplicative_max}{Numeric}
 
 \item{load_increment}{Numeric}
 }
@@ -158,7 +221,7 @@ plot(sets, athletes = "Athlete 1", reps = 1)
 plot(sets, athletes = "Athlete 1", x_var = "RIR")
 
 # Another way to create LEV profiles
-sets <- create_profiles(athletes = c("Mladen", "Ivan"), L0 = c(200, 180)) \%>\%
+sets <- create_profiles(athlete = c("Mladen", "Ivan"), L0 = c(200, 180)) \%>\%
   create_visits(1) \%>\%
   create_sets(load = c(100, 120, 140), load_type = "absolute")
 

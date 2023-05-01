@@ -20,7 +20,7 @@ S3 method for adding two or more LEV Profiles and Visits
 \examples{
 # Add profiles
 profile1 <- create_athletes(5)
-profile2 <- create_profiles(athletes = c("Mladen", "Milan", "Mihailo"))
+profile2 <- create_profiles(athlete = c("Mladen", "Milan", "Mihailo"))
 
 added_profiles <- profile1 + profile2
 added_profiles

@@ -13,7 +13,7 @@
 #'     load = c(70, 80, 90)
 #'   )
 #'
-#' sets2 <- create_profiles(athletes = c("Mladen", "Milan", "Mihailo")) %>%
+#' sets2 <- create_profiles(athlete = c("Mladen", "Milan", "Mihailo")) %>%
 #'   create_visits(1:3) %>%
 #'   create_sets(
 #'     load = c(70, 80, 90)
@@ -161,7 +161,7 @@ as.data.frame.LEV_sets <- function(x, row.names = NULL, optional = FALSE, ...) {
 #' plot(sets, athletes = "Athlete 1", x_var = "RIR")
 #'
 #' # Another way to create LEV profiles
-#' sets <- create_profiles(athletes = c("Mladen", "Ivan"), L0 = c(200, 180)) %>%
+#' sets <- create_profiles(athlete = c("Mladen", "Ivan"), L0 = c(200, 180)) %>%
 #'   create_visits(1) %>%
 #'   create_sets(load = c(100, 120, 140), load_type = "absolute")
 #'
