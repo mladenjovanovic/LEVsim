@@ -82,9 +82,9 @@ get_sets <- function(visit_LEV_profile,
   load_index <- NULL
   last_row <- NULL
   set <- NULL
-  V0_fatigue <- NULL
+  V0_fatigue_additive <- NULL
   V0_fatigue_multiplicative <- NULL
-  L0_fatigue <- NULL
+  L0_fatigue_additive <- NULL
   L0_fatigue_multiplicative <- NULL
   set_V0 <- NULL
   set_L0 <- NULL
@@ -127,8 +127,12 @@ get_sets <- function(visit_LEV_profile,
   if (inter_set_fatigue == TRUE) {
     sets <- sets %>%
       dplyr::mutate(
-        set_L0 = systematic_effect(L0, load_index - 1, L0_fatigue, L0_fatigue_multiplicative),
-        set_V0 = systematic_effect(V0, load_index - 1, V0_fatigue, V0_fatigue_multiplicative),
+        set_L0 = systematic_effect(L0, load_index - 1, L0_fatigue_multiplicative, TRUE),
+        set_L0 = systematic_effect(set_L0, load_index - 1, L0_fatigue_additive, FALSE),
+
+        set_V0 = systematic_effect(V0, load_index - 1, V0_fatigue_multiplicative, TRUE),
+        set_V0 = systematic_effect(set_V0, load_index - 1, V0_fatigue_additive, FALSE),
+
         set_1RM = get_load_at_velocity(set_V0, set_L0, v1RM)
       )
   } else {
@@ -148,16 +152,18 @@ get_sets <- function(visit_LEV_profile,
     ) %>%
     dplyr::mutate(
       get_reps_velocity(
-        set_V0,
-        V0_rep_drop,
-        set_L0,
-        L0_rep_drop,
-        biological_variation,
-        biological_variation_multiplicative,
-        instrumentation_noise,
-        instrumentation_noise_multiplicative,
-        rep,
-        load
+        V0 = set_V0,
+        V0_rep_drop_additive = V0_rep_drop_additive,
+        V0_rep_drop_multiplicative = V0_rep_drop_multiplicative,
+        L0 = set_L0,
+        L0_rep_drop_additive = L0_rep_drop_additive,
+        L0_rep_drop_multiplicative = L0_rep_drop_multiplicative,
+        biological_variation_additive = biological_variation_additive,
+        biological_variation_multiplicative = biological_variation_multiplicative,
+        instrumentation_noise_additive = instrumentation_noise_additive,
+        instrumentation_noise_multiplicative = instrumentation_noise_multiplicative,
+        rep = rep,
+        load = load
       )
     ) %>%
     dplyr::mutate(
@@ -214,15 +220,24 @@ get_sets <- function(visit_LEV_profile,
         # Calculate estimated RIR and %MNR
         reps_done = get_reps_done(rep, failed_rep),
         last_RIR = get_last_RIR(RIR, failed_rep),
-        last_eRIR_sys = systematic_effect(last_RIR[1], visit = 1, effect = est_RIR_systematic[1], multiplicative = est_RIR_systematic_multiplicative[1]) - last_RIR[1],
-        last_eRIR_rnd = random_effect(last_RIR[1], effect = est_RIR_random[1], multiplicative = est_RIR_random_multiplicative[1]) - last_RIR[1],
-        last_eRIR = last_RIR[1] + last_eRIR_sys + last_eRIR_rnd,
+
+        # Systematic effects
+        last_eRIR = systematic_effect(last_RIR, visit = 1, effect = est_RIR_systematic_multiplicative, TRUE),
+        last_eRIR = systematic_effect(last_eRIR, visit = 1, effect = est_RIR_systematic_additive, FALSE),
+
+        # Random effects
+        last_eRIR = random_effect(last_eRIR, effect = est_RIR_random_multiplicative, TRUE),
+        last_eRIR = random_effect(last_eRIR, effect = est_RIR_random_additive, FALSE),
+
         last_eRIR = ifelse(last_eRIR < 0, 0, last_eRIR),
         last_eRIR = round(last_eRIR),
         est_RIR = last_eRIR + (RIR - last_RIR),
         est_nRM = nRM + est_RIR - RIR,
         `est_%MNR` = (rep / est_nRM) * 100,
-        set_to_failure = ifelse(is.na(RIR), FALSE, ifelse(any(RIR <= 0), TRUE, FALSE))
+        set_to_failure = ifelse(is.na(RIR), FALSE, ifelse(any(RIR <= 0), TRUE, FALSE)),
+
+        # If set is taken to failure, then est_RIR MUST be the same as RIR
+        est_RIR = ifelse(set_to_failure == TRUE, RIR, est_RIR)
       ) %>%
       dplyr::select(-last_rep, -last_row, -last_RIR, -last_eRIR, -last_eRIR_sys, -last_eRIR_rnd) %>%
       dplyr::ungroup()
