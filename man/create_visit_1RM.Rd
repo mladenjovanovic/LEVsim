@@ -24,7 +24,7 @@ This is done by using \code{load_perc} against theoretical visit profile 1RM
 }
 \examples{
 set.seed(1667)
-sets <- create_profiles(1, L0_visit_change = 2.5) \%>\%
+sets <- create_profiles(1, L0_visit_change_additive = 2.5) \%>\%
   create_visits(1:10) \%>\%
   create_visit_1RM() \%>\%
   create_sets(load = 0.8, load_type = "visit 1RM")

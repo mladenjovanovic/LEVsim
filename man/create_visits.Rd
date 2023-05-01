@@ -41,7 +41,7 @@ plot(sets, athletes = "Athlete 1", reps = 1)
 plot(sets, athletes = "Athlete 1", x_var = "RIR")
 
 # Another way to create LEV profiles
-sets <- create_profiles(athletes = c("Mladen", "Ivan"), L0 = c(200, 180)) \%>\%
+sets <- create_profiles(athlete = c("Mladen", "Ivan"), L0 = c(200, 180)) \%>\%
   create_visits(1) \%>\%
   create_sets(load = c(100, 120, 140), load_type = "absolute")
 

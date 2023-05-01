@@ -15,7 +15,10 @@
 #' @return Object \code{LEV_sets}
 #' @export
 #' @examples
-#' test_sets <- create_profiles(athletes = 1:2, L0_visit_random = 10, L0_fatigue = -10) %>%
+#' test_sets <- create_profiles(
+#'       athlete = 1:2,
+#'       L0_visit_random_additive = 10,
+#'       L0_fatigue_multiplicative = 0.1) %>%
 #'   create_visits(1) %>%
 #'   create_tests() %>%
 #'   create_summary()

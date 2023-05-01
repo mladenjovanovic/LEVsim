@@ -25,7 +25,7 @@ sets1 <- create_athletes(5) \%>\%
   ) \%>\%
   create_summary()
 
-sets2 <- create_profiles(athletes = c("Mladen", "Milan", "Mihailo")) \%>\%
+sets2 <- create_profiles(athlete = c("Mladen", "Milan", "Mihailo")) \%>\%
   create_visits(1:3) \%>\%
   create_sets(
     load = c(70, 80, 90)

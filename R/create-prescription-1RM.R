@@ -4,7 +4,7 @@
 #'
 #' @param LEV_profile Object returned from \code{\link{create_visits}}
 #' @param init_1RM Initial 1RM value. If \code{NULL} (default), then initial 1RM is estimated using
-#'      profile parameters and used
+#'      profile parameters and used to prescribe
 #' @param visit_1RM_func Function to calculate visit 1RM using \code{init_1RM} and visit as parameters.
 #'      By default, there is no change in \code{init_1RM} across visits
 #' @param load_perc Percentage to be used to calculate loads using theoretical visit profile 1RM. This
