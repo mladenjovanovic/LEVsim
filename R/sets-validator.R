@@ -11,7 +11,7 @@ validate_LEV_sets <- function(LEV_sets, stop_running = TRUE) {
   is_good <- class(LEV_sets) == "LEV_sets"
 
   if (stop_running) {
-    if (!is_good) {
+    if (!any(is_good)) {
       stop("Object is not proper LEV_sets object. Please use `create_sets()` to create one", call. = FALSE)
     }
   }
