@@ -8,8 +8,8 @@
 #'      is located
 #' @param reps String indicating the name of the column in \code{program_df} where number of target
 #'     repetitions is located
-#' @param load_type Type of load calculation. Can be either 'absolute' (default), or 'visit 1RM', or
-#'      'prescription 1RM'
+#' @param load_type Type of load calculation. Can be either 'absolute' (default), 'profile 1RM', 'L0',
+#'     'visit 1RM', or 'prescription 1RM'
 #' @param max_reps How many maximum reps to generate to search for failure? Default is 100
 #' @param failed_reps Should failed-reps be included in the output? Default is \code{FALSE}
 #' @param failed_sets Should failed-sets be included in the output? Default is \code{FALSE}
@@ -58,8 +58,8 @@ create_program_sets <- function(LEV_profile = create_profiles(),
   # +++++++++++++++++++++++++++++++++++++++++++
 
   # Check the loading type
-  if ((length(load_type) != 1) | !(load_type %in% c("absolute", "visit 1RM", "prescription 1RM"))) {
-    stop("Wrong loading type. Please use 'absolute', 'visit 1RM', or 'prescription 1RM'", call. = FALSE)
+  if ((length(load_type) != 1) | !(load_type %in% c("absolute", "profile 1RM", "L0", "visit 1RM", "prescription 1RM"))) {
+    stop("Wrong loading type. Please use 'absolute', 'profile 1RM', 'L0', 'visit 1RM', or 'prescription 1RM'", call. = FALSE)
   }
 
   # Check of the object is proper LEV_profile
@@ -87,24 +87,38 @@ create_program_sets <- function(LEV_profile = create_profiles(),
       # Create visit loads
       if (load_type == "absolute") {
         visit_load <- program_load
+        load_perc <- NA
+        load_perc_adj <- NA
+      } else if (load_type == "profile 1RM") {
+        visit_load <- get_load_rounded(program_load * visit$`1RM`, load_increment)
+        load_perc <- program_load
+        load_perc_adj <- visit_load / visit$`1RM`
+      } else if (load_type == "L0") {
+        visit_load <- get_load_rounded(program_load * visit$L0, load_increment)
+        load_perc <- program_load
+        load_perc_adj <- visit_load / visit$L0
       } else if (load_type == "visit 1RM") {
         # visit 1RM
         visit_load <- get_load_rounded(program_load * visit_1RM, load_increment)
+        load_perc <- program_load
+        load_perc_adj <- visit_load / visit_1RM
 
         # Check if there are NAs due to missing visit_1RM metric
         if (any(is.na(visit_load))) {
           stop("There are missing values in the load due to missing visit 1RM. Please use 'create_visit_1RM()' before 'create_sets()'",
-            call. = FALSE
+               call. = FALSE
           )
         }
-      } else {
+      } else if (load_type == "prescription 1RM") {
         # prescription 1RM
         visit_load <- get_load_rounded(program_load * prescription_1RM, load_increment)
+        load_perc <- program_load
+        load_perc_adj <- visit_load / prescription_1RM
 
         # Check if there are NAs due to missing prescription_1RM metric
         if (any(is.na(visit_load))) {
           stop("There are missing values in the load due to missing prescription 1RM. Please use 'create_prescription_1RM()' before 'create_sets()'",
-            call. = FALSE
+               call. = FALSE
           )
         }
       }
@@ -119,6 +133,10 @@ create_program_sets <- function(LEV_profile = create_profiles(),
         inter_set_fatigue = inter_set_fatigue
       )
 
+      visit_sets$load_type <- load_type
+      visit_sets$load_perc <- load_perc[visit_sets$load_index]
+      visit_sets$load_perc_adj <- load_perc_adj[visit_sets$load_index]
+
       # Filter out unnecessary columns
       visit_sets <- new_sets(
         athlete = visit_sets$athlete,
@@ -131,7 +149,10 @@ create_program_sets <- function(LEV_profile = create_profiles(),
         prescription_1RM = visit_sets$prescription_1RM,
         load_increment = visit_sets$load_increment,
         set = visit_sets$set,
+        load_type = visit_sets$load_type,
         load_index = visit_sets$load_index,
+        load_perc = visit_sets$load_perc,
+        load_perc_adj = visit_sets$load_perc_adj,
         load = visit_sets$load,
         set_V0 = visit_sets$set_V0,
         set_L0 = visit_sets$set_L0,
@@ -186,6 +207,7 @@ create_program_sets <- function(LEV_profile = create_profiles(),
   if (purrr::is_empty(sets_df)) {
     return()
   }
+
   if (keep_program_df == FALSE) {
     # Save as LV_sets object
     sets_df <- new_sets(
@@ -199,7 +221,10 @@ create_program_sets <- function(LEV_profile = create_profiles(),
       prescription_1RM = sets_df$prescription_1RM,
       load_increment = sets_df$load_increment,
       set = sets_df$set,
+      load_type = sets_df$load_type,
       load_index = sets_df$load_index,
+      load_perc = sets_df$load_perc,
+      load_perc_adj = sets_df$load_perc_adj,
       load = sets_df$load,
       set_V0 = sets_df$set_V0,
       set_L0 = sets_df$set_L0,
