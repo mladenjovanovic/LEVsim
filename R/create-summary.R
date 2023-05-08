@@ -47,6 +47,9 @@ create_summary <- function(LEV_sets) {
   set_to_failure <- NULL
   target_reps <- NULL
   est_nRM <- NULL
+  load_type <- NULL
+  load_perc <- NULL
+  load_perc_adj <- NULL
   # +++++++++++++++++++++++++++++++++++++++++++
 
   is_sets <- validate_LEV_sets(LEV_sets)
@@ -64,6 +67,9 @@ create_summary <- function(LEV_sets) {
       prescription_1RM = prescription_1RM[[1]],
       set_to_failure = set_to_failure[[1]],
       target_reps = target_reps[[1]],
+      load_type = load_type[[1]],
+      load_perc = load_perc[[1]],
+      load_perc_adj = load_perc_adj[[1]],
       load = load[[1]],
       nRM = nRM[[1]],
       reps_done = reps_done[[1]],
@@ -109,7 +115,10 @@ create_summary <- function(LEV_sets) {
     visit_1RM = df$visit_1RM,
     prescription_1RM = df$prescription_1RM,
     set = df$set,
+    load_type = df$load_type,
     load_index = df$load_index,
+    load_perc = df$load_perc,
+    load_perc_adj = df$load_perc_adj,
     set_to_failure = df$set_to_failure,
     target_reps = df$target_reps,
     load = df$load,
