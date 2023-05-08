@@ -105,7 +105,10 @@ as.data.frame.LEV_sets <- function(x, row.names = NULL, optional = FALSE, ...) {
 #'      \item{visits}{Visits to keep in}
 #'      \item{sets}{Sets to keep in}
 #'      \item{reps}{Reps to keep in}
+#'      \item{load_types}{Loads types to keep in}
 #'      \item{loads}{Loads to keep in}
+#'      \item{load_percs}{Load percentages to keep in}
+#'      \item{load_percs_adj}{Adjusted load percentages to keep in}
 #'      \item{sets_to_failure}{Sets to failure to keep in}
 #'      \item{target_repetitions}{Target repetitions to keep in}
 #'      \item{repetitions_done}{Repetitions done to keep in}
@@ -185,7 +188,10 @@ plot_LEV_sets <- function(df,
                           visits = NULL,
                           sets = NULL,
                           reps = NULL,
+                          load_types = NULL,
                           loads = NULL,
+                          load_percs = NULL,
+                          load_percs_adj = NULL,
                           sets_to_failure = NULL,
                           target_repetitions = NULL,
                           repetitions_done = NULL,
@@ -220,6 +226,9 @@ plot_LEV_sets <- function(df,
   est_RIR <- NULL
   reps_done <- NULL
   target_reps <- NULL
+  load_type <- NULL
+  load_perc <- NULL
+  load_perc_adj <- NULL
   # +++++++++++++++++++++++++++++++++++++++++++
 
   y_var_name <- as.name(y_var)
@@ -261,9 +270,24 @@ plot_LEV_sets <- function(df,
       dplyr::filter(rep %in% reps)
   }
 
+  if (!is.null(load_types)) {
+    df <- df %>%
+      dplyr::filter(load_type %in% load_types)
+  }
+
   if (!is.null(loads)) {
     df <- df %>%
       dplyr::filter(load %in% loads)
+  }
+
+  if (!is.null(load_percs)) {
+    df <- df %>%
+      dplyr::filter(load_perc %in% load_percs)
+  }
+
+  if (!is.null(load_percs_adj)) {
+    df <- df %>%
+      dplyr::filter(load_perc_adj %in% load_percs_adj)
   }
 
   if (!is.null(sets_to_failure)) {

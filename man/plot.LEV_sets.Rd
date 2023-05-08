@@ -30,7 +30,10 @@ can utilize:
 \item{visits}{Visits to keep in}
 \item{sets}{Sets to keep in}
 \item{reps}{Reps to keep in}
+\item{load_types}{Loads types to keep in}
 \item{loads}{Loads to keep in}
+\item{load_percs}{Load percentages to keep in}
+\item{load_percs_adj}{Adjusted load percentages to keep in}
 \item{sets_to_failure}{Sets to failure to keep in}
 \item{target_repetitions}{Target repetitions to keep in}
 \item{repetitions_done}{Repetitions done to keep in}

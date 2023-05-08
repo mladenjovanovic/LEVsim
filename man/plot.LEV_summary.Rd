@@ -28,7 +28,10 @@ Here are the extra parameters your can utilize:
 \item{athletes}{Althetes to keep in}
 \item{visits}{Visits to keep in}
 \item{sets}{Sets to keep in}
+\item{load_types}{Load types to keep in}
 \item{loads}{Loads to keep in}
+\item{load_percs}{Load percentages to keep in}
+\item{load_percs_adj}{Adjusted load percentages to keep in}
 \item{nRMs}{N-Repetition-Maximum loads to keep in}
 \item{est_nRMs}{Estimated N-Repetition-Maximum loads to keep in}
 \item{sets_to_failure}{Sets-To-Failure indicator (TRUE/FALSE) to keep in}
