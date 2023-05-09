@@ -10,10 +10,8 @@
 #' @param n Number of athletes
 #' @param V0_min Numeric
 #' @param V0_max Numeric
-#' @param V0_rep_drop_additive_min Numeric
-#' @param V0_rep_drop_additive_max Numeric
-#' @param V0_rep_drop_multiplicative_min Numeric
-#' @param V0_rep_drop_multiplicative_max Numeric
+#' @param V0_rep_drop_min Numeric
+#' @param V0_rep_drop_max Numeric
 #' @param V0_fatigue_additive_min Numeric
 #' @param V0_fatigue_additive_max Numeric
 #' @param V0_fatigue_multiplicative_min Numeric
@@ -28,10 +26,8 @@
 #' @param V0_visit_random_multiplicative_max Numeric
 #' @param L0_min Numeric
 #' @param L0_max Numeric
-#' @param L0_rep_drop_additive_min Numeric
-#' @param L0_rep_drop_additive_max Numeric
-#' @param L0_rep_drop_multiplicative_min Numeric
-#' @param L0_rep_drop_multiplicative_max Numeric
+#' @param L0_rep_drop_min Numeric
+#' @param L0_rep_drop_max Numeric
 #' @param L0_fatigue_additive_min Numeric
 #' @param L0_fatigue_additive_max Numeric
 #' @param L0_fatigue_multiplicative_min Numeric
@@ -104,10 +100,8 @@
 create_athletes <- function(n = 20,
                             V0_min = 1.5,
                             V0_max = 2.5,
-                            V0_rep_drop_additive_min = 0,
-                            V0_rep_drop_additive_max = 0,
-                            V0_rep_drop_multiplicative_min = 0,
-                            V0_rep_drop_multiplicative_max = 0,
+                            V0_rep_drop_min = 0,
+                            V0_rep_drop_max = 0,
                             V0_fatigue_additive_min = 0,
                             V0_fatigue_additive_max = 0,
                             V0_fatigue_multiplicative_min = 0,
@@ -123,10 +117,8 @@ create_athletes <- function(n = 20,
 
                             L0_min = 180,
                             L0_max = 280,
-                            L0_rep_drop_additive_min = 0,
-                            L0_rep_drop_additive_max = 0,
-                            L0_rep_drop_multiplicative_min = 0.3,
-                            L0_rep_drop_multiplicative_max = 0.6,
+                            L0_rep_drop_min = 0.3,
+                            L0_rep_drop_max = 0.6,
                             L0_fatigue_additive_min = 0,
                             L0_fatigue_additive_max = 0,
                             L0_fatigue_multiplicative_min = 0,
@@ -173,8 +165,7 @@ create_athletes <- function(n = 20,
     athlete = sprintf(paste0("Athlete %0", floor(log10(n)) + 1, "d"), seq(1, n)),
 
     V0 = stats::runif(n, V0_min, V0_max),
-    V0_rep_drop_additive = stats::runif(n, V0_rep_drop_additive_min, V0_rep_drop_additive_max),
-    V0_rep_drop_multiplicative = stats::runif(n, V0_rep_drop_multiplicative_min, V0_rep_drop_multiplicative_max),
+    V0_rep_drop = stats::runif(n, V0_rep_drop_min, V0_rep_drop_max),
     V0_fatigue_additive = stats::runif(n, V0_fatigue_additive_min, V0_fatigue_additive_max),
     V0_fatigue_multiplicative = stats::runif(n, V0_fatigue_multiplicative_min, V0_fatigue_multiplicative_max),
     V0_visit_change_additive = stats::runif(n, V0_visit_change_additive_min, V0_visit_change_additive_max),
@@ -183,8 +174,7 @@ create_athletes <- function(n = 20,
     V0_visit_random_multiplicative = stats::runif(n, V0_visit_random_multiplicative_min, V0_visit_random_multiplicative_max),
 
     L0 = stats::runif(n, L0_min, L0_max),
-    L0_rep_drop_additive = stats::runif(n, L0_rep_drop_additive_min, L0_rep_drop_additive_max),
-    L0_rep_drop_multiplicative = stats::runif(n, L0_rep_drop_multiplicative_min, L0_rep_drop_multiplicative_max),
+    L0_rep_drop = stats::runif(n, L0_rep_drop_min, L0_rep_drop_max),
     L0_fatigue_additive = stats::runif(n, L0_fatigue_additive_min, L0_fatigue_additive_max),
     L0_fatigue_multiplicative = stats::runif(n, L0_fatigue_multiplicative_min, L0_fatigue_multiplicative_max),
     L0_visit_change_additive = stats::runif(n, L0_visit_change_additive_min, L0_visit_change_additive_max),

@@ -8,10 +8,8 @@ create_athletes(
   n = 20,
   V0_min = 1.5,
   V0_max = 2.5,
-  V0_rep_drop_additive_min = 0,
-  V0_rep_drop_additive_max = 0,
-  V0_rep_drop_multiplicative_min = 0,
-  V0_rep_drop_multiplicative_max = 0,
+  V0_rep_drop_min = 0,
+  V0_rep_drop_max = 0,
   V0_fatigue_additive_min = 0,
   V0_fatigue_additive_max = 0,
   V0_fatigue_multiplicative_min = 0,
@@ -26,10 +24,8 @@ create_athletes(
   V0_visit_random_multiplicative_max = 0.05,
   L0_min = 180,
   L0_max = 280,
-  L0_rep_drop_additive_min = 0,
-  L0_rep_drop_additive_max = 0,
-  L0_rep_drop_multiplicative_min = 0.3,
-  L0_rep_drop_multiplicative_max = 0.6,
+  L0_rep_drop_min = 0.3,
+  L0_rep_drop_max = 0.6,
   L0_fatigue_additive_min = 0,
   L0_fatigue_additive_max = 0,
   L0_fatigue_multiplicative_min = 0,
@@ -74,13 +70,9 @@ create_athletes(
 
 \item{V0_max}{Numeric}
 
-\item{V0_rep_drop_additive_min}{Numeric}
+\item{V0_rep_drop_min}{Numeric}
 
-\item{V0_rep_drop_additive_max}{Numeric}
-
-\item{V0_rep_drop_multiplicative_min}{Numeric}
-
-\item{V0_rep_drop_multiplicative_max}{Numeric}
+\item{V0_rep_drop_max}{Numeric}
 
 \item{V0_fatigue_additive_min}{Numeric}
 
@@ -110,13 +102,9 @@ create_athletes(
 
 \item{L0_max}{Numeric}
 
-\item{L0_rep_drop_additive_min}{Numeric}
+\item{L0_rep_drop_min}{Numeric}
 
-\item{L0_rep_drop_additive_max}{Numeric}
-
-\item{L0_rep_drop_multiplicative_min}{Numeric}
-
-\item{L0_rep_drop_multiplicative_max}{Numeric}
+\item{L0_rep_drop_max}{Numeric}
 
 \item{L0_fatigue_additive_min}{Numeric}
 

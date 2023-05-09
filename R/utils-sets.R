@@ -62,11 +62,9 @@ get_sets <- function(visit_LEV_profile,
   # +++++++++++++++++++++++++++++++++++++++++++
   # Code chunk for dealing with R CMD check note
   V0 <- NULL
-  V0_rep_drop_additive <- NULL
-  V0_rep_drop_multiplicative <- NULL
+  V0_rep_drop <- NULL
   L0 <- NULL
-  L0_rep_drop_additive <- NULL
-  L0_rep_drop_multiplicative <- NULL
+  L0_rep_drop <- NULL
   biological_variation_additive <- NULL
   biological_variation_multiplicative <- NULL
   instrumentation_noise_additive <- NULL
@@ -156,11 +154,9 @@ get_sets <- function(visit_LEV_profile,
     dplyr::mutate(
       get_reps_velocity(
         V0 = set_V0,
-        V0_rep_drop_additive = V0_rep_drop_additive,
-        V0_rep_drop_multiplicative = V0_rep_drop_multiplicative,
+        V0_rep_drop = V0_rep_drop,
         L0 = set_L0,
-        L0_rep_drop_additive = L0_rep_drop_additive,
-        L0_rep_drop_multiplicative = L0_rep_drop_multiplicative,
+        L0_rep_drop = L0_rep_drop,
         biological_variation_additive = biological_variation_additive,
         biological_variation_multiplicative = biological_variation_multiplicative,
         instrumentation_noise_additive = instrumentation_noise_additive,

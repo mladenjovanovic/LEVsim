@@ -7,8 +7,7 @@
 create_profiles(
   athlete = NA,
   V0 = 1.8,
-  V0_rep_drop_additive = 0,
-  V0_rep_drop_multiplicative = 0,
+  V0_rep_drop = 0,
   V0_fatigue_additive = 0,
   V0_fatigue_multiplicative = 0,
   V0_visit_change_additive = 0,
@@ -16,8 +15,7 @@ create_profiles(
   V0_visit_random_additive = 0,
   V0_visit_random_multiplicative = 0,
   L0 = 180,
-  L0_rep_drop_additive = 0,
-  L0_rep_drop_multiplicative = 0.045,
+  L0_rep_drop = 0.045,
   L0_fatigue_additive = 0,
   L0_fatigue_multiplicative = 0,
   L0_visit_change_additive = 0,
@@ -43,11 +41,7 @@ create_profiles(
 
 \item{V0}{Highest velocity when load equals zero}
 
-\item{V0_rep_drop_additive}{Number indicating fixed amount of \code{V0} dropping
-per repetition within set. This parameter models the
-exertion-velocity characteristic}
-
-\item{V0_rep_drop_multiplicative}{Number indicating proportion of \code{V0} dropping
+\item{V0_rep_drop}{Number indicating fixed amount of \code{V0} dropping
 per repetition within set. This parameter models the
 exertion-velocity characteristic}
 
@@ -71,11 +65,7 @@ each visit}
 
 \item{L0}{Highest load when velocity equals zero}
 
-\item{L0_rep_drop_additive}{Number indicating fixed amount of \code{L0} dropping
-per repetition within set. This parameter models the
-exertion-velocity characteristic}
-
-\item{L0_rep_drop_multiplicative}{Number indicating proportion of \code{L0} dropping
+\item{L0_rep_drop}{Number indicating fixed amount of \code{L0} dropping
 per repetition within set. This parameter models the
 exertion-velocity characteristic}
 

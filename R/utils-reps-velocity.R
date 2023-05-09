@@ -1,14 +1,22 @@
+
+# Functions to model within-set fatigue
+rep_L0_func <- function(L0, load, rep, k) {
+  L0 - k * load * (rep - 1)
+}
+
+rep_V0_func <- function(V0, initial_velocity, rep, k) {
+  V0 - k * (V0 - initial_velocity) * (rep - 1)
+}
+
 # Get Reps Velocity
 #
 # Function provide Exertion-Velocity profile utilizing \code{V0_rep_drop} and
 #     \code{L0_rep_drop} parameters
 #
 get_reps_velocity <- function(V0,
-                              V0_rep_drop_additive,
-                              V0_rep_drop_multiplicative,
+                              V0_rep_drop,
                               L0,
-                              L0_rep_drop_additive,
-                              L0_rep_drop_multiplicative,
+                              L0_rep_drop,
                               biological_variation_additive,
                               biological_variation_multiplicative,
                               instrumentation_noise_additive,
@@ -28,19 +36,17 @@ get_reps_velocity <- function(V0,
 
   reps <- dplyr::tibble(
     V0 = V0,
-    V0_rep_drop_additive = V0_rep_drop_additive,
-    V0_rep_drop_multiplicative = V0_rep_drop_multiplicative,
+    V0_rep_drop = V0_rep_drop,
     L0 = L0,
-    L0_rep_drop_additive = L0_rep_drop_additive,
-    L0_rep_drop_multiplicative = L0_rep_drop_multiplicative,
+    L0_rep_drop = L0_rep_drop,
     rep = rep,
     load = load
   ) %>%
     dplyr::mutate(
       # Effects of fatigue within-set (i.e., between reps)
       rep_initial_velocity = get_velocity_at_load(V0, L0, load),
-      rep_V0 = V0 - V0_rep_drop_multiplicative * (V0 - rep_initial_velocity) * (rep - 1) - V0_rep_drop_additive * (rep - 1),
-      rep_L0 = L0 - L0_rep_drop_multiplicative * load * (rep - 1) - L0_rep_drop_additive * (rep - 1),
+      rep_V0 = rep_V0_func(V0, rep_initial_velocity, rep, V0_rep_drop),
+      rep_L0 = rep_L0_func(L0, load, rep, L0_rep_drop),
 
       # True profile velocity
       true_rep_velocity = get_velocity_at_load(rep_V0, rep_L0, load),
