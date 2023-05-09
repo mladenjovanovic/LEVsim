@@ -5,10 +5,7 @@
 #'
 #' @param athlete Numeric or character vector indicating different athletes. Can also be names
 #' @param V0 Highest velocity when load equals zero
-#' @param V0_rep_drop_additive Number indicating fixed amount of \code{V0} dropping
-#'     per repetition within set. This parameter models the
-#'     exertion-velocity characteristic
-#' @param V0_rep_drop_multiplicative Number indicating proportion of \code{V0} dropping
+#' @param V0_rep_drop Number indicating fixed amount of \code{V0} dropping
 #'     per repetition within set. This parameter models the
 #'     exertion-velocity characteristic
 #' @param V0_fatigue_additive Number indicating additive systematic change in \code{V0} across multiple
@@ -24,10 +21,7 @@
 #' @param V0_visit_random_multiplicative Number indicating SD of proportional random change in \code{V0} for
 #'     each visit
 #' @param L0 Highest load when velocity equals zero
-#' @param L0_rep_drop_additive Number indicating fixed amount of \code{L0} dropping
-#'     per repetition within set. This parameter models the
-#'     exertion-velocity characteristic
-#' @param L0_rep_drop_multiplicative Number indicating proportion of \code{L0} dropping
+#' @param L0_rep_drop Number indicating fixed amount of \code{L0} dropping
 #'     per repetition within set. This parameter models the
 #'     exertion-velocity characteristic
 #' @param L0_fatigue_additive Number indicating additive systematic change in \code{L0} across multiple
@@ -103,8 +97,7 @@
 #' plot(sets, visits = 1, x_var = "RIR")
 create_profiles <- function(athlete = NA,
                             V0 = 1.8,
-                            V0_rep_drop_additive = 0,
-                            V0_rep_drop_multiplicative = 0,
+                            V0_rep_drop = 0,
                             V0_fatigue_additive = 0,
                             V0_fatigue_multiplicative = 0,
                             V0_visit_change_additive = 0,
@@ -112,8 +105,7 @@ create_profiles <- function(athlete = NA,
                             V0_visit_random_additive = 0,
                             V0_visit_random_multiplicative = 0,
                             L0 = 180,
-                            L0_rep_drop_additive = 0,
-                            L0_rep_drop_multiplicative = 0.045,
+                            L0_rep_drop = 0.045,
                             L0_fatigue_additive = 0,
                             L0_fatigue_multiplicative = 0,
                             L0_visit_change_additive = 0,
@@ -137,8 +129,7 @@ create_profiles <- function(athlete = NA,
   new_LEV_profile(
     athlete = athlete,
     V0 = V0,
-    V0_rep_drop_additive = V0_rep_drop_additive,
-    V0_rep_drop_multiplicative = V0_rep_drop_multiplicative,
+    V0_rep_drop = V0_rep_drop,
     V0_fatigue_additive = V0_fatigue_additive,
     V0_fatigue_multiplicative = V0_fatigue_multiplicative,
     V0_visit_change_additive = V0_visit_change_additive,
@@ -146,8 +137,7 @@ create_profiles <- function(athlete = NA,
     V0_visit_random_additive = V0_visit_random_additive,
     V0_visit_random_multiplicative = V0_visit_random_multiplicative,
     L0 = L0,
-    L0_rep_drop_additive = L0_rep_drop_additive,
-    L0_rep_drop_multiplicative = L0_rep_drop_multiplicative,
+    L0_rep_drop = L0_rep_drop,
     L0_fatigue_additive = L0_fatigue_additive,
     L0_fatigue_multiplicative = L0_fatigue_multiplicative,
     L0_visit_change_additive = L0_visit_change_additive,
