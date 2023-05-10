@@ -71,7 +71,7 @@ get_sets <- function(visit_LEV_profile,
   instrumentation_noise_multiplicative <- NULL
   rep_V0 <- NULL
   rep_L0 <- NULL
-  biological_rep_velocity <- NULL
+  manifested_rep_velocity <- NULL
   v1RM <- NULL
   failed_rep <- NULL
   last_rep <- NULL
@@ -178,7 +178,7 @@ get_sets <- function(visit_LEV_profile,
   cleaned_sets <- sets %>%
     dplyr::group_by(load_index)
 
-  # Here use either true_rep_velocity or biological_rep_velocity
+  # Here use either true_rep_velocity or manifested_rep_velocity
   if (use_true_velocity == TRUE) {
     cleaned_sets <- cleaned_sets %>%
       dplyr::mutate(
@@ -187,7 +187,7 @@ get_sets <- function(visit_LEV_profile,
   } else {
     cleaned_sets <- cleaned_sets %>%
       dplyr::mutate(
-        failed_rep = biological_rep_velocity <= v1RM
+        failed_rep = manifested_rep_velocity <= v1RM
       )
   }
 

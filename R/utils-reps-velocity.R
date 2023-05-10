@@ -30,7 +30,7 @@ get_reps_velocity <- function(V0,
   rep_V0 <- NULL
   rep_L0 <- NULL
   true_rep_velocity <- NULL
-  biological_rep_velocity <- NULL
+  manifested_rep_velocity <- NULL
   measured_rep_velocity <- NULL
   # +++++++++++++++++++++++++++++++++++++++++++
 
@@ -52,11 +52,11 @@ get_reps_velocity <- function(V0,
       true_rep_velocity = get_velocity_at_load(rep_V0, rep_L0, load),
 
       # Add biological variation
-      biological_rep_velocity = random_effect(true_rep_velocity, 1, biological_variation_multiplicative, TRUE),
-      biological_rep_velocity = random_effect(biological_rep_velocity, 1, biological_variation_additive, FALSE),
+      manifested_rep_velocity = random_effect(true_rep_velocity, 1, biological_variation_multiplicative, TRUE),
+      manifested_rep_velocity = random_effect(manifested_rep_velocity, 1, biological_variation_additive, FALSE),
 
       # Add instrumentation noise
-      measured_rep_velocity = random_effect(biological_rep_velocity, 1, instrumentation_noise_multiplicative, TRUE),
+      measured_rep_velocity = random_effect(manifested_rep_velocity, 1, instrumentation_noise_multiplicative, TRUE),
       measured_rep_velocity = random_effect(measured_rep_velocity, 1, instrumentation_noise_additive, FALSE)
     )
 
