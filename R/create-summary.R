@@ -35,7 +35,7 @@ create_summary <- function(LEV_sets) {
   reps <- NULL
   `%MNR` <- NULL
   true_rep_velocity <- NULL
-  biological_rep_velocity <- NULL
+  manifested_rep_velocity <- NULL
   measured_rep_velocity <- NULL
   best_measured_rep_velocity <- NULL
   VL <- NULL
@@ -80,8 +80,8 @@ create_summary <- function(LEV_sets) {
       `est_%MNR` = `est_%MNR`[reps_done],
       first_true_rep_velocity = true_rep_velocity[[1]],
       last_true_rep_velocity = true_rep_velocity[reps_done],
-      first_biological_rep_velocity = biological_rep_velocity[[1]],
-      last_biological_rep_velocity = biological_rep_velocity[reps_done],
+      first_manifested_rep_velocity = manifested_rep_velocity[[1]],
+      last_manifested_rep_velocity = manifested_rep_velocity[reps_done],
       first_measured_rep_velocity = measured_rep_velocity[[1]],
       last_measured_rep_velocity = measured_rep_velocity[reps_done],
       best_measured_rep_velocity = best_measured_rep_velocity[reps_done],
@@ -131,8 +131,8 @@ create_summary <- function(LEV_sets) {
     `est_%MNR` = df$`est_%MNR`,
     first_true_rep_velocity = df$first_true_rep_velocity,
     last_true_rep_velocity = df$last_true_rep_velocity,
-    first_biological_rep_velocity = df$first_biological_rep_velocity,
-    last_biological_rep_velocity = df$last_biological_rep_velocity,
+    first_manifested_rep_velocity = df$first_manifested_rep_velocity,
+    last_manifested_rep_velocity = df$last_manifested_rep_velocity,
     first_measured_rep_velocity = df$first_measured_rep_velocity,
     last_measured_rep_velocity = df$last_measured_rep_velocity,
     best_measured_rep_velocity = df$best_measured_rep_velocity,
