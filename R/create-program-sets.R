@@ -1,4 +1,5 @@
 #' Create Program Sets
+#'
 #' Function creates sets, using provided \code{LEV_profile}, \code{loads}, and \code{program_df}
 #' @param LEV_profile \code{LEV_profile} object, returned by \code{\link{create_visits}} function
 #' @param program_df Data frame with strength training program

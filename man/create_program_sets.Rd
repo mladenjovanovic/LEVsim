@@ -2,8 +2,7 @@
 % Please edit documentation in R/create-program-sets.R
 \name{create_program_sets}
 \alias{create_program_sets}
-\title{Create Program Sets
-Function creates sets, using provided \code{LEV_profile}, \code{loads}, and \code{program_df}}
+\title{Create Program Sets}
 \usage{
 create_program_sets(
   LEV_profile = create_profiles(),
@@ -53,7 +52,6 @@ repetitions is located}
 Object \code{LEV_sets}, or \code{data.frame} depending if \code{keep_program_df} equal to TRUE
 }
 \description{
-Create Program Sets
 Function creates sets, using provided \code{LEV_profile}, \code{loads}, and \code{program_df}
 }
 \examples{
