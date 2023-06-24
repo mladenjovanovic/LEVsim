@@ -214,6 +214,7 @@ get_sets <- function(visit_LEV_profile,
     dplyr::filter(rep <= ifelse(is.na(target_reps), Inf, target_reps))
 
   if (subjective_ratings == TRUE) {
+
     cleaned_sets <- cleaned_sets %>%
       dplyr::mutate(
         # Calculate estimated RIR and %MNR
@@ -225,8 +226,8 @@ get_sets <- function(visit_LEV_profile,
         last_eRIR = systematic_effect(last_eRIR, visit = 1, effect = est_RIR_systematic_additive, FALSE),
 
         # Random effects
-        last_eRIR = random_effect(last_eRIR, effect = est_RIR_random_multiplicative, TRUE),
-        last_eRIR = random_effect(last_eRIR, effect = est_RIR_random_additive, FALSE),
+        last_eRIR = random_effect(last_eRIR, visit = 1, effect = est_RIR_random_multiplicative, TRUE),
+        last_eRIR = random_effect(last_eRIR, visit = 1, effect = est_RIR_random_additive, FALSE),
 
         last_eRIR = ifelse(last_eRIR < 0, 0, last_eRIR),
         last_eRIR = round(last_eRIR),
