@@ -54,6 +54,7 @@
 #' @param est_RIR_random_additive_max Numeric
 #' @param est_RIR_random_multiplicative_min Numeric
 #' @param est_RIR_random_multiplicative_max Numeric
+#' @param est_0RIR_error Logical
 #' @param biological_variation_additive_min Numeric
 #' @param biological_variation_additive_max Numeric
 #' @param biological_variation_multiplicative_min Numeric
@@ -147,6 +148,7 @@ create_athletes <- function(n = 20,
                             est_RIR_random_additive_max = 0,
                             est_RIR_random_multiplicative_min = 0,
                             est_RIR_random_multiplicative_max = 0.25,
+                            est_0RIR_error = FALSE,
 
                             biological_variation_additive_min = 0,
                             biological_variation_additive_max = 0,
@@ -190,6 +192,7 @@ create_athletes <- function(n = 20,
     est_RIR_systematic_multiplicative = stats::runif(n, est_RIR_systematic_multiplicative_min, est_RIR_systematic_multiplicative_max),
     est_RIR_random_additive = stats::runif(n, est_RIR_random_additive_min, est_RIR_random_additive_max),
     est_RIR_random_multiplicative = stats::runif(n, est_RIR_random_multiplicative_min, est_RIR_random_multiplicative_max),
+    est_0RIR_error = est_0RIR_error,
 
     biological_variation_additive = stats::runif(n, biological_variation_additive_min, biological_variation_additive_max),
     biological_variation_multiplicative = stats::runif(n, biological_variation_multiplicative_min, biological_variation_multiplicative_max),

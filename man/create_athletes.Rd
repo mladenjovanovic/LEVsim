@@ -52,6 +52,7 @@ create_athletes(
   est_RIR_random_additive_max = 0,
   est_RIR_random_multiplicative_min = 0,
   est_RIR_random_multiplicative_max = 0.25,
+  est_0RIR_error = FALSE,
   biological_variation_additive_min = 0,
   biological_variation_additive_max = 0,
   biological_variation_multiplicative_min = 0.02,
@@ -157,6 +158,8 @@ create_athletes(
 \item{est_RIR_random_multiplicative_min}{Numeric}
 
 \item{est_RIR_random_multiplicative_max}{Numeric}
+
+\item{est_0RIR_error}{Logical}
 
 \item{biological_variation_additive_min}{Numeric}
 

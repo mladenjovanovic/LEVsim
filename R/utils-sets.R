@@ -99,6 +99,7 @@ get_sets <- function(visit_LEV_profile,
   est_RIR_random_multiplicative <- NULL
   est_RIR_systematic_additive <- NULL
   est_RIR_systematic_multiplicative <- NULL
+  est_0RIR_error <- NULL
   est_nRM <- NULL
   last_RIR <- NULL
   last_eRIR <- NULL
