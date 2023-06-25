@@ -49,6 +49,8 @@
 #'     \code{RIR}
 #' @param est_RIR_random_multiplicative Number indicating SD of the random proportional biological variation
 #'     in estimating \code{RIR}
+#' @param est_0RIR_error Logical (default \code{FALSE}) indicating whether to apply estimated RIR noise when
+#'     the true RIR is equal to zero
 #' @param biological_variation_additive Number indicating SD of the random additive biological variation
 #'     in velocity when performing repetitions
 #' @param biological_variation_multiplicative Number indicating SD of the random proportional biological variation
@@ -119,6 +121,7 @@ create_profiles <- function(athlete = NA,
                             est_RIR_systematic_multiplicative = 0,
                             est_RIR_random_additive = 0,
                             est_RIR_random_multiplicative = 0,
+                            est_0RIR_error = FALSE,
                             biological_variation_additive = 0,
                             biological_variation_multiplicative = 0,
                             instrumentation_noise_additive = 0,
@@ -151,6 +154,7 @@ create_profiles <- function(athlete = NA,
     est_RIR_systematic_multiplicative = est_RIR_systematic_multiplicative,
     est_RIR_random_additive = est_RIR_random_additive,
     est_RIR_random_multiplicative = est_RIR_random_multiplicative,
+    est_0RIR_error = est_0RIR_error,
     biological_variation_additive = biological_variation_additive,
     biological_variation_multiplicative = biological_variation_multiplicative,
     instrumentation_noise_additive = instrumentation_noise_additive,

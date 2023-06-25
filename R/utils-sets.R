@@ -99,6 +99,7 @@ get_sets <- function(visit_LEV_profile,
   est_RIR_random_multiplicative <- NULL
   est_RIR_systematic_additive <- NULL
   est_RIR_systematic_multiplicative <- NULL
+  est_0RIR_error <- NULL
   est_nRM <- NULL
   last_RIR <- NULL
   last_eRIR <- NULL
@@ -237,7 +238,8 @@ get_sets <- function(visit_LEV_profile,
         set_to_failure = ifelse(is.na(RIR), FALSE, ifelse(any(RIR <= 0), TRUE, FALSE)),
 
         # If set is taken to failure, then est_RIR MUST be the same as RIR
-        est_RIR = ifelse(set_to_failure == TRUE, RIR, est_RIR)
+        # Unless est_0RIR_error set to TRUE
+        est_RIR = ifelse(set_to_failure == TRUE & est_0RIR_error == FALSE, RIR, est_RIR)
       ) %>%
       dplyr::select(-last_rep, -last_row, -last_RIR, -last_eRIR, -last_eRIR_sys, -last_eRIR_rnd) %>%
       dplyr::ungroup()

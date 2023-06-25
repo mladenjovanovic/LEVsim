@@ -29,6 +29,7 @@ create_profiles(
   est_RIR_systematic_multiplicative = 0,
   est_RIR_random_additive = 0,
   est_RIR_random_multiplicative = 0,
+  est_0RIR_error = FALSE,
   biological_variation_additive = 0,
   biological_variation_multiplicative = 0,
   instrumentation_noise_additive = 0,
@@ -106,6 +107,9 @@ biological variation in estimating \code{RIR}}
 
 \item{est_RIR_random_multiplicative}{Number indicating SD of the random proportional biological variation
 in estimating \code{RIR}}
+
+\item{est_0RIR_error}{Logical (default \code{FALSE}) indicating whether to apply estimated RIR noise when
+the true RIR is equal to zero}
 
 \item{biological_variation_additive}{Number indicating SD of the random additive biological variation
 in velocity when performing repetitions}
