@@ -27,6 +27,8 @@ create_summary <- function(LEV_sets) {
   visit_1RM <- NULL
   prescription_1RM <- NULL
   set <- NULL
+  set_V0 <- NULL
+  set_L0 <- NULL
   load_index <- NULL
   load <- NULL
   RTF <- NULL
@@ -61,6 +63,8 @@ create_summary <- function(LEV_sets) {
     dplyr::summarise(
       V0 = V0[[1]],
       L0 = L0[[1]],
+      set_V0 = set_V0[[1]],
+      set_L0 = set_L0[[1]],
       v1RM = v1RM[[1]],
       `1RM` = `1RM`[[1]],
       visit_1RM = visit_1RM[[1]],
@@ -115,6 +119,8 @@ create_summary <- function(LEV_sets) {
     visit_1RM = df$visit_1RM,
     prescription_1RM = df$prescription_1RM,
     set = df$set,
+    set_V0 = df$set_V0,
+    set_L0 = df$set_L0,
     load_type = df$load_type,
     load_index = df$load_index,
     load_perc = df$load_perc,
