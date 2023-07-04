@@ -4,7 +4,11 @@
 #'
 #' @param LEV_profile \code{LEV_profile} object, returned by \code{\link{create_visits}} function
 #' @param load Numeric vector. Loads are either absolute weight or percentages. See also \code{load_type}
-#' @param reps Target number of reps. Default is equal to \code{max_reps}
+#' @param reps Target number of reps. Default is equal to \code{NA}, implying max reps
+#' @param target_est_RIR Target \code{est_RIR}. Set is stopped when reaching this quality threshold. Default is \code{NA}
+#' @param target_velocity Target measured velocity. Set is stopped when reaching this quality threshold. Default is \code{NA}
+#' @param target_VL Target velocity loss. Set is stopped when reaching this quality threshold. Default is \code{NA}
+#' @param target_est_MNR Target \code{est_MNR}. Set is stopped when reaching this quality threshold. Default is \code{NA}
 #' @param load_type Type of load calculation. Can be either 'absolute' (default), 'profile 1RM', 'L0',
 #'     'visit 1RM', or 'prescription 1RM'
 #' @param max_reps How many maximum reps to generate to search for failure? Default is 100
@@ -12,6 +16,8 @@
 #' @param failed_sets Should failed-sets be included in the output? Default is \code{FALSE}
 #' @param use_true_velocity When estimating failure, should true or biological (default) velocity be used?
 #' @param inter_set_fatigue Should profile inter-set fatigue parameters be utilized? Default is \code{TRUE}
+#' @param incremental_est_RIR When calculating \code{est_RIR} for the preceding reps last rep, should
+#'      increments be used or instantaneous subjective ratings for each rep? Default is \code{TRUE}
 #'
 #' @return Object \code{LEV_sets}
 #' @export
@@ -50,12 +56,17 @@
 create_sets <- function(LEV_profile,
                         load,
                         reps = rep(NA, length(load)),
+                        target_est_RIR = rep(NA, length(load)),
+                        target_velocity = rep(NA, length(load)),
+                        target_VL = rep(NA, length(load)),
+                        target_est_MNR = rep(NA, length(load)),
                         load_type = "absolute",
                         max_reps = 100,
                         failed_reps = FALSE,
                         failed_sets = FALSE,
                         use_true_velocity = FALSE,
-                        inter_set_fatigue = TRUE) {
+                        inter_set_fatigue = TRUE,
+                        incremental_est_RIR = TRUE) {
 
   # +++++++++++++++++++++++++++++++++++++++++++
   # Code chunk for dealing with R CMD check note
@@ -128,9 +139,14 @@ create_sets <- function(LEV_profile,
         visit,
         load = visit_load,
         reps = reps,
+        target_est_RIR = target_est_RIR,
+        target_velocity = target_velocity,
+        target_VL = target_VL,
+        target_est_MNR = target_est_MNR,
         max_reps = max_reps,
         use_true_velocity = use_true_velocity,
-        inter_set_fatigue = inter_set_fatigue
+        inter_set_fatigue = inter_set_fatigue,
+        incremental_est_RIR = incremental_est_RIR
       )
 
       visit_sets$load_type <- load_type
