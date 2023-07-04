@@ -12,7 +12,8 @@ create_prescription_1RM(
  },
   load_perc = seq(0.8, 1.2, by = 0.025),
   buffer = 1,
-  use_true_velocity = FALSE
+  use_true_velocity = FALSE,
+  round_1RM = TRUE
 )
 }
 \arguments{
@@ -31,6 +32,8 @@ is utilized when \code{init_RM} equals \code{NULL}}
 prescription}
 
 \item{use_true_velocity}{When estimating failure, should true or biological (default) velocity be used?}
+
+\item{round_1RM}{Should calculated 1RM be rounded after multiplying with buffer? Default is \code{FALSE}}
 }
 \description{
 This function creates prescription 1RM within provided \code{LEV_profile}

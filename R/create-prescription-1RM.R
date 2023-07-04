@@ -12,6 +12,7 @@
 #' @param buffer Default is 1, but can be, for example 0.8 of the estimated 1RM to be used for
 #'      prescription
 #' @param use_true_velocity When estimating failure, should true or biological (default) velocity be used?
+#' @param round_1RM Should calculated 1RM be rounded after multiplying with buffer? Default is \code{FALSE}
 #' @export
 #' @examples
 #' set.seed(1667)
@@ -45,7 +46,8 @@ create_prescription_1RM <- function(LEV_profile,
                                     },
                                     load_perc = seq(0.8, 1.2, by = 0.025),
                                     buffer = 1,
-                                    use_true_velocity = FALSE) {
+                                    use_true_velocity = FALSE,
+                                    round_1RM = TRUE) {
 
   # Check of the object is proper LEV_profile
   is_LEV <- validate_LEV_profile(LEV_profile, stop_running = TRUE)
@@ -66,7 +68,10 @@ create_prescription_1RM <- function(LEV_profile,
       )
       last_try <- min(which(oneRM_trials$failed_rep)) - 1
       init_1RM <- load[[last_try]] * buffer
-      init_1RM <- get_load_rounded(init_1RM, profile$profile$load_increment)
+
+      if (round_1RM == TRUE) {
+        init_1RM <- get_load_rounded(init_1RM, profile$profile$load_increment)
+      }
     }
 
     profile$visit <- purrr::map(profile$visit, function(visit) {
