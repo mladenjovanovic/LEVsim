@@ -66,6 +66,7 @@ create_prescription_1RM <- function(LEV_profile,
       )
       last_try <- min(which(oneRM_trials$failed_rep)) - 1
       init_1RM <- load[[last_try]] * buffer
+      init_1RM <- get_load_rounded(init_1RM, profile$profile$load_increment)
     }
 
     profile$visit <- purrr::map(profile$visit, function(visit) {
