@@ -8,7 +8,15 @@
 #' @param load String indicating the name of the column in \code{program_df} where load or perc 1RM
 #'      is located
 #' @param reps String indicating the name of the column in \code{program_df} where number of target
-#'     repetitions is located
+#'     repetitions is located. Default is \code{NULL}
+#' @param target_est_RIR String indicating the name of the column in \code{program_df} where target
+#'     estimated RIR is located. Default is \code{NULL}
+#' @param target_velocity String indicating the name of the column in \code{program_df} where target
+#'     measured velocity is located. Default is \code{NULL}
+#' @param target_VL String indicating the name of the column in \code{program_df} where target
+#'     measured velocity loss is located. Default is \code{NULL}
+#' @param target_est_MNR String indicating the name of the column in \code{program_df} where target
+#'     estimated percent maximum number of repetitions is located. Default is \code{NULL}
 #' @param load_type Type of load calculation. Can be either 'absolute' (default), 'profile 1RM', 'L0',
 #'     'visit 1RM', or 'prescription 1RM'
 #' @param max_reps How many maximum reps to generate to search for failure? Default is 100
@@ -17,6 +25,8 @@
 #' @param use_true_velocity When estimating failure, should true or biological (default) velocity be used?
 #' @param inter_set_fatigue Should profile inter-set fatigue parameters be utilized? Default is \code{TRUE}
 #' @param keep_program_df Should \code{LEV_sets} object be returned or \code{data.frame}
+#' @param incremental_est_RIR When calculating \code{est_RIR} for the preceding reps last rep, should
+#'      increments be used or instantaneous subjective ratings for each rep? Default is \code{TRUE}
 #'
 #' @return Object \code{LEV_sets}, or \code{data.frame} depending if \code{keep_program_df} equal to TRUE
 #' @export
@@ -44,13 +54,18 @@ create_program_sets <- function(LEV_profile = create_profiles(),
                                 program_df,
                                 visit,
                                 load,
-                                reps,
+                                reps = NULL,
+                                target_est_RIR = NULL,
+                                target_velocity = NULL,
+                                target_VL = NULL,
+                                target_est_MNR = NULL,
                                 load_type = "absolute",
                                 max_reps = 100,
                                 failed_reps = FALSE,
                                 failed_sets = FALSE,
                                 use_true_velocity = FALSE,
                                 inter_set_fatigue = TRUE,
+                                incremental_est_RIR = TRUE,
                                 keep_program_df = FALSE) {
 
   # +++++++++++++++++++++++++++++++++++++++++++
@@ -78,8 +93,14 @@ create_program_sets <- function(LEV_profile = create_profiles(),
       # Filter out visit from the training program
       program_df_visit <- program_df[program_df[visit] == .visit$visit, ]
 
+      # Filter out columns with information
       program_load <- program_df_visit[[load]]
-      program_reps <- program_df_visit[[reps]]
+      program_reps <- ifelse(is.null(reps), NA, program_df_visit[[reps]])
+
+      program_target_est_RIR <- ifelse(is.null(target_est_RIR), NA, program_df_visit[[target_est_RIR]])
+      program_target_velocity <- ifelse(is.null(target_velocity), NA, program_df_visit[[target_velocity]])
+      program_target_VL <- ifelse(is.null(target_VL), NA, program_df_visit[[target_VL]])
+      program_target_est_MNR <- ifelse(is.null(target_est_MNR), NA, program_df_visit[[target_est_MNR]])
 
       if (purrr::is_empty(program_load)) {
         return(NULL)
@@ -129,9 +150,14 @@ create_program_sets <- function(LEV_profile = create_profiles(),
         .visit,
         load = visit_load,
         reps = program_reps,
+        target_est_RIR = program_target_est_RIR,
+        target_velocity = program_target_velocity,
+        target_VL = program_target_VL,
+        target_est_MNR = program_target_est_MNR,
         max_reps = max_reps,
         use_true_velocity = use_true_velocity,
-        inter_set_fatigue = inter_set_fatigue
+        inter_set_fatigue = inter_set_fatigue,
+        incremental_est_RIR = incremental_est_RIR
       )
 
       visit_sets$load_type <- load_type

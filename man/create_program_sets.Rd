@@ -9,13 +9,18 @@ create_program_sets(
   program_df,
   visit,
   load,
-  reps,
+  reps = NULL,
+  target_est_RIR = NULL,
+  target_velocity = NULL,
+  target_VL = NULL,
+  target_est_MNR = NULL,
   load_type = "absolute",
   max_reps = 100,
   failed_reps = FALSE,
   failed_sets = FALSE,
   use_true_velocity = FALSE,
   inter_set_fatigue = TRUE,
+  incremental_est_RIR = TRUE,
   keep_program_df = FALSE
 )
 }
@@ -31,7 +36,19 @@ is located}
 is located}
 
 \item{reps}{String indicating the name of the column in \code{program_df} where number of target
-repetitions is located}
+repetitions is located. Default is \code{NULL}}
+
+\item{target_est_RIR}{String indicating the name of the column in \code{program_df} where target
+estimated RIR is located. Default is \code{NULL}}
+
+\item{target_velocity}{String indicating the name of the column in \code{program_df} where target
+measured velocity is located. Default is \code{NULL}}
+
+\item{target_VL}{String indicating the name of the column in \code{program_df} where target
+measured velocity loss is located. Default is \code{NULL}}
+
+\item{target_est_MNR}{String indicating the name of the column in \code{program_df} where target
+estimated percent maximum number of repetitions is located. Default is \code{NULL}}
 
 \item{load_type}{Type of load calculation. Can be either 'absolute' (default), 'profile 1RM', 'L0',
 'visit 1RM', or 'prescription 1RM'}
@@ -45,6 +62,9 @@ repetitions is located}
 \item{use_true_velocity}{When estimating failure, should true or biological (default) velocity be used?}
 
 \item{inter_set_fatigue}{Should profile inter-set fatigue parameters be utilized? Default is \code{TRUE}}
+
+\item{incremental_est_RIR}{When calculating \code{est_RIR} for the preceding reps last rep, should
+increments be used or instantaneous subjective ratings for each rep? Default is \code{TRUE}}
 
 \item{keep_program_df}{Should \code{LEV_sets} object be returned or \code{data.frame}}
 }

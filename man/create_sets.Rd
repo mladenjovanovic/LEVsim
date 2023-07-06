@@ -8,12 +8,17 @@ create_sets(
   LEV_profile,
   load,
   reps = rep(NA, length(load)),
+  target_est_RIR = rep(NA, length(load)),
+  target_velocity = rep(NA, length(load)),
+  target_VL = rep(NA, length(load)),
+  target_est_MNR = rep(NA, length(load)),
   load_type = "absolute",
   max_reps = 100,
   failed_reps = FALSE,
   failed_sets = FALSE,
   use_true_velocity = FALSE,
-  inter_set_fatigue = TRUE
+  inter_set_fatigue = TRUE,
+  incremental_est_RIR = TRUE
 )
 }
 \arguments{
@@ -21,7 +26,15 @@ create_sets(
 
 \item{load}{Numeric vector. Loads are either absolute weight or percentages. See also \code{load_type}}
 
-\item{reps}{Target number of reps. Default is equal to \code{max_reps}}
+\item{reps}{Target number of reps. Default is equal to \code{NA}, implying max reps}
+
+\item{target_est_RIR}{Target \code{est_RIR}. Set is stopped when reaching this quality threshold. Default is \code{NA}}
+
+\item{target_velocity}{Target measured velocity. Set is stopped when reaching this quality threshold. Default is \code{NA}}
+
+\item{target_VL}{Target velocity loss. Set is stopped when reaching this quality threshold. Default is \code{NA}}
+
+\item{target_est_MNR}{Target \code{est_MNR}. Set is stopped when reaching this quality threshold. Default is \code{NA}}
 
 \item{load_type}{Type of load calculation. Can be either 'absolute' (default), 'profile 1RM', 'L0',
 'visit 1RM', or 'prescription 1RM'}
@@ -35,6 +48,9 @@ create_sets(
 \item{use_true_velocity}{When estimating failure, should true or biological (default) velocity be used?}
 
 \item{inter_set_fatigue}{Should profile inter-set fatigue parameters be utilized? Default is \code{TRUE}}
+
+\item{incremental_est_RIR}{When calculating \code{est_RIR} for the preceding reps last rep, should
+increments be used or instantaneous subjective ratings for each rep? Default is \code{TRUE}}
 }
 \value{
 Object \code{LEV_sets}
