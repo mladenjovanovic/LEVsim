@@ -173,6 +173,7 @@ plot_LEV_summary <- function(df,
                              est_nRMs = NULL,
                              color = NULL,
                              facet = "visit",
+                             x_var = "load_index",
                              label_size = 1.5) {
 
 
@@ -199,6 +200,8 @@ plot_LEV_summary <- function(df,
   load_perc_adj <- NULL
   # +++++++++++++++++++++++++++++++++++++++++++
 
+  x_var_name <- as.name(x_var)
+
   # If null, use visit so it doesn't throw an error
   if (is.null(facet)) {
     facet.tmp <- "visit"
@@ -210,6 +213,7 @@ plot_LEV_summary <- function(df,
   df <- df %>%
     dplyr::mutate(
       facet_var = !!facet_name,
+      x_var = !!x_var_name,
       set = factor(set)
     )
 
@@ -284,9 +288,9 @@ plot_LEV_summary <- function(df,
   }
 
   if (is.null(color)) {
-    gg <- ggplot2::ggplot(df, ggplot2::aes(x = load_index, xend = load_index, y = best_measured_rep_velocity, yend = last_measured_rep_velocity))
+    gg <- ggplot2::ggplot(df, ggplot2::aes(x = x_var, xend = x_var, y = best_measured_rep_velocity, yend = last_measured_rep_velocity))
   } else {
-    gg <- ggplot2::ggplot(df, ggplot2::aes_string(x = "load_index", xend = "load_index", y = "best_measured_rep_velocity", yend = "last_measured_rep_velocity", color = color))
+    gg <- ggplot2::ggplot(df, ggplot2::aes_string(x = "x_var", xend = "x_var", y = "best_measured_rep_velocity", yend = "last_measured_rep_velocity", color = color))
   }
 
   gg <- gg +
@@ -314,7 +318,7 @@ plot_LEV_summary <- function(df,
   }
 
   gg <- gg +
-    ggplot2::xlab("Set") +
+    ggplot2::xlab(x_var) +
     ggplot2::ylab("Measured Rep Velocity")
 
   gg
