@@ -174,6 +174,8 @@ plot_LEV_summary <- function(df,
                              color = NULL,
                              facet = "visit",
                              x_var = "load_index",
+                             y_start = "best_measured_rep_velocity",
+                             y_end = "last_measured_rep_velocity",
                              label_size = 1.5) {
 
 
@@ -201,6 +203,8 @@ plot_LEV_summary <- function(df,
   # +++++++++++++++++++++++++++++++++++++++++++
 
   x_var_name <- as.name(x_var)
+  y_start_name <- as.name(y_start)
+  y_end_name <- as.name(y_end)
 
   # If null, use visit so it doesn't throw an error
   if (is.null(facet)) {
@@ -214,6 +218,8 @@ plot_LEV_summary <- function(df,
     dplyr::mutate(
       facet_var = !!facet_name,
       x_var = !!x_var_name,
+      y_start = !!y_start_name,
+      y_end = !!y_end_name,
       set = factor(set)
     )
 
@@ -288,18 +294,18 @@ plot_LEV_summary <- function(df,
   }
 
   if (is.null(color)) {
-    gg <- ggplot2::ggplot(df, ggplot2::aes(x = x_var, xend = x_var, y = best_measured_rep_velocity, yend = last_measured_rep_velocity))
+    gg <- ggplot2::ggplot(df, ggplot2::aes(x = x_var, xend = x_var, y = y_start, yend = y_end))
   } else {
-    gg <- ggplot2::ggplot(df, ggplot2::aes_string(x = "x_var", xend = "x_var", y = "best_measured_rep_velocity", yend = "last_measured_rep_velocity", color = color))
+    gg <- ggplot2::ggplot(df, ggplot2::aes_string(x = "x_var", xend = "x_var", y = "y_start", yend = "y_end", color = color))
   }
 
   gg <- gg +
     ggplot2::theme_linedraw() +
     ggplot2::geom_segment(alpha = 0.9, size = 1, arrow = ggplot2::arrow(length = ggplot2::unit(0.1, "cm"))) +
-    ggplot2::geom_text(ggplot2::aes(y = best_measured_rep_velocity + 0.025, label = load), vjust = "bottom", size = label_size, alpha = 0.8) +
-    ggplot2::geom_text(ggplot2::aes(y = last_measured_rep_velocity - 0.025, label = paste0(est_RIR, "eRIR")), vjust = "top", size = label_size, alpha = 0.8) +
-    ggplot2::geom_text(ggplot2::aes(y = last_measured_rep_velocity + 0.5 * (best_measured_rep_velocity - last_measured_rep_velocity), label = reps_done), vjust = -1, size = label_size, alpha = 0.8, angle = 90)
-  # ggplot2::geom_label(ggplot2::aes(y = best_measured_rep_velocity + 0.065, label = paste0(reps, " w/", load, "\n@", RIR, "RIR")), vjust = "center", size = 2)
+    ggplot2::geom_text(ggplot2::aes(y = y_start + 0.025, label = load), vjust = "bottom", size = label_size, alpha = 0.8) +
+    ggplot2::geom_text(ggplot2::aes(y = y_end - 0.025, label = paste0(est_RIR, "eRIR")), vjust = "top", size = label_size, alpha = 0.8) +
+    ggplot2::geom_text(ggplot2::aes(y = y_end + 0.5 * (y_start - y_end), label = reps_done), vjust = -1, size = label_size, alpha = 0.8, angle = 90)
+  # ggplot2::geom_label(ggplot2::aes(y = y_start + 0.065, label = paste0(reps, " w/", load, "\n@", RIR, "RIR")), vjust = "center", size = 2)
 
   if (type == "athletes") {
     if (!is.null(facet)) {

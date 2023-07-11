@@ -250,6 +250,7 @@ get_sets <- function(visit_LEV_profile,
       nRM = last_rep - 1,
       `%MNR` = (rep / nRM) * 100,
       best_measured_rep_velocity = cummax(measured_rep_velocity),
+      worst_measured_rep_velocity = cummin(measured_rep_velocity),
       VL = best_measured_rep_velocity - measured_rep_velocity,
       `%VL` = VL / best_measured_rep_velocity * 100,
       VR = 100 * (measured_rep_velocity - v1RM) / (best_measured_rep_velocity - v1RM)
