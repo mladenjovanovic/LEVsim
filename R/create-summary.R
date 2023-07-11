@@ -40,6 +40,7 @@ create_summary <- function(LEV_sets) {
   manifested_rep_velocity <- NULL
   measured_rep_velocity <- NULL
   best_measured_rep_velocity <- NULL
+  worst_measured_rep_velocity <- NULL
   VL <- NULL
   `%VL` <- NULL
   VR <- NULL
@@ -89,6 +90,7 @@ create_summary <- function(LEV_sets) {
       first_measured_rep_velocity = measured_rep_velocity[[1]],
       last_measured_rep_velocity = measured_rep_velocity[reps_done],
       best_measured_rep_velocity = best_measured_rep_velocity[reps_done],
+      worst_measured_rep_velocity = worst_measured_rep_velocity[reps_done],
       VL = VL[reps_done],
       `%VL` = `%VL`[reps_done],
       VR = VR[reps_done]
@@ -142,6 +144,7 @@ create_summary <- function(LEV_sets) {
     first_measured_rep_velocity = df$first_measured_rep_velocity,
     last_measured_rep_velocity = df$last_measured_rep_velocity,
     best_measured_rep_velocity = df$best_measured_rep_velocity,
+    worst_measured_rep_velocity = df$worst_measured_rep_velocity,
     VL = df$VL,
     `%VL` = df$`%VL`,
     VR = df$VR
