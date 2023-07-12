@@ -1,3 +1,13 @@
+# Function to check if parameters is NA
+check_NA <- function(param, df) {
+  if (is.null(param)) {
+    return(NA)
+  } else {
+    return(df[[param]])
+  }
+}
+
+
 #' Create Program Sets
 #'
 #' Function creates sets, using provided \code{LEV_profile}, \code{loads}, and \code{program_df}
@@ -86,6 +96,7 @@ create_program_sets <- function(LEV_profile = create_profiles(),
 
     # Cycle through visits
     individual_sets <- purrr::map_df(profile$visit, function(.visit) {
+
       visit_1RM <- .visit$visit_1RM
       prescription_1RM <- .visit$prescription_1RM
       load_increment <- .visit$load_increment
@@ -95,12 +106,12 @@ create_program_sets <- function(LEV_profile = create_profiles(),
 
       # Filter out columns with information
       program_load <- program_df_visit[[load]]
-      program_reps <- ifelse(is.null(reps), NA, program_df_visit[[reps]])
+      program_reps <- check_NA(reps, program_df_visit)
 
-      program_target_est_RIR <- ifelse(is.null(target_est_RIR), NA, program_df_visit[[target_est_RIR]])
-      program_target_velocity <- ifelse(is.null(target_velocity), NA, program_df_visit[[target_velocity]])
-      program_target_VL <- ifelse(is.null(target_VL), NA, program_df_visit[[target_VL]])
-      program_target_est_MNR <- ifelse(is.null(target_est_MNR), NA, program_df_visit[[target_est_MNR]])
+      program_target_est_RIR <- check_NA(target_est_RIR, program_df_visit)
+      program_target_velocity <- check_NA(target_velocity, program_df_visit)
+      program_target_VL <- check_NA(target_VL, program_df_visit)
+      program_target_est_MNR <- check_NA(target_est_MNR, program_df_visit)
 
       if (purrr::is_empty(program_load)) {
         return(NULL)
