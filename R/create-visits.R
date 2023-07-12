@@ -105,19 +105,15 @@ create_visits <- function(LEV_profile = create_profiles(),
       v1RM = true_profile$v1RM,
       v1RM_random_additive = true_profile$v1RM_random_additive,
       v1RM_random_multiplicative = true_profile$v1RM_random_multiplicative,
-
       est_RIR_systematic_additive = true_profile$est_RIR_systematic_additive,
       est_RIR_systematic_multiplicative = true_profile$est_RIR_systematic_multiplicative,
       est_RIR_random_additive = true_profile$est_RIR_random_additive,
       est_RIR_random_multiplicative = true_profile$est_RIR_random_multiplicative,
       est_0RIR_error = true_profile$est_0RIR_error,
-
       biological_variation_additive = true_profile$biological_variation_additive,
       biological_variation_multiplicative = true_profile$biological_variation_multiplicative,
-
       instrumentation_noise_additive = true_profile$instrumentation_noise_additive,
       instrumentation_noise_multiplicative = true_profile$instrumentation_noise_multiplicative,
-
       load_increment = true_profile$load_increment
     )
 
@@ -128,17 +124,14 @@ create_visits <- function(LEV_profile = create_profiles(),
         # Deduct 1 from visit since first visit is initial without systematic effects
         new_V0 = systematic_effect(V0, visit - 1, V0_visit_change_multiplicative, TRUE),
         new_V0 = systematic_effect(new_V0, visit - 1, V0_visit_change_additive, FALSE),
-
         new_L0 = systematic_effect(L0, visit - 1, L0_visit_change_multiplicative, TRUE),
         new_L0 = systematic_effect(new_L0, visit - 1, L0_visit_change_additive, FALSE),
 
         # Random effects
         new_V0 = random_effect(new_V0, visit - 1, V0_visit_random_multiplicative, TRUE),
         new_V0 = random_effect(new_V0, visit - 1, V0_visit_random_additive, FALSE),
-
         new_L0 = random_effect(new_L0, visit - 1, L0_visit_random_multiplicative, TRUE),
         new_L0 = random_effect(new_L0, visit - 1, L0_visit_random_additive, FALSE),
-
         new_v1RM = random_effect(v1RM, visit - 1, v1RM_random_multiplicative, TRUE),
         new_v1RM = random_effect(new_v1RM, visit - 1, v1RM_random_additive, FALSE),
 

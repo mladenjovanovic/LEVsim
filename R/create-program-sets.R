@@ -45,9 +45,10 @@ check_NA <- function(param, df) {
 #'
 #' set.seed(10)
 #' program_sets <- create_profiles(
-#'       athlete = 1,
-#'       L0_visit_change_additive = 1,
-#'       L0_fatigue_additive = 5) %>%
+#'   athlete = 1,
+#'   L0_visit_change_additive = 1,
+#'   L0_fatigue_additive = 5
+#' ) %>%
 #'   create_visits(1:12) %>%
 #'   create_prescription_1RM(buffer = 0.9) %>%
 #'   create_program_sets(
@@ -96,7 +97,6 @@ create_program_sets <- function(LEV_profile = create_profiles(),
 
     # Cycle through visits
     individual_sets <- purrr::map_df(profile$visit, function(.visit) {
-
       visit_1RM <- .visit$visit_1RM
       prescription_1RM <- .visit$prescription_1RM
       load_increment <- .visit$load_increment
@@ -139,7 +139,7 @@ create_program_sets <- function(LEV_profile = create_profiles(),
         # Check if there are NAs due to missing visit_1RM metric
         if (any(is.na(visit_load))) {
           stop("There are missing values in the load due to missing visit 1RM. Please use 'create_visit_1RM()' before 'create_sets()'",
-               call. = FALSE
+            call. = FALSE
           )
         }
       } else if (load_type == "prescription 1RM") {
@@ -151,7 +151,7 @@ create_program_sets <- function(LEV_profile = create_profiles(),
         # Check if there are NAs due to missing prescription_1RM metric
         if (any(is.na(visit_load))) {
           stop("There are missing values in the load due to missing prescription 1RM. Please use 'create_prescription_1RM()' before 'create_sets()'",
-               call. = FALSE
+            call. = FALSE
           )
         }
       }

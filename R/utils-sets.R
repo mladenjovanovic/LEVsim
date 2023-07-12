@@ -174,10 +174,8 @@ get_sets <- function(visit_LEV_profile,
       dplyr::mutate(
         set_L0 = systematic_effect(L0, load_index - 1, -L0_fatigue_multiplicative, TRUE),
         set_L0 = systematic_effect(set_L0, load_index - 1, -L0_fatigue_additive, FALSE),
-
         set_V0 = systematic_effect(V0, load_index - 1, -V0_fatigue_multiplicative, TRUE),
         set_V0 = systematic_effect(set_V0, load_index - 1, -V0_fatigue_additive, FALSE),
-
         set_1RM = get_load_at_velocity(set_V0, set_L0, v1RM)
       )
   } else {
@@ -269,7 +267,6 @@ get_sets <- function(visit_LEV_profile,
         # Random effects
         est_RIR = random_effect(est_RIR, visit = 1, effect = est_RIR_random_multiplicative, TRUE),
         est_RIR = random_effect(est_RIR, visit = 1, effect = est_RIR_random_additive, FALSE),
-
         est_RIR = ifelse(est_RIR < 0, 0, est_RIR),
         est_RIR = round(est_RIR),
 
@@ -301,7 +298,6 @@ get_sets <- function(visit_LEV_profile,
     ) %>%
     # Now filter out remove everything after quality indicator
     dplyr::filter(dplyr::row_number() <= stop_indicator_last_row) %>%
-
     # Add extra metrics
     dplyr::mutate(
       reps_done = get_reps_done(rep, failed_rep),
@@ -330,7 +326,7 @@ get_sets <- function(visit_LEV_profile,
     )
 
   cleaned_sets <- cleaned_sets %>%
-    #dplyr::select(-last_rep, -last_row, -last_RIR, -last_eRIR, -last_eRIR_sys, -last_eRIR_rnd) %>%
+    # dplyr::select(-last_rep, -last_row, -last_RIR, -last_eRIR, -last_eRIR_sys, -last_eRIR_rnd) %>%
     dplyr::ungroup()
 
   # Return cleaned sets

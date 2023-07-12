@@ -42,9 +42,10 @@ creating LV and RTF profiles
 }
 \examples{
 test_sets <- create_profiles(
-      athlete = 1:2,
-      L0_visit_random_additive = 10,
-      L0_fatigue_multiplicative = 0.1) \%>\%
+  athlete = 1:2,
+  L0_visit_random_additive = 10,
+  L0_fatigue_multiplicative = 0.1
+) \%>\%
   create_visits(1) \%>\%
   create_tests() \%>\%
   create_summary()

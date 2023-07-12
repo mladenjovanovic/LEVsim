@@ -115,7 +115,6 @@ create_athletes <- function(n = 20,
                             V0_visit_random_additive_max = 0,
                             V0_visit_random_multiplicative_min = 0.01,
                             V0_visit_random_multiplicative_max = 0.05,
-
                             L0_min = 180,
                             L0_max = 280,
                             L0_rep_drop_min = 0.3,
@@ -132,14 +131,12 @@ create_athletes <- function(n = 20,
                             L0_visit_random_additive_max = 0,
                             L0_visit_random_multiplicative_min = 0.01,
                             L0_visit_random_multiplicative_max = 0.05,
-
                             v1RM_min = 0.2,
                             v1RM_max = 0.4,
                             v1RM_random_additive_min = 0,
                             v1RM_random_additive_max = 0,
                             v1RM_random_multiplicative_min = 0,
                             v1RM_random_multiplicative_max = 0.05,
-
                             est_RIR_systematic_additive_min = -2,
                             est_RIR_systematic_additive_max = 2,
                             est_RIR_systematic_multiplicative_min = 0,
@@ -149,23 +146,19 @@ create_athletes <- function(n = 20,
                             est_RIR_random_multiplicative_min = 0,
                             est_RIR_random_multiplicative_max = 0.25,
                             est_0RIR_error = FALSE,
-
                             biological_variation_additive_min = 0,
                             biological_variation_additive_max = 0,
                             biological_variation_multiplicative_min = 0.02,
                             biological_variation_multiplicative_max = 0.075,
-
                             instrumentation_noise_additive_min = 0,
                             instrumentation_noise_additive_max = 0,
                             instrumentation_noise_multiplicative_min = 0,
                             instrumentation_noise_multiplicative_max = 0,
-
                             load_increment = 2.5) {
 
   # Call create profiles
   create_profiles(
     athlete = sprintf(paste0("Athlete %0", floor(log10(n)) + 1, "d"), seq(1, n)),
-
     V0 = stats::runif(n, V0_min, V0_max),
     V0_rep_drop = stats::runif(n, V0_rep_drop_min, V0_rep_drop_max),
     V0_fatigue_additive = stats::runif(n, V0_fatigue_additive_min, V0_fatigue_additive_max),
@@ -174,7 +167,6 @@ create_athletes <- function(n = 20,
     V0_visit_change_multiplicative = stats::runif(n, V0_visit_change_multiplicative_min, V0_visit_change_multiplicative_max),
     V0_visit_random_additive = stats::runif(n, V0_visit_random_additive_min, V0_visit_random_additive_max),
     V0_visit_random_multiplicative = stats::runif(n, V0_visit_random_multiplicative_min, V0_visit_random_multiplicative_max),
-
     L0 = stats::runif(n, L0_min, L0_max),
     L0_rep_drop = stats::runif(n, L0_rep_drop_min, L0_rep_drop_max),
     L0_fatigue_additive = stats::runif(n, L0_fatigue_additive_min, L0_fatigue_additive_max),
@@ -183,24 +175,18 @@ create_athletes <- function(n = 20,
     L0_visit_change_multiplicative = stats::runif(n, L0_visit_change_multiplicative_min, L0_visit_change_multiplicative_max),
     L0_visit_random_additive = stats::runif(n, L0_visit_random_additive_min, L0_visit_random_additive_max),
     L0_visit_random_multiplicative = stats::runif(n, L0_visit_random_multiplicative_min, L0_visit_random_multiplicative_max),
-
     v1RM = stats::runif(n, v1RM_min, v1RM_max),
     v1RM_random_additive = stats::runif(n, v1RM_random_additive_min, v1RM_random_additive_max),
     v1RM_random_multiplicative = stats::runif(n, v1RM_random_multiplicative_min, v1RM_random_multiplicative_max),
-
     est_RIR_systematic_additive = stats::runif(n, est_RIR_systematic_additive_min, est_RIR_systematic_additive_max),
     est_RIR_systematic_multiplicative = stats::runif(n, est_RIR_systematic_multiplicative_min, est_RIR_systematic_multiplicative_max),
     est_RIR_random_additive = stats::runif(n, est_RIR_random_additive_min, est_RIR_random_additive_max),
     est_RIR_random_multiplicative = stats::runif(n, est_RIR_random_multiplicative_min, est_RIR_random_multiplicative_max),
     est_0RIR_error = est_0RIR_error,
-
     biological_variation_additive = stats::runif(n, biological_variation_additive_min, biological_variation_additive_max),
     biological_variation_multiplicative = stats::runif(n, biological_variation_multiplicative_min, biological_variation_multiplicative_max),
-
     instrumentation_noise_additive = stats::runif(n, instrumentation_noise_additive_min, instrumentation_noise_additive_max),
     instrumentation_noise_multiplicative = stats::runif(n, instrumentation_noise_multiplicative_min, instrumentation_noise_multiplicative_max),
-
     load_increment = load_increment
   )
-
 }

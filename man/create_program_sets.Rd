@@ -79,9 +79,10 @@ data("strength_training_program")
 
 set.seed(10)
 program_sets <- create_profiles(
-      athlete = 1,
-      L0_visit_change_additive = 1,
-      L0_fatigue_additive = 5) \%>\%
+  athlete = 1,
+  L0_visit_change_additive = 1,
+  L0_fatigue_additive = 5
+) \%>\%
   create_visits(1:12) \%>\%
   create_prescription_1RM(buffer = 0.9) \%>\%
   create_program_sets(
