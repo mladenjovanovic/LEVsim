@@ -4,6 +4,7 @@
 #'
 #' @param LEV_profile Object returned from \code{\link{create_profiles}} or \code{\link{create_athletes}}
 #' @param visit Numeric vector. Default is 1
+#' @param between_visit_effects Logical. Should between-visit effects be applied. Default is \code{TRUE}
 #'
 #' @return \code{LEV_profile} object
 #' @export
@@ -40,7 +41,8 @@
 #' plot(sets, facet = NULL, x_var = "load")
 #' plot(sets, visits = 1, x_var = "RIR")
 create_visits <- function(LEV_profile = create_profiles(),
-                          visit = 1) {
+                          visit = 1,
+                          between_visit_effects = TRUE) {
 
 
   # +++++++++++++++++++++++++++++++++++++++++++
@@ -118,26 +120,37 @@ create_visits <- function(LEV_profile = create_profiles(),
     )
 
     # New V0, L0, and v1RM
-    visits_df <- visits_df %>%
-      dplyr::mutate(
-        # Systematic effects
-        # Deduct 1 from visit since first visit is initial without systematic effects
-        new_V0 = systematic_effect(V0, visit - 1, V0_visit_change_multiplicative, TRUE),
-        new_V0 = systematic_effect(new_V0, visit - 1, V0_visit_change_additive, FALSE),
-        new_L0 = systematic_effect(L0, visit - 1, L0_visit_change_multiplicative, TRUE),
-        new_L0 = systematic_effect(new_L0, visit - 1, L0_visit_change_additive, FALSE),
+    if (between_visit_effects == TRUE) {
+      visits_df <- visits_df %>%
+        dplyr::mutate(
+          # Systematic effects
+          # Deduct 1 from visit since first visit is initial without systematic effects
+          new_V0 = systematic_effect(V0, visit - 1, V0_visit_change_multiplicative, TRUE),
+          new_V0 = systematic_effect(new_V0, visit - 1, V0_visit_change_additive, FALSE),
+          new_L0 = systematic_effect(L0, visit - 1, L0_visit_change_multiplicative, TRUE),
+          new_L0 = systematic_effect(new_L0, visit - 1, L0_visit_change_additive, FALSE),
 
-        # Random effects
-        new_V0 = random_effect(new_V0, visit - 1, V0_visit_random_multiplicative, TRUE),
-        new_V0 = random_effect(new_V0, visit - 1, V0_visit_random_additive, FALSE),
-        new_L0 = random_effect(new_L0, visit - 1, L0_visit_random_multiplicative, TRUE),
-        new_L0 = random_effect(new_L0, visit - 1, L0_visit_random_additive, FALSE),
-        new_v1RM = random_effect(v1RM, visit - 1, v1RM_random_multiplicative, TRUE),
-        new_v1RM = random_effect(new_v1RM, visit - 1, v1RM_random_additive, FALSE),
+          # Random effects
+          new_V0 = random_effect(new_V0, visit - 1, V0_visit_random_multiplicative, TRUE),
+          new_V0 = random_effect(new_V0, visit - 1, V0_visit_random_additive, FALSE),
+          new_L0 = random_effect(new_L0, visit - 1, L0_visit_random_multiplicative, TRUE),
+          new_L0 = random_effect(new_L0, visit - 1, L0_visit_random_additive, FALSE),
+          new_v1RM = random_effect(v1RM, visit - 1, v1RM_random_multiplicative, TRUE),
+          new_v1RM = random_effect(new_v1RM, visit - 1, v1RM_random_additive, FALSE),
 
-        # Check if v1RM is below zero
-        new_v1RM = dplyr::if_else(new_v1RM < 0, 0, new_v1RM)
-      )
+          # Check if v1RM is below zero
+          new_v1RM = dplyr::if_else(new_v1RM < 0, 0, new_v1RM)
+        )
+    } else {
+      visits_df <- visits_df %>%
+        dplyr::mutate(
+          # Use the default profile values
+          new_V0 = V0,
+          new_L0 = L0,
+          new_v1RM = v1RM
+        )
+    }
+
 
     # Now, create new profiles for each visit
     visits_list <- purrr::pmap(visits_df, function(...) {

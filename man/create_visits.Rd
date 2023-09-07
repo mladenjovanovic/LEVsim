@@ -4,12 +4,18 @@
 \alias{create_visits}
 \title{Create Visits}
 \usage{
-create_visits(LEV_profile = create_profiles(), visit = 1)
+create_visits(
+  LEV_profile = create_profiles(),
+  visit = 1,
+  between_visit_effects = TRUE
+)
 }
 \arguments{
 \item{LEV_profile}{Object returned from \code{\link{create_profiles}} or \code{\link{create_athletes}}}
 
 \item{visit}{Numeric vector. Default is 1}
+
+\item{between_visit_effects}{Logical. Should between-visit effects be applied. Default is \code{TRUE}}
 }
 \value{
 \code{LEV_profile} object
