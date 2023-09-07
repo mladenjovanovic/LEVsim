@@ -121,6 +121,7 @@ plot.LEV_profile <- function(x, type = "athletes", ...) {
   visit <- NULL
   `1RM` <- NULL
   `v1RM` <- NULL
+  athlete <- NULL
   # +++++++++++++++++++++++++++++++++++++++++++
 
   if (!(type %in% c("athletes", "pooled"))) {
@@ -163,21 +164,20 @@ plot.LEV_profile <- function(x, type = "athletes", ...) {
   } else {
     gg <- gg +
       ggplot2::geom_segment(
-        ggplot2::aes(x = 0, xend = L0, y = V0, yend = 0),
-        color = "#5DA5DA"
+        ggplot2::aes(x = 0, xend = L0, y = V0, yend = 0, color = athlete)
       ) +
       ggplot2::geom_segment(
-        ggplot2::aes(x = 0, xend = `1RM`, y = v1RM, yend = v1RM),
+        ggplot2::aes(x = 0, xend = `1RM`, y = v1RM, yend = v1RM, color = athlete),
         alpha = 0.5,
         linetype = "dotted"
       ) +
       ggplot2::geom_segment(
-        ggplot2::aes(x = `1RM`, xend = `1RM`, y = 0, yend = v1RM),
+        ggplot2::aes(x = `1RM`, xend = `1RM`, y = 0, yend = v1RM, color = athlete),
         alpha = 0.5,
         linetype = "dotted"
       ) +
       ggplot2::geom_point(
-        ggplot2::aes(x = `1RM`, y = v1RM),
+        ggplot2::aes(x = `1RM`, y = v1RM, color = athlete),
         size = 2,
         shape = 21,
         fill = "white"
