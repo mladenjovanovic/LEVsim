@@ -1,9 +1,7 @@
-#' Function to return model fit metrics
+# Function to return model fit metrics
 LEV_model_fit <- function(model = NULL, observed, predicted, na.rm = FALSE) {
   resid <- observed - predicted
 
-  # This is needed for the LOOCV option which doesn't return model
-  # thus, RSE cannot be computed
   if (is.null(model)) {
     RSE <- NA
   } else {
@@ -12,7 +10,7 @@ LEV_model_fit <- function(model = NULL, observed, predicted, na.rm = FALSE) {
 
   list(
     RSE = RSE,
-    R_squared = stats::cor(observed, predicted)^2,
+    bias = mean(resid, na.rm = na.rm),
     minErr = min(resid, na.rm = na.rm),
     maxErr = max(resid, na.rm = na.rm),
     maxAbsErr = max(abs(resid), na.rm = na.rm),
