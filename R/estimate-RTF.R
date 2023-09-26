@@ -126,7 +126,8 @@ estimate_RTF <- function(load,
   model_fit <- model_fit[model_fit$solution %in% best_solutions, ]
 
   df_reps <- df_reps[df_reps$solution %in% best_solutions, ] %>%
-    dplyr::arrange(solution, load_index)
+    dplyr::arrange(solution, load_index) %>%
+    dplyr::mutate(residuals = pred_MNR - MNR)
 
   # Return object
   new_profile_estimate(

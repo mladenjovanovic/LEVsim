@@ -140,7 +140,8 @@ estimate_EVP <- function(rep,
       )
     ) %>%
     dplyr::select(rep, load, velocity, true_rep_velocity) %>%
-    dplyr::rename(pred_velocity = true_rep_velocity)
+    dplyr::rename(pred_velocity = true_rep_velocity) %>%
+    dplyr::mutate(residuals = pred_velocity - velocity)
 
   # Return object
   new_profile_estimate(

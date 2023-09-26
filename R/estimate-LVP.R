@@ -42,6 +42,7 @@ estimate_LVP <- function(load,
   m1 <- stats::lm(velocity~load, df, weights = model_weights)
 
   df$pred_velocity <- stats::predict(m1, newdata = data.frame(load = df$load))
+  df$residuals <- df$pred_velocity - df$velocity
 
   # Parameters
   V0 <- stats::coef(m1)[[1]]
