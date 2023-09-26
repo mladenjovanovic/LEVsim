@@ -51,6 +51,7 @@ estimate_EVP <- function(rep,
   # +++++++++++++++++++++++++++++++++++++++++++
   # Code chunk for dealing with R CMD check note
   true_rep_velocity <- NULL
+  pred_velocity <- NULL
   # +++++++++++++++++++++++++++++++++++++++++++
 
   `1RM` <- get_load_at_velocity(V0, L0, v1RM)
