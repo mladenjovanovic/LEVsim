@@ -9,6 +9,7 @@ LEV_model_fit <- function(model = NULL, observed, predicted, na.rm = FALSE) {
   }
 
   list(
+    n = length(resid),
     RSE = RSE,
     bias = mean(resid, na.rm = na.rm),
     minErr = min(resid, na.rm = na.rm),
