@@ -6,8 +6,7 @@
 \usage{
 create_tests(
   LEV_profile = create_profiles(),
-  load_1RM = seq(0.6, 1.2, by = 0.025),
-  load_LV = c(0.5, 0.6, 0.7, 0.8, 0.85, 0.9, 0.95, 0.975, 1),
+  load_LV = c(0.5, 0.6, 0.7, 0.8, 0.85, 0.9, 0.95, 0.975, 1, 1.025, 1.05),
   load_RTF = c(0.9, 0.8, 0.7),
   max_reps = 100,
   failed_reps = FALSE,
@@ -18,11 +17,9 @@ create_tests(
 \arguments{
 \item{LEV_profile}{\code{LEV_profile} object, returned by \code{\link{create_visits}} function}
 
-\item{load_1RM}{Percentages used to estimate visit 1RM. Percentage are used to calculate loads using theoretical visit profile 1RM}
+\item{load_LV}{Percentages of \code{profile 1RM} used to estimate LV profile. Highest load is considered \code{visit 1RM}}
 
-\item{load_LV}{Percentages used to estimate LV profile}
-
-\item{load_RTF}{Percentages used to estimate RTF profile}
+\item{load_RTF}{Percentages of \code{visit 1RM} used to estimate RTF profile}
 
 \item{max_reps}{How many maximum reps to generate to search for failure? Default is 100}
 
