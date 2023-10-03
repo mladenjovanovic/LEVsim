@@ -27,18 +27,7 @@ create_visit_1RM <- function(LEV_profile, load_perc = seq(0.8, 1.2, by = 0.025),
   res <- purrr::map(LEV_profile, function(profile) {
     # Cycle through visits
     profile$visit <- purrr::map(profile$visit, function(visit) {
-      load <- get_load_rounded(visit$`1RM` * load_perc, visit$load_increment)
-
-      oneRM_trials <- get_sets(
-        visit,
-        load,
-        max_reps = 1,
-        use_true_velocity = use_true_velocity,
-        inter_set_fatigue = FALSE
-      )
-
-      last_try <- min(which(oneRM_trials$failed_rep)) - 1
-      visit$visit_1RM <- load[[last_try]]
+      visit$visit_1RM <- get_visit_1RM(visit, load_perc, use_true_velocity = use_true_velocity)
       visit
     })
 

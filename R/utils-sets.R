@@ -14,6 +14,16 @@ get_last_rep <- function(rep, failed) {
   last_rep
 }
 
+# Function to return last successful set
+get_last_succesful_set <- function(set, failed) {
+  if (any(failed)) {
+    last_set <- min(set[failed]) - 1
+  } else {
+    last_set <- length(set)
+  }
+
+  last_set
+}
 
 # Function to find reps done
 get_reps_done <- function(rep, failed) {
@@ -60,6 +70,79 @@ filter_missing_reps <- function(sets, failed_sets) {
     dplyr::ungroup()
 }
 
+# Get Visit 1RM
+#
+# Internal function for fast estimation of the visit 1RM
+# @param visit_LEV_profile \code{FEV_visit} object
+# @param load_perc Numeric vector
+# @param use_true_velocity What should be used to discern failure
+#
+# @return Visit 1RM
+get_visit_1RM <- function(visit_LEV_profile,
+                          load_perc = seq(0.8, 1.2, by = 0.025),
+                          use_true_velocity = FALSE) {
+
+  # +++++++++++++++++++++++++++++++++++++++++++
+  # Code chunk for dealing with R CMD check note
+  `1RM` <- NULL
+  L0 <- NULL
+  L0_rep_drop <- NULL
+  V0 <- NULL
+  V0_rep_drop <- NULL
+  biological_variation_additive <- NULL
+  biological_variation_multiplicative <- NULL
+  instrumentation_noise_additive <- NULL
+  instrumentation_noise_multiplicative <- NULL
+  load_increment <- NULL
+  load_index <- NULL
+  manifested_rep_velocity <- NULL
+  true_rep_velocity <- NULL
+  v1RM <- NULL
+  # +++++++++++++++++++++++++++++++++++++++++++
+
+
+  class(visit_LEV_profile) <- "list"
+  profile_info <- dplyr::bind_rows(visit_LEV_profile)
+
+  sets <- tidyr::expand_grid(
+    profile_info,
+    load_index = seq_along(load_perc),
+    rep = 1
+  ) %>%
+  dplyr::mutate(
+    load_perc = load_perc[load_index],
+    load = get_load_rounded(`1RM` * load_perc, load_increment)) %>%
+  dplyr::mutate(
+      get_reps_velocity(
+        V0 = V0,
+        V0_rep_drop = V0_rep_drop,
+        L0 = L0,
+        L0_rep_drop = L0_rep_drop,
+        biological_variation_additive = biological_variation_additive,
+        biological_variation_multiplicative = biological_variation_multiplicative,
+        instrumentation_noise_additive = instrumentation_noise_additive,
+        instrumentation_noise_multiplicative = instrumentation_noise_multiplicative,
+        rep = rep,
+        load = load
+      )
+  )
+
+  # Here use either true_rep_velocity or manifested_rep_velocity
+  if (use_true_velocity == TRUE) {
+    sets <- sets %>%
+      dplyr::mutate(
+        failed_rep = true_rep_velocity <= v1RM
+      )
+  } else {
+    sets <- sets %>%
+      dplyr::mutate(
+        failed_rep = manifested_rep_velocity <= v1RM
+      )
+  }
+
+  last_try <- min(which(sets$failed_rep)) - 1
+  sets$load[[last_try]]
+}
 
 # Generate Single Visit Sets
 #
@@ -141,6 +224,7 @@ get_sets <- function(visit_LEV_profile,
   stop_indicator_rep <- NULL
   stop_rep <- NULL
   stop_velocity <- NULL
+  zeroRIR_reached <- NULL
   # +++++++++++++++++++++++++++++++++++++++++++
 
   class(visit_LEV_profile) <- "list"
@@ -301,10 +385,11 @@ get_sets <- function(visit_LEV_profile,
     # Add extra metrics
     dplyr::mutate(
       reps_done = get_reps_done(rep, failed_rep),
-      set_to_failure = ifelse(is.na(RIR), FALSE, ifelse(any(RIR <= 0), TRUE, FALSE)),
-      # If set is taken to failure, then est_RIR MUST be the same as RIR
+      set_to_failure = ifelse(is.na(RIR), FALSE, ifelse(any(RIR < 0), TRUE, FALSE)),
+      zeroRIR_reached = ifelse(is.na(RIR), FALSE, ifelse(any(RIR <= 0), TRUE, FALSE)),
+      # If set is taken to failure (i.e, 0RIR reached), then est_RIR MUST be the same as RIR
       # Unless est_0RIR_error set to TRUE
-      est_RIR = ifelse(RIR == 0 & set_to_failure == TRUE & est_0RIR_error == FALSE, 0, est_RIR)
+      est_RIR = ifelse(RIR == 0 & zeroRIR_reached == TRUE & est_0RIR_error == FALSE, 0, est_RIR)
     )
 
   if (incremental_est_RIR == TRUE) {

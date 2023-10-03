@@ -4,9 +4,8 @@
 #'     The set fatigue effects, set in the individual profiles, are disregarded when
 #'     creating LV and RTF profiles
 #' @param LEV_profile \code{LEV_profile} object, returned by \code{\link{create_visits}} function
-#' @param load_1RM Percentages used to estimate visit 1RM. Percentage are used to calculate loads using theoretical visit profile 1RM
-#' @param load_LV Percentages used to estimate LV profile
-#' @param load_RTF Percentages used to estimate RTF profile
+#' @param load_LV Percentages of \code{profile 1RM} used to estimate LV profile. Highest load is considered \code{visit 1RM}
+#' @param load_RTF Percentages of \code{visit 1RM} used to estimate RTF profile
 #' @param max_reps How many maximum reps to generate to search for failure? Default is 100
 #' @param failed_reps Should failed-reps be included in the output? Default is \code{FALSE}
 #' @param failed_sets Should failed-sets be included in the output? Default is \code{FALSE}
@@ -27,8 +26,7 @@
 #' plot(test_sets, sets = "LV")
 #' plot(test_sets, sets = "RTF")
 create_tests <- function(LEV_profile = create_profiles(),
-                         load_1RM = seq(0.6, 1.2, by = 0.025),
-                         load_LV = c(0.5, 0.6, 0.7, 0.8, 0.85, 0.9, 0.95, 0.975, 1),
+                         load_LV = c(0.5, 0.6, 0.7, 0.8, 0.85, 0.9, 0.95, 0.975, 1, 1.025, 1.05),
                          load_RTF = c(0.9, 0.8, 0.7),
                          max_reps = 100,
                          failed_reps = FALSE,
@@ -41,34 +39,50 @@ create_tests <- function(LEV_profile = create_profiles(),
   set <- NULL
   visit <- NULL
   load_index <- NULL
+  failed_rep <- NULL
   # +++++++++++++++++++++++++++++++++++++++++++
 
   # Check of the object is proper LEV_profile
   is_LEV <- validate_LEV_profile(LEV_profile, stop_running = TRUE)
 
-  # Estimate visit 1RMs
-  visit_1RM <- LEV_profile %>%
-    create_visit_1RM(load_perc = load_1RM, use_true_velocity = use_true_velocity)
-
   # Create Load-Velocity data
-  LV_profile <- visit_1RM %>%
+  LV_profile <- LEV_profile %>%
     create_sets(
       load = load_LV,
       reps = 1,
       max_reps = max_reps,
-      load_type = "visit 1RM",
+      load_type = "profile 1RM",
       use_true_velocity = use_true_velocity,
       failed_reps = failed_reps,
       failed_sets = failed_sets,
       inter_set_fatigue = FALSE
     )
 
-  LV_profile$set <- "LV"
   LV_profile <- as.data.frame(LV_profile)
 
-  # Create RTF data
+  # Find the highest load and use that as visit 1RM
+  LV_profile <- LV_profile %>%
+    dplyr::group_by(athlete, visit) %>%
+    dplyr::mutate(visit_1RM = load[get_last_succesful_set(set, failed_rep)]) %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(
+      load_perc_adj = load / visit_1RM,
+      set = "LV")
 
-  RTF_profile <- visit_1RM %>%
+  visit_1RM <- LV_profile %>%
+    dplyr::group_by(athlete, visit) %>%
+    dplyr::summarise(visit_1RM = visit_1RM[1]) %>%
+    dplyr::ungroup()
+
+  LEV_profile <- LEV_profile %>%
+    update_1RM(
+      what = "visit 1RM",
+      athlete = visit_1RM$athlete,
+      visit = visit_1RM$visit,
+      updated_1RM = visit_1RM$visit_1RM)
+
+  # Create RTF data
+  RTF_profile <- LEV_profile %>%
     create_sets(
       load = load_RTF,
       max_reps = max_reps,
