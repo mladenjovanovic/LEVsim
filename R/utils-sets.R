@@ -14,6 +14,16 @@ get_last_rep <- function(rep, failed) {
   last_rep
 }
 
+# Function to return last successful set
+get_last_succesful_set <- function(set, failed) {
+  if (any(failed)) {
+    last_set <- min(set[failed]) - 1
+  } else {
+    last_set <- length(set)
+  }
+
+  last_set
+}
 
 # Function to find reps done
 get_reps_done <- function(rep, failed) {
@@ -214,6 +224,7 @@ get_sets <- function(visit_LEV_profile,
   stop_indicator_rep <- NULL
   stop_rep <- NULL
   stop_velocity <- NULL
+  zeroRIR_reached <- NULL
   # +++++++++++++++++++++++++++++++++++++++++++
 
   class(visit_LEV_profile) <- "list"
@@ -374,10 +385,11 @@ get_sets <- function(visit_LEV_profile,
     # Add extra metrics
     dplyr::mutate(
       reps_done = get_reps_done(rep, failed_rep),
-      set_to_failure = ifelse(is.na(RIR), FALSE, ifelse(any(RIR <= 0), TRUE, FALSE)),
-      # If set is taken to failure, then est_RIR MUST be the same as RIR
+      set_to_failure = ifelse(is.na(RIR), FALSE, ifelse(any(RIR < 0), TRUE, FALSE)),
+      zeroRIR_reached = ifelse(is.na(RIR), FALSE, ifelse(any(RIR <= 0), TRUE, FALSE)),
+      # If set is taken to failure (i.e, 0RIR reached), then est_RIR MUST be the same as RIR
       # Unless est_0RIR_error set to TRUE
-      est_RIR = ifelse(RIR == 0 & set_to_failure == TRUE & est_0RIR_error == FALSE, 0, est_RIR)
+      est_RIR = ifelse(RIR == 0 & zeroRIR_reached == TRUE & est_0RIR_error == FALSE, 0, est_RIR)
     )
 
   if (incremental_est_RIR == TRUE) {
