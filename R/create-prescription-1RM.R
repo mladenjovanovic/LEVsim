@@ -12,7 +12,7 @@
 #' @param buffer Default is 1, but can be, for example 0.8 of the estimated 1RM to be used for
 #'      prescription
 #' @param use_true_velocity When estimating failure, should true or biological (default) velocity be used?
-#' @param round_1RM Should calculated 1RM be rounded after multiplying with buffer? Default is \code{FALSE}
+#' @param round_1RM Should calculated 1RM be rounded after multiplying with buffer? Default is \code{TRUE}
 #' @export
 #' @examples
 #' set.seed(1667)

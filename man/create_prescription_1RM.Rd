@@ -33,7 +33,7 @@ prescription}
 
 \item{use_true_velocity}{When estimating failure, should true or biological (default) velocity be used?}
 
-\item{round_1RM}{Should calculated 1RM be rounded after multiplying with buffer? Default is \code{FALSE}}
+\item{round_1RM}{Should calculated 1RM be rounded after multiplying with buffer? Default is \code{TRUE}}
 }
 \description{
 This function creates prescription 1RM within provided \code{LEV_profile}
