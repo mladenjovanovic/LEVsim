@@ -52,7 +52,7 @@ Object \code{LEV_estimate}
 }
 \description{
 Finds the \code{L0_reps_drop} and \code{V0_reps_drop} parameters that
-minimize the sum of squares given the performed \code{rep}, \code{load}, and \code{velocity}
+minimize the sum-of-squares-error given the performed \code{rep}, \code{load}, and \code{velocity}
 and \code{V0} and \code{L0} parameters.
 }
 \examples{
@@ -65,7 +65,8 @@ RTF_df <- create_profiles(biological_variation_multiplicative = 0.05, L0_rep_dro
 m1 <- estimate_EVP(
   rep = RTF_df$rep,
   load = RTF_df$load,
-  velocity = RTF_df$measured_rep_velocity)
+  velocity = RTF_df$measured_rep_velocity
+)
 
 m1
 }
