@@ -109,10 +109,11 @@ get_visit_1RM <- function(visit_LEV_profile,
     load_index = seq_along(load_perc),
     rep = 1
   ) %>%
-  dplyr::mutate(
-    load_perc = load_perc[load_index],
-    load = get_load_rounded(`1RM` * load_perc, load_increment)) %>%
-  dplyr::mutate(
+    dplyr::mutate(
+      load_perc = load_perc[load_index],
+      load = get_load_rounded(`1RM` * load_perc, load_increment)
+    ) %>%
+    dplyr::mutate(
       get_reps_velocity(
         V0 = V0,
         V0_rep_drop = V0_rep_drop,
@@ -125,7 +126,7 @@ get_visit_1RM <- function(visit_LEV_profile,
         rep = rep,
         load = load
       )
-  )
+    )
 
   # Here use either true_rep_velocity or manifested_rep_velocity
   if (use_true_velocity == TRUE) {

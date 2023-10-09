@@ -39,7 +39,7 @@ estimate_LVP <- function(load,
   }
 
   # Create absolute LVP
-  m1 <- stats::lm(velocity~load, df, weights = model_weights)
+  m1 <- stats::lm(velocity ~ load, df, weights = model_weights)
 
   df$pred_velocity <- stats::predict(m1, newdata = data.frame(load = df$load))
   df$residuals <- df$pred_velocity - df$velocity
@@ -53,12 +53,14 @@ estimate_LVP <- function(load,
     model = m1,
     observed = df$velocity,
     predicted = df$pred_velocity,
-    na.rm = na.rm)
+    na.rm = na.rm
+  )
 
   # Return object
   new_profile_estimate(
     parameters = list(V0 = V0, L0 = L0),
     model_fit = model_fit,
     model = m1,
-    data = df)
+    data = df
+  )
 }
