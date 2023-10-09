@@ -12,6 +12,7 @@
 #' @param v1RM Profile parameter
 #' @param L0_rep_drop Search vector parameters
 #' @param V0_rep_drop Search vector parameters
+#' @param fractional Should fractional MNR be returned? Default is \code{FALSE}
 #' @param relative_load If \code{load} is relative, then absolute load is calculated by
 #'     multiplying with profile 1RM
 #' @param return_multiple Should multiple solutions be reported? Defaults is \code{FALSE}
@@ -40,6 +41,7 @@ estimate_RTF_grid <- function(load,
                               v1RM = 0.2,
                               L0_rep_drop = seq(0, 0.15, by = 0.005),
                               V0_rep_drop = seq(0, 0.15, by = 0.005),
+                              fractional = FALSE,
                               relative_load = FALSE,
                               return_multiple = FALSE,
                               max_reps = 100,
@@ -83,26 +85,23 @@ estimate_RTF_grid <- function(load,
   df_reps <- df %>%
     dplyr::mutate(load_index = seq_along(load)) %>%
     tidyr::expand_grid(parameters) %>%
-    tidyr::expand_grid(rep = seq(1, max_reps)) %>%
     # Do the predictions
     dplyr::mutate(
-      get_reps_velocity(
-        V0 = V0,
-        V0_rep_drop = V0_rep_drop,
+      pred_MNR = get_MNR(
+        load = load,
         L0 = L0,
+        V0 = V0,
+        v1RM = v1RM,
         L0_rep_drop = L0_rep_drop,
-        biological_variation_additive = 0,
-        biological_variation_multiplicative = 0,
-        instrumentation_noise_additive = 0,
-        instrumentation_noise_multiplicative = 0,
-        rep = rep,
-        load = load
+        V0_rep_drop = V0_rep_drop,
+        fractional = fractional,
+        max_reps = max_reps,
+        na.rm = na.rm
       )
     ) %>%
-    dplyr::group_by(load_index, load, MNR, solution, V0_rep_drop, L0_rep_drop) %>%
-    dplyr::mutate(failed_rep = true_rep_velocity <= v1RM) %>%
-    dplyr::summarise(pred_MNR = sum(failed_rep == FALSE)) %>%
-    dplyr::ungroup()
+    dplyr::mutate(
+      pred_MNR = ifelse(is.na(pred_MNR), max_reps, pred_MNR)
+    )
 
   # Get model performance
   model_fit <- df_reps %>%

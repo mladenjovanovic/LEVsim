@@ -12,6 +12,7 @@ estimate_RTF_grid(
   v1RM = 0.2,
   L0_rep_drop = seq(0, 0.15, by = 0.005),
   V0_rep_drop = seq(0, 0.15, by = 0.005),
+  fractional = FALSE,
   relative_load = FALSE,
   return_multiple = FALSE,
   max_reps = 100,
@@ -33,6 +34,8 @@ then use \code{relative_load = TRUE}}
 \item{L0_rep_drop}{Search vector parameters}
 
 \item{V0_rep_drop}{Search vector parameters}
+
+\item{fractional}{Should fractional MNR be returned? Default is \code{FALSE}}
 
 \item{relative_load}{If \code{load} is relative, then absolute load is calculated by
 multiplying with profile 1RM}
