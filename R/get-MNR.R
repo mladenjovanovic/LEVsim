@@ -1,7 +1,8 @@
 # Function to find MNR (nRM)
 find_MNR <- function(rep, failed, velocity, v1RM, fractional) {
-
-  if(!any(failed)) return(NA)
+  if (!any(failed)) {
+    return(NA)
+  }
 
   first_failed_rep <- get_last_rep(rep, failed)
   last_succesful_rep <- first_failed_rep - 1
@@ -9,7 +10,6 @@ find_MNR <- function(rep, failed, velocity, v1RM, fractional) {
   if (fractional == FALSE) {
     last_succesful_rep
   } else {
-
     first_failed_rep_velocity <- velocity[[first_failed_rep]]
     last_succesful_rep_velocity <- velocity[[last_succesful_rep]]
 
@@ -63,7 +63,7 @@ get_MNR <- function(load,
 
   `1RM` <- get_load_at_velocity(V0, L0, v1RM)
 
-  if(relative_load == TRUE) load <- load * `1RM`
+  if (relative_load == TRUE) load <- load * `1RM`
 
   # Put data into data frame
   df <- data.frame(
@@ -107,7 +107,9 @@ get_MNR <- function(load,
         failed = failed_rep,
         velocity = true_rep_velocity,
         v1RM = v1RM[[1]],
-        fractional = fractional)) %>%
+        fractional = fractional
+      )
+    ) %>%
     dplyr::ungroup()
   df_reps$MNR
 }
