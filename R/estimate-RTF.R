@@ -76,8 +76,6 @@ estimate_RTF <- function(load,
 
   # optimization function
   opt_func <- function(par) {
-    cat(par, "\n")
-    # browser()
     # Predict rep velocities
     pred_df <- df %>%
       dplyr::mutate(

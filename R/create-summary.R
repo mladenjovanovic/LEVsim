@@ -33,6 +33,7 @@ create_summary <- function(LEV_sets) {
   load <- NULL
   RTF <- NULL
   nRM <- NULL
+  nRM_frac <- NULL
   RIR <- NULL
   reps <- NULL
   `%MNR` <- NULL
@@ -77,6 +78,7 @@ create_summary <- function(LEV_sets) {
       load_perc_adj = load_perc_adj[[1]],
       load = load[[1]],
       nRM = nRM[[1]],
+      nRM_frac = nRM_frac[[1]],
       reps_done = reps_done[[1]],
       RIR = RIR[reps_done],
       `%MNR` = `%MNR`[reps_done],
@@ -131,6 +133,7 @@ create_summary <- function(LEV_sets) {
     target_reps = df$target_reps,
     load = df$load,
     nRM = df$nRM,
+    nRM_frac = df$nRM_frac,
     reps_done = df$reps_done,
     RIR = df$RIR,
     `%MNR` = df$`%MNR`,
