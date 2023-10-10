@@ -330,7 +330,37 @@ get_sets <- function(visit_LEV_profile,
     dplyr::mutate(
       rep_1RM = get_load_at_velocity(rep_V0, rep_L0, v1RM),
       RIR = last_rep - rep - 1,
-      nRM = last_rep - 1,
+      nRM = last_rep - 1
+    )
+
+  # Here use either true_rep_velocity or manifested_rep_velocity
+  # to calculate fractional nRM
+  if (use_true_velocity == TRUE) {
+    cleaned_sets <- cleaned_sets %>%
+      dplyr::mutate(
+        nRM_frac = find_MNR(
+          rep = rep,
+          failed = failed_rep,
+          velocity = true_rep_velocity,
+          v1RM = v1RM,
+          fractional = TRUE
+        )
+      )
+  } else {
+    cleaned_sets <- cleaned_sets %>%
+      dplyr::mutate(
+        nRM_frac = find_MNR(
+          rep = rep,
+          failed = failed_rep,
+          velocity = manifested_rep_velocity,
+          v1RM = v1RM,
+          fractional = TRUE
+        )
+      )
+  }
+
+  cleaned_sets <- cleaned_sets %>%
+    dplyr::mutate(
       `%MNR` = (rep / nRM) * 100,
       best_measured_rep_velocity = cummax(measured_rep_velocity),
       worst_measured_rep_velocity = cummin(measured_rep_velocity),
@@ -390,7 +420,10 @@ get_sets <- function(visit_LEV_profile,
       zeroRIR_reached = ifelse(is.na(RIR), FALSE, ifelse(any(RIR <= 0), TRUE, FALSE)),
       # If set is taken to failure (i.e, 0RIR reached), then est_RIR MUST be the same as RIR
       # Unless est_0RIR_error set to TRUE
-      est_RIR = ifelse(RIR == 0 & zeroRIR_reached == TRUE & est_0RIR_error == FALSE, 0, est_RIR)
+      # NOTE: One can use either zeroRIR_reached, or set_to_failure. In the latter case, if one
+      # doesn't attempt next rep, then failure is not reached, and thus est_0RIR_error is not
+      # applied
+      est_RIR = ifelse(RIR == 0 & set_to_failure == TRUE & est_0RIR_error == FALSE, 0, est_RIR)
     )
 
   if (incremental_est_RIR == TRUE) {
