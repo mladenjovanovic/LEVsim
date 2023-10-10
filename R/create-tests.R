@@ -67,7 +67,8 @@ create_tests <- function(LEV_profile = create_profiles(),
     dplyr::ungroup() %>%
     dplyr::mutate(
       load_perc_adj = load / visit_1RM,
-      set = "LV")
+      set = "LV"
+    )
 
   visit_1RM <- LV_profile %>%
     dplyr::group_by(athlete, visit) %>%
@@ -79,7 +80,8 @@ create_tests <- function(LEV_profile = create_profiles(),
       what = "visit 1RM",
       athlete = visit_1RM$athlete,
       visit = visit_1RM$visit,
-      updated_1RM = visit_1RM$visit_1RM)
+      updated_1RM = visit_1RM$visit_1RM
+    )
 
   # Create RTF data
   RTF_profile <- LEV_profile %>%

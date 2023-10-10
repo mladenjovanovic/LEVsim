@@ -1,7 +1,7 @@
 #' Estimate Exertion-Velocity Profile
 #'
 #' @description Finds the \code{L0_reps_drop} and \code{V0_reps_drop} parameters that
-#'     minimize the sum of squares given the performed \code{rep}, \code{load}, and \code{velocity}
+#'     minimize the sum-of-squares-error given the performed \code{rep}, \code{load}, and \code{velocity}
 #'      and \code{V0} and \code{L0} parameters.
 #'
 #' @param rep Numeric vector indicating repetition
@@ -31,7 +31,8 @@
 #' m1 <- estimate_EVP(
 #'   rep = RTF_df$rep,
 #'   load = RTF_df$load,
-#'   velocity = RTF_df$measured_rep_velocity)
+#'   velocity = RTF_df$measured_rep_velocity
+#' )
 #'
 #' m1
 estimate_EVP <- function(rep,
@@ -56,7 +57,7 @@ estimate_EVP <- function(rep,
 
   `1RM` <- get_load_at_velocity(V0, L0, v1RM)
 
-  if(relative_load == TRUE) load <- load * `1RM`
+  if (relative_load == TRUE) load <- load * `1RM`
 
   # Put data into data frame
   df <- data.frame(
@@ -94,14 +95,16 @@ estimate_EVP <- function(rep,
 
     # Return sum of squares
     sum((pred_df$velocity - pred_df$true_rep_velocity)^2 * pred_df$model_weights)
-
   }
 
   get_optim_params <- function() {
     tryCatch(
       {
         stats::optim(
-          par = c(L0_rep_drop_limits[[1]], V0_rep_drop_limits[[1]]),
+          par = c(
+            0.5 * (L0_rep_drop_limits[[1]] + L0_rep_drop_limits[[2]]),
+            0.5 * (V0_rep_drop_limits[[1]] + V0_rep_drop_limits[[2]])
+          ),
           fn = opt_func,
           method = "L-BFGS-B",
           lower = c(L0_rep_drop_limits[[1]], V0_rep_drop_limits[[1]]),
@@ -123,7 +126,8 @@ estimate_EVP <- function(rep,
   # Create results
   parameters <- list(
     L0_rep_drop = results$par[[1]],
-    V0_rep_drop = results$par[[2]])
+    V0_rep_drop = results$par[[2]]
+  )
 
   df <- df %>%
     dplyr::mutate(
@@ -149,7 +153,9 @@ estimate_EVP <- function(rep,
     parameters = parameters,
     model_fit = LEV_model_fit(
       observed = df$velocity,
-      predicted = df$pred_velocity),
+      predicted = df$pred_velocity
+    ),
     model = NULL,
-    data = df)
+    data = df
+  )
 }

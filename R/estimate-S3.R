@@ -41,7 +41,7 @@ summary.LEV_estimate <- function(object, ...) {
   cat("--------------------\n")
   print(data.frame(object$model_fit), row.names = FALSE)
 
-  if(!is.null(object$model))  {
+  if (!is.null(object$model)) {
     cat("\nModel summary\n")
     cat("-------------\n")
     summary(object$model, ...)
@@ -153,7 +153,7 @@ coef.LEV_estimate <- function(object, ...) {
 #' predict(m1, newdata = data.frame(load = 100))
 #' @export
 predict.LEV_estimate <- function(object, ...) {
-  if(!is.null(object$model)) {
+  if (!is.null(object$model)) {
     stats::predict(object$model, ...)
   } else {
     NULL

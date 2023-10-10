@@ -58,7 +58,7 @@ create_prescription_1RM <- function(LEV_profile,
 
     # If init_1RM is not provided, test it
     if (is.null(init_1RM)) {
-      init_1RM <-  buffer * get_visit_1RM(profile$profile, load_perc, use_true_velocity = use_true_velocity)
+      init_1RM <- buffer * get_visit_1RM(profile$profile, load_perc, use_true_velocity = use_true_velocity)
 
       if (round_1RM == TRUE) {
         init_1RM <- get_load_rounded(init_1RM, profile$profile$load_increment)
