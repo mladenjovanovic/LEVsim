@@ -1,7 +1,11 @@
 # Function to find MNR (nRM)
 find_MNR <- function(rep, failed, velocity, v1RM, fractional) {
-  if (!any(failed)) {
+  if (!any(failed == TRUE)) {
     return(NA)
+  }
+
+  if (!any(failed == FALSE)) {
+    return(0)
   }
 
   first_failed_rep <- get_last_rep(rep, failed)
