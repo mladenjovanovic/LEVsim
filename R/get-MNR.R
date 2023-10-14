@@ -103,7 +103,7 @@ get_MNR <- function(load,
         load = load
       )
     ) %>%
-    dplyr::group_by(set_index, load) %>%
+    dplyr::group_by(set_index) %>%
     dplyr::mutate(failed_rep = true_rep_velocity <= v1RM) %>%
     dplyr::summarise(
       MNR = find_MNR(
